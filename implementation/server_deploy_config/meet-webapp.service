@@ -1,0 +1,13 @@
+[Unit]
+Description=Meet Web Application service
+After=network.target
+
+[Service]
+User=http
+Group=http
+WorkingDirectory=/var/www/meet
+ExecStart=/usr/bin/make serve
+KillSignal=SIGINT
+
+[Install]
+WantedBy=multi-user.target
