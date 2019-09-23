@@ -48,7 +48,7 @@ class Marker():
         primary_key=False
     )
 
-    user = models.OneToOneField(
+    user = models.ForeignKey(
         "User",
         null=True,
         blank=True,
