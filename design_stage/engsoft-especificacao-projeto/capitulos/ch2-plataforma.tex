@@ -1,0 +1,100 @@
+% ==============================================================================
+% Projeto de Sistema - Ádler Oliveira Silva Neves
+% Capítulo 2 - Plataforma de Desenvolvimento
+% ==============================================================================
+\chapter{Plataforma de Desenvolvimento}
+\label{sec-plataforma}
+
+% \vitor{As tabelas abaixo devem ser adaptadas às tecnologias e ferramentas utilizadas pelo aluno. Foram já indicadas algumas tecnologias bastante utilizadas em disciplinas e projetos em que estou envolvido.}
+
+
+%=======================================================================================================
+%			Tabela de Plataforma de Desenvolvimento e Tecnologias Utilizadas
+%=======================================================================================================
+
+Na Tabela~\ref{tabela-plataforma} são listadas as tecnologias utilizadas no desenvolvimento da ferramenta, bem como o propósito de sua utilização.
+
+\begin{table}[h]
+	\centering	
+	\vspace{0.5cm}
+	\footnotesize
+	\caption{Plataforma de Desenvolvimento e Tecnologias Utilizadas}	
+	\label{tabela-plataforma}
+	\begin{tabular}{|p{1.6cm}|c|p{5cm}|p{6.5cm}|}  \hline 
+ 		Tecnologia & Versão & Descrição & Propósito \\\hline 
+
+		Python & 3.7 & Linguagem de programação orientada a objetos e independente de plataforma. & Escrita do código-fonte das classes que compõem o sistema. \\\hline
+ 		
+		Django & 2.2.5 & Conjunto de APIs e tecnologias voltadas para a construção rápida de aplicações rápidas, seguras e escaláveis. & Redução da complexidade do desenvolvimento, implantação e gerenciamento de aplicações Web a partir de seus componentes de infra-estrutura prontos para o uso. \\ \hline
+ 		
+		Django Admin Site & 2.2.5 & Aplicação drop-in que provê um gerenciamento facilitado dos dados do sistema por administradores. & Redução da complexidade de administração do sistema. \\ \hline
+		
+		Django Rosetta & 0.9.3 & Aplicação drop-in que provê um gerenciamento facilitado da tradução de páginas da interface. & Redução do esforço de traduzir o sistema para diferentes idiomas. \\ \hline
+		
+		Django Templates & 2.2.5 & API para a construção de páginas baseadas em templates & Criação das páginas Web do sistema, reutilizando a estrutura visual comum às paginas, facilitando a manutenção do padrão visual do sistema.  \\ \hline
+		
+		Django Page Components & 0.1 & API para criação de componentes reutilizáveis & Criação e reutilização de componentes visuais Web de alto nível, componentes customizados de forma a facilitar a manutenção do padrão visual do sistema. \\ \hline
+		
+		Django Forms & 2.2.5 & API para definição e tratamento de formulários & Criação de formulários e seu posterior tratamento, facilitando o desacoplamento das camadas. \\ \hline
+		
+% 		EJB & 4.0.9 & API para construção de componentes transacionais gerenciados por \textit{container}. & Implementação das regras de negócio em componentes distribuídos, transacionais, seguros e portáveis. \\\hline
+		
+		Django ORM & 2.2.5 & API para persistência de dados por meio de mapeamento objeto/relacional. & Persistência dos objetos de domínio sem necessidade de escrita dos comandos SQL. \\\hline
+		
+		PyCDI & 1.1 & API para injeção de dependências. & Integração entre diferentes camadas da arquitetura. \\\hline
+		
+% 		Facelets & 2.0 &  API para definição de decoradores (\textit{templates}) integrada ao JSF. & Reutilização da estrutura visual comum às paginas, facilitando a manutenção do padrão visual do sistema. \\\hline
+		
+% 		PrimeFaces & 6.2 &  Conjunto de componentes visuais JSF \textit{open source}. & Reutilização de componentes visuais Web de alto nível. \\\hline
+		
+		PostgreSQL & 11.5 & Sistema Gerenciador de Banco de Dados Relacional gratuito. & Armazenamento dos dados manipulados pela ferramenta. \\\hline
+		
+		WSGIServer & 0.2 & Servidor de Aplicações e arquivos estáticos para Python WSGI. & Execução das APIs citadas acima em ambiente de desenvolvimento. \\ \hline
+		
+		Gunicorn & 19.9.0 & Servidor de Aplicações para Python WSGI. & Execução das APIs citadas acima em ambiente de produção e hospedagem da aplicação Web, dando acesso aos usuários via HTTP. \\ \hline
+		
+		NGINX & 1.17.3 & Servidor de arquivos estáticos e proxy-reverso. & Servir arquivos estáticos e realizar o proxy-reverso no Gunicorn, adicionando a camada TLS em ambiente de produção. \\ \hline
+	\end{tabular}
+\end{table}
+
+
+
+
+
+
+%=======================================================================================================
+%			Tabela de Softwares de Apoio ao Desenvolvimento do Projeto
+%=======================================================================================================
+
+\newpage
+Na Tabela~\ref{tabela-software} vemos os softwares que apoiaram o desenvolvimento de documentos e também do código fonte.
+
+\begin{table}[h]
+	\centering	
+	\vspace{0.5cm}
+	\caption{Softwares de Apoio ao Desenvolvimento do Projeto}	
+	\label{tabela-software}
+	\begin{tabular}{|p{3cm}|p{1.5cm}|p{5cm}|p{6cm}|}  \hline 
+	
+ 		Tecnologia & Versão & Descrição & Propósito \\\hline 
+ 		 
+		FrameWeb Editor & 1.0.0. 201908 181134 & Ferramenta CASE do método FrameWeb. & Criação dos modelos de Entidades, Aplicação, Persistência e Navegação. \\\hline 
+ 		 
+		PlantUML & 1.2019.11 & Renderizador de diagramas. & Renderização gráfica de diagramas a partir de texto que o FrameWeb não gera. \\ \hline
+
+		TeX Live  & 2019. 51075-3 & Implementação do \LaTeX & Documentação do projeto arquitetural do sistema. \\\hline       
+		
+		GNOME \LaTeX & 3.32.0 & Editor de LaTeX. &  Escrita da documentação do sistema, sendo usado o \textit{template} \textit{abnTeX}.\footnote{\url{http://www.abntex.net.br}.} \\\hline    
+
+		Eclipse IDE for Enterprise Java Developers & 4.12.0 & Ambiente de desenvolvimento (IDE) com suporte ao desenvolvimento Java EE. & Ambiente de execução do plug-in do FrameWeb Editor. \\\hline 
+		
+		VSCodium & 1.37.1 & Editor de texto com suporte a extensões com suporte a Python. & Desenvolvimento do código-fonte da aplicação. \\\hline
+		
+		pip & 19.0.3 & Ferramenta de gerência de dependências de software python. & Obtenção das dependências do projeto. \\\hline
+		
+		virtualenv & 16.1.0 & Ferrramenta para isolar ambientes de desenvolvimento python. & Isolar as dependencias do software do restante do sistema.  \\ \hline
+		
+		Automake & 1.16.1 & Ferramenta de automação em script & Desenvolver atalhos convenientes para várias tarefas. \\ \hline 
+		
+	\end{tabular}
+\end{table}

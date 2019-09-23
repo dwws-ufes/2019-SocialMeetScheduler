@@ -1,0 +1,34 @@
+@startuml
+
+package "Presentation Tier" as pt #application {
+	package "Templates" as tpl {
+		card "View"
+	}
+	package "Views" as vws {
+		card "Control"
+	}
+}
+
+package "Business Tier" as bt #greenyellow {
+	package "Services" as svc {
+		card "Application"
+	}
+	package "Models" as mdl {
+		card "Domain"
+	}
+}
+
+folder "Data Access Tier" as dat #lightpink {
+}
+
+pt -[hidden]right-> bt
+bt -[hidden]right-> dat
+bt -[hidden]right-> dat
+
+tpl -down-> vws
+tpl <-down- vws
+mdl <-down- svc
+vws -> svc
+
+
+@enduml
