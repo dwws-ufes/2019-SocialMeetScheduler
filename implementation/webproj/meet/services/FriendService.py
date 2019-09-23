@@ -1,9 +1,10 @@
 # -*- encoding: utf-8 -*-
 
+from pycdi.utils import Singleton
+
+
+@Singleton()
 class FriendService:
-    def __init__(self):
-        pass
-    
     def startFriendshipWith(self):
         raise NotImplementedError("# TODO: Implement this missing method") 
     

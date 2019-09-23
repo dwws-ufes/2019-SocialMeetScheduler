@@ -3,6 +3,8 @@
 **/*.pyd
 **/__pycache__/**
 **/__pycache__
+**/.vscode
+**/.vscode/**
 **/.ropeproject
 **/.ropeproject/**
 **/virtual_env

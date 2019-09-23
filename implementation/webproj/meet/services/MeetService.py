@@ -1,9 +1,10 @@
 # -*- encoding: utf-8 -*-
 
+from pycdi.utils import Singleton
+
+
+@Singleton()
 class MeetService:
-    def __init__(self):
-        pass
-    
     def addUpdateMeet(self):
         raise NotImplementedError("# TODO: Implement this missing method") 
     
