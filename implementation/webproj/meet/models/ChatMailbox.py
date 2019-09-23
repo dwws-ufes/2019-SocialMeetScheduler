@@ -2,6 +2,10 @@
 
 from django.db import models
 from django.contrib.gis.db import models as gismodels
+from django.contrib.auth import get_user_model
+from .Meet import Meet
+
+User = get_user_model()
 
 
 class ChatMailbox(models.Model):
@@ -14,7 +18,7 @@ class ChatMailbox(models.Model):
     # chatmessage: Set[ChatMessage]
 
     user = models.ForeignKey(
-        "User",
+        User,
         null=True,
         blank=True,
         on_delete=models.CASCADE,
@@ -22,7 +26,7 @@ class ChatMailbox(models.Model):
     )
 
     meet = models.ForeignKey(
-        "Meet",
+        Meet,
         null=True,
         blank=True,
         on_delete=models.CASCADE,
@@ -30,7 +34,7 @@ class ChatMailbox(models.Model):
     )
 
     user = models.ForeignKey(
-        "User",
+        User,
         null=True,
         blank=True,
         on_delete=models.CASCADE,

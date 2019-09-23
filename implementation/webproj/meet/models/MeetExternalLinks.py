@@ -2,6 +2,7 @@
 
 from django.db import models
 from django.contrib.gis.db import models as gismodels
+from .Meet import Meet
 
 
 class MeetExternalLinks(models.Model):
@@ -19,7 +20,7 @@ class MeetExternalLinks(models.Model):
     )
 
     meet = models.ForeignKey(
-        "Meet",
+        Meet,
         null=True,
         blank=True,
         on_delete=models.CASCADE,

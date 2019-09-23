@@ -2,9 +2,12 @@
 
 from django.db import models
 from django.contrib.gis.db import models as gismodels
+from django.contrib.auth import get_user_model
+
+User = get_user_model()
 
 
-class Marker():
+class Marker(models.Model):
     key = models.UUIDField(
         blank=False,
         null=False,
@@ -49,7 +52,7 @@ class Marker():
     )
 
     user = models.ForeignKey(
-        "User",
+        User,
         null=True,
         blank=True,
         on_delete=models.CASCADE,

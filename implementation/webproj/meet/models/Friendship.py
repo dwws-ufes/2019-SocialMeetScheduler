@@ -2,6 +2,9 @@
 
 from django.db import models
 from django.contrib.gis.db import models as gismodels
+from django.contrib.auth import get_user_model
+
+User = get_user_model()
 
 
 class Friendship(models.Model):
@@ -18,7 +21,7 @@ class Friendship(models.Model):
     )
 
     user = models.ForeignKey(
-        "User",
+        User,
         null=True,
         blank=True,
         on_delete=models.CASCADE,
@@ -26,7 +29,7 @@ class Friendship(models.Model):
     )
 
     user = models.ForeignKey(
-        "User",
+        User,
         null=True,
         blank=True,
         on_delete=models.CASCADE,
