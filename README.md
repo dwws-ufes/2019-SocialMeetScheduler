@@ -3,7 +3,7 @@ Assignment for the 2019 edition of the "Web Development and the Semantic Web" co
 
 ## How to run
 
-First, install `python3`, `automake`, `libspartialite` and `python-virtualenv` from your distro's repository.
+First, install `python3`, `automake`, `gdal`, `geos`, `libspartialite` and `python-virtualenv` from your distro's repository.
 
 Then run `sudo make depends` to download required python modules from PyPI repository into your system.
 
