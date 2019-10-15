@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% load i18n leaflet_tags %}
+
+{% block title %}
+{{ meet.title }} | {{ block.super }}
+{% endblock title %}
+
+{% block additional_head %}
+{% leaflet_js %}
+{% leaflet_css %}
+<script type="text/javascript" defer>
+    function map_init(map, options) {
+        // get point lat and lon
+        var lon = {{ meet.point.x }};
+        var lat = {{ meet.point.y }};
+        // zoom to point & add it to map
+        map.setView([lon, lat], 12);
+        L.marker([lon, lat]).addTo(map);
+    }
+</script>
+{% endblock additional_head %}
+
+{% block content %}
+{% leaflet_map "main" callback="map_init" %}
+<h2>{{ meet.title }}</h2>
+<hr>
+<dl class="row">
+    <dt class="col-sm-3">{% trans "field_meet_title" %}</dt>
+    <dd class="col-sm-9">{{ meet.title }}</dd>
+
+    <dt class="col-sm-3">{% trans "field_meet_name" %}</dt>
+    <dd class="col-sm-9">{{ meet.name }}</dd>
+
+    <dt class="col-sm-3">{% trans "field_meet_meeting" %}</dt>
+    <dd class="col-sm-9">{{ meet.meeting }}</dd>
+
+    <dt class="col-sm-3">{% trans "field_meet_creator" %}</dt>
+    <dd class="col-sm-9">
+        <a href="{% url 'user' meet.creator.username %}">
+            {{ meet.creator.username }}
+        </a>
+        <a href="{% url 'messagemeet' meet.key %}" class="badge badge-pill badge-primary text-white">
+            <i class="fa fa-envelope-o" aria-hidden="true"></i>
+        </a>
+    </dd>
+
+    <dt class="col-sm-3">{% trans "field_meet_description" %}</dt>
+    <dd class="col-sm-9">{{ meet.description }}</dd>
+</dl>
+{% if meet.creator.pk == request.user.pk %}
+<a href="{% url 'meetedt' meet.key %}" class="btn btn-warning">{% trans "Edit" %}</a>
+{% endif %}
+{% endblock content %}

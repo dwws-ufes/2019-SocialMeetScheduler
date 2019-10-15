@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block title %}
+{% trans "Account" %} | {{ block.super }}
+{% endblock title %}
+
+{% block content %}
+<p>
+    <a href="{% url 'friends' %}">
+        {% trans "Friends" %}
+    </a>
+</p>
+<p>
+    <a href="{% url 'conversations' %}">
+        {% trans "Conversations" %}
+    </a>
+</p>
+<p>
+    <a href="{% url 'meets_nearby' %}">
+        {% trans "Meets nearby" %}
+    </a>
+</p>
+<p>
+    <a href="{% url 'meets_popular' %}">
+        {% trans "Popular meets" %}
+    </a>
+</p>
+{% endblock content %}

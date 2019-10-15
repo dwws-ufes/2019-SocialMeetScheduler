@@ -107,7 +107,10 @@ serve: virtual_env
 	)
 
 addlang:
-	. virtual_env/bin/activate; cd webproj; python ../manage.py makemessages -l $(LANG)
+	. virtual_env/bin/activate; python manage.py makemessages -i virtual_env -l $(LANG)
+
+updatelangs:
+	for i in $$(ls -1 webproj/locale/); do LANG=$$i make addlang; done
 
 new-superuser:
 	. virtual_env/bin/activate; python manage.py createsuperuser

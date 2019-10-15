@@ -1,0 +1,50 @@
+<!DOCTYPE html>{% load static i18n %}
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>{% trans "Soon" %}&#x2122;</title>
+    <link rel="shortcut icon" type="image/png" href="{% static 'favicon.png' %}"/>
+    <style>
+    *{
+        font-family: sans-serif;
+        font-variant: small-caps;
+        padding: 0px;
+        margin: 0px;
+    }
+    div{
+        background: radial-gradient(circle, #303233, #202122);
+        position: fixed;
+        display: flex;
+        justify-content: center;
+        align-items:center;
+        width: 100%;
+        height: 100%;
+    }
+    span{
+        /*color: #262829;*/
+        color: #dfda78;
+        width: 100%;
+        text-align: center;
+        font-size: 600%;
+        font-weight: 900;
+        text-shadow:
+        /*
+        4px 4px 8px #2F3233,
+        0 0 10px #000408,
+        -4px -4px 8px #2F3233;
+        */
+        4px 4px 8px #555522,
+        0 0 10px #321,
+        -4px -4px 8px #555522;
+        background-clip: text;
+    }
+    </style>
+</head>
+<body>
+    <div>
+        <span>
+            {% trans "Soon" %}&#x2122;
+        </span>
+    </div>
+</body>
+</html>

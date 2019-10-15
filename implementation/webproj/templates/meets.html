@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% block title %}
+{% if request.path != '/' %}
+{% trans "Meets by" %}
+{% if by == 'distance' %}
+{% trans "distance" %}
+{% elif by == 'popularity' %}
+{% trans "popularity" %}
+{% else %}
+{% trans "unknown criteria" %}
+{% endif %}
+|
+{% endif %}
+{{ block.super }}
+{% endblock title %}
+
+{% block content %}
+
+{% if meets|length > 0 %}
+<table class="table table-striped table-bordered">
+    <thead class="bg-dark text-light">
+            <td>{% trans "field_meet_title" %}</td>
+            <td>{% trans "field_meet_name" %}</td>
+            <td>{% trans "field_meet_lat" %}</td>
+            <td>{% trans "field_meet_long" %}</td>
+            <td>{% trans "field_meet_meeting" %}</td>
+            <td>{% trans "open_details" %}</td>
+    </thead>
+    <tbody>
+        {% for meet in meets %}
+        <tr>
+            <td>{{meet.title}}</td>
+            <td>{{meet.name}}</td>
+            <td>{{meet.point.y}}</td>
+            <td>{{meet.point.x}}</td>
+            <td>{{meet.meeting}}</td>
+            <td>
+                <a href="{% url 'meet' meet.key %}" class="btn btn-primary">
+                    <i class="fa fa-eye" aria-hidden="true"></i>
+                </a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<small class="text-muted">{% trans "Empty list" %}</small>
+{% endif %}
+<a href="{% url 'meetnew' %}" class="btn btn-primary">{% trans "Create meet" %}</a>
+{% endblock content %}

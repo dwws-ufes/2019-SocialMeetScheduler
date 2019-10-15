@@ -2,7 +2,7 @@
 
 from django.db import models
 from django.contrib.gis.db import models as gismodels
-from .Marker import Marker
+from .Marker import Marker, User
 
 
 class Meet(Marker):
@@ -25,8 +25,8 @@ class Meet(Marker):
         primary_key=False
     )
 
-    # meetstar: MeetStar
+    # stars: MeetStar
 
-    # chatmailbox: Set[ChatMailbox]
+    # chats: Set[ChatMailbox]
 
-    # meetexternallinks: Set[MeetExternalLinks]
+    # external_links: Set[MeetExternalLinks]

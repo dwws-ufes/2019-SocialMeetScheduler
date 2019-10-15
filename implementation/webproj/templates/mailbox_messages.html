@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load i18n crispy_forms_tags %}
+
+{% block conversation %}
+{% trans "Conversation" %} | {{ block.super }}
+{% endblock conversation %}
+
+{% block content %}
+<ul>
+    {% for message in mailbox.messages.all %}
+    <li>
+        {{ message.sender }} ({{message.sent}}) - {{ message.message }}
+    </li>
+    {% endfor %}
+</ul>
+<form action="{% url 'conversation' mailbox.pk %}" method="POST">
+    {% csrf_token %}
+    {{form|crispy}}
+    <button type="submit" class="btn btn-primary">{% trans "Send message" %}</button>
+</form>
+{% endblock content %}

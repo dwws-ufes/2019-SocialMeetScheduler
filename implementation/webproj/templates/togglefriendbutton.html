@@ -1,0 +1,32 @@
+{% load i18n method_override %}
+{% if is_friend %}
+<form action="{% url 'user' friendable.username %}" method="POST">
+    {% csrf_token %}
+    {% method_override 'DELETE' %}
+    <button class="btn btn-danger">{% trans "Break friendship" %}</button>
+</form>
+{% elif is_pending %}
+{% if friendable.pk == user.pk %}
+<form action="{% url 'user' friendable.username %}" method="POST">
+    {% csrf_token %}
+    {% method_override 'DELETE' %}
+    <button>{% trans "Nevermind" %}</button>
+</form>
+{% else %}
+<form action="{% url 'user' friendable.username %}" method="POST">
+    {% csrf_token %}
+    <button class="btn btn-success">{% trans "Accept" %}</button>
+</form>
+<form action="{% url 'user' friendable.username %}" method="POST">
+    {% csrf_token %}
+    {% method_override 'DELETE' %}
+    <button class="btn btn-danger">{% trans "Reject" %}</button>
+</form>
+{% endif %}
+{% else %}
+<form action="{% url 'user' friendable.username %}" method="POST">
+    {% csrf_token %}
+    <button class="btn btn-primary">{% trans "Add friend" %}</button>
+</form>
+{% endif %}
+

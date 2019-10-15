@@ -18,27 +18,29 @@ class ChatMessage(models.Model):
     sent = models.DateTimeField(
         blank=False,
         null=False,
-        primary_key=False
+        primary_key=False,
+        auto_now_add=True
     )
 
     read = models.BooleanField(
+        default=False,
         blank=False,
         null=False,
         primary_key=False
     )
 
-    chatmailbox = models.ForeignKey(
+    mailbox = models.ForeignKey(
         ChatMailbox,
-        null=True,
-        blank=True,
+        null=False,
+        blank=False,
         on_delete=models.CASCADE,
-        related_name="chatmessage"
+        related_name="messages"
     )
 
-    user = models.ForeignKey(
+    sender = models.ForeignKey(
         User,
-        null=True,
-        blank=True,
+        null=False,
+        blank=False,
         on_delete=models.CASCADE,
-        related_name="chatmessage"
+        related_name="messages"
     )

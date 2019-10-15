@@ -14,12 +14,16 @@ django-registration
 django-registration-redux
 django-settings-export
 django-forms-bootstrap
+django-crispy-forms
 django-rosetta
 django-template-check
 django-dia
 django-pycdi
 django-page-components
+django-method-override
+django-leaflet
 unicode-slugify
+pylint-django
 beautifulsoup4
 html2text
 html5lib

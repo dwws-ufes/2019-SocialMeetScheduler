@@ -1,0 +1,719 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-10-15 12:42+0000\n"
+"PO-Revision-Date: 2019-10-15 12:59-0306\n"
+"Last-Translator: b'  <adlerosn@gmail.com>'\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Translated-Using: django-rosetta 0.9.3\n"
+
+#: server_secrets/active_languages.html:3
+msgid "lang__en"
+msgstr "English"
+
+#: server_secrets/form_meta_fields.html:2
+msgid "form_meet_id_label"
+msgstr ""
+
+#: server_secrets/form_meta_fields.html:3
+msgid "form_meet_id_help"
+msgstr ""
+
+#: server_secrets/form_meta_fields.html:4
+msgid "form_meet_title_label"
+msgstr "Title"
+
+#: server_secrets/form_meta_fields.html:5
+msgid "form_meet_title_help"
+msgstr "the title your meet will have"
+
+#: server_secrets/form_meta_fields.html:6
+msgid "form_meet_description_label"
+msgstr "Description"
+
+#: server_secrets/form_meta_fields.html:7
+msgid "form_meet_description_help"
+msgstr ""
+"talk a little about what might help people get interested in showing up"
+
+#: server_secrets/form_meta_fields.html:8
+msgid "form_meet_meeting_label"
+msgstr "Meet date"
+
+#: server_secrets/form_meta_fields.html:9
+msgid "form_meet_meeting_help"
+msgstr "when your meet will happen ('Y-m-d H:M:S' or 'm/d/y H:M:S')"
+
+#: server_secrets/form_meta_fields.html:10
+msgid "form_meet_name_label"
+msgstr "Name"
+
+#: server_secrets/form_meta_fields.html:11
+msgid "form_meet_name_help"
+msgstr "the name of the place you will host your meet"
+
+#: server_secrets/form_meta_fields.html:12
+msgid "form_meet_privacy_require_account_label"
+msgstr "Only show for people with account"
+
+#: server_secrets/form_meta_fields.html:13
+msgid "form_meet_privacy_require_account_help"
+msgstr ""
+"by checking this, only people with an account will be able to see your event"
+
+#: server_secrets/form_meta_fields.html:14
+msgid "form_meet_privacy_unlisted_label"
+msgstr "Hide from the lists"
+
+#: server_secrets/form_meta_fields.html:15
+msgid "form_meet_privacy_unlisted_help"
+msgstr ""
+"by checking this, only people with the link will be able to find your event"
+
+#: server_secrets/form_meta_fields.html:16
+msgid "form_conversation_message_label"
+msgstr "Message"
+
+#: server_secrets/form_meta_fields.html:17
+msgid "form_conversation_message_help"
+msgstr "what do you want to talk with them?"
+
+#: server_secrets/form_meta_fields.html:18
+msgid "form_meetexternallinks_id_label"
+msgstr ""
+
+#: server_secrets/form_meta_fields.html:19
+msgid "form_meetexternallinks_id_help"
+msgstr ""
+
+#: server_secrets/form_meta_fields.html:20
+msgid "form_meetexternallinks_name_label"
+msgstr "Name"
+
+#: server_secrets/form_meta_fields.html:21
+msgid "form_meetexternallinks_name_help"
+msgstr "the name of the place the link points to"
+
+#: server_secrets/form_meta_fields.html:22
+msgid "form_meetexternallinks_url_label"
+msgstr "URL"
+
+#: server_secrets/form_meta_fields.html:23
+msgid "form_meetexternallinks_url_help"
+msgstr "the link"
+
+#: server_secrets/form_meta_fields.html:24
+msgid "form_meetstar_id_label"
+msgstr ""
+
+#: server_secrets/form_meta_fields.html:25
+msgid "form_meetstar_id_help"
+msgstr ""
+
+#: server_secrets/form_meta_fields.html:26
+msgid "form_meetstar_anonymous_label"
+msgstr ""
+
+#: server_secrets/form_meta_fields.html:27
+msgid "form_meetstar_anonymous_help"
+msgstr ""
+
+#: webproj/meet/services/FriendService.py:15
+msgid "You cannot friend yourself."
+msgstr ""
+
+#: webproj/meet/services/FriendService.py:47
+msgid "This action is not possible if both users are not friends."
+msgstr ""
+
+#: webproj/meet/services/MeetService.py:21
+#: webproj/meet/services/MeetService.py:29
+#: webproj/meet/services/MeetService.py:37
+#: webproj/meet/services/MeetService.py:49
+#: webproj/meet/services/MeetService.py:71
+#: webproj/meet/services/MeetService.py:93
+#: webproj/meet/services/MeetService.py:147
+#: webproj/meet/services/MeetService.py:153
+#: webproj/meet/services/MessengerService.py:81
+msgid ""
+"This data does not belong to the user who requested something about it."
+msgstr ""
+
+#: webproj/meet/services/MeetService.py:122
+msgid "User is not authorized to see this data."
+msgstr ""
+
+#: webproj/meet/views.py:153 webproj/meet/views.py:223
+msgid "usr_not_found"
+msgstr "User object was not found in the database"
+
+#: webproj/meet/views.py:201
+msgid "cht_not_found"
+msgstr "Chat object was not found in the database"
+
+#: webproj/meet/views.py:247 webproj/meet/views.py:307
+#: webproj/meet/views.py:336 webproj/meet/views.py:362
+#: webproj/meet/views.py:383 webproj/meet/views.py:425
+msgid "meet_not_found"
+msgstr "Meet object was not found in the database"
+
+#: webproj/meet/views.py:445
+msgid "meetstar_not_found"
+msgstr "MeetStar object was not found in the database"
+
+#: webproj/templates/asklatlong.html:5
+msgid "Where are you?"
+msgstr ""
+
+#: webproj/templates/asklatlong.html:24
+msgid "Load from browser"
+msgstr ""
+
+#: webproj/templates/asklatlong.html:27 webproj/templates/meet_view.html:52
+#: webproj/templates/meets.html:25
+msgid "field_meet_lat"
+msgstr "Latitude"
+
+#: webproj/templates/asklatlong.html:31 webproj/templates/meet_view.html:53
+#: webproj/templates/meets.html:26
+msgid "field_meet_long"
+msgstr "Longitude"
+
+#: webproj/templates/asklatlong.html:35
+msgid "I'm there"
+msgstr ""
+
+#: webproj/templates/base.html:2
+msgid "lang-code-iso"
+msgstr "en"
+
+#: webproj/templates/base_footer.html:5
+msgid "Back to top"
+msgstr ""
+
+#: webproj/templates/base_footer.html:9
+msgid "Universidade Federal do Espírito Santo"
+msgstr ""
+
+#: webproj/templates/base_footer.html:11
+msgid "written by Adler Neves"
+msgstr ""
+
+#: webproj/templates/base_footer.html:15
+msgid "ftr_tz_chg"
+msgstr "Change timezone"
+
+#: webproj/templates/base_header.html:44 webproj/templates/myaccount.html:5
+msgid "Account"
+msgstr ""
+
+#: webproj/templates/base_header.html:48
+msgid "Log out"
+msgstr ""
+
+#: webproj/templates/base_header.html:58
+msgid "Sign Up"
+msgstr ""
+
+#: webproj/templates/base_header.html:61
+#: webproj/templates/registration/login.html:4
+#: webproj/templates/registration/login.html:10
+msgid "Log in"
+msgstr ""
+
+#: webproj/templates/friends.html:5 webproj/templates/myaccount.html:11
+msgid "Friends"
+msgstr ""
+
+#: webproj/templates/friends.html:31
+msgid "No friends to display"
+msgstr ""
+
+#: webproj/templates/httperror.html:4
+msgid "Error"
+msgstr ""
+
+#: webproj/templates/httperror.html:13
+msgid "The document you requested was not found."
+msgstr ""
+
+#: webproj/templates/httperror.html:15
+msgid "You're not authorized to see this content."
+msgstr ""
+
+#: webproj/templates/httperror.html:17
+msgid "Your browser sent a malformed request."
+msgstr ""
+
+#: webproj/templates/httperror.html:19
+msgid "There was an server-side error while processing your request."
+msgstr ""
+
+#: webproj/templates/httperror.html:21
+msgid "There was an unexpected error."
+msgstr ""
+
+#: webproj/templates/mailbox_messages.html:5
+msgid "Conversation"
+msgstr ""
+
+#: webproj/templates/mailbox_messages.html:19
+#: webproj/templates/talktofriend.html:10
+#: webproj/templates/talktomeetorganizer.html:9 webproj/templates/user.html:19
+msgid "Send message"
+msgstr ""
+
+#: webproj/templates/mailboxes.html:5 webproj/templates/myaccount.html:16
+msgid "Conversations"
+msgstr ""
+
+#: webproj/templates/mailboxes.html:23
+msgid "No conversations to display"
+msgstr ""
+
+#: webproj/templates/meet_edit.html:5
+msgid "Edit meet"
+msgstr ""
+
+#: webproj/templates/meet_edit.html:31
+msgid "form_meet_point_label"
+msgstr "Where is it?"
+
+#: webproj/templates/meet_edit.html:43
+msgid "Save"
+msgstr ""
+
+#: webproj/templates/meet_view.html:28 webproj/templates/meet_view.html:50
+#: webproj/templates/meets.html:23
+msgid "field_meet_title"
+msgstr "Title"
+
+#: webproj/templates/meet_view.html:31 webproj/templates/meet_view.html:51
+#: webproj/templates/meets.html:24
+msgid "field_meet_name"
+msgstr "Name"
+
+#: webproj/templates/meet_view.html:34 webproj/templates/meet_view.html:54
+#: webproj/templates/meets.html:27
+msgid "field_meet_meeting"
+msgstr "When"
+
+#: webproj/templates/meet_view.html:37
+msgid "field_meet_creator"
+msgstr "Organizer"
+
+#: webproj/templates/meet_view.html:47
+#| msgid "form_meet_description_help"
+msgid "field_meet_description"
+msgstr "Description"
+
+#: webproj/templates/meets.html:5
+msgid "Meets by"
+msgstr ""
+
+#: webproj/templates/meets.html:7
+msgid "distance"
+msgstr ""
+
+#: webproj/templates/meets.html:9
+msgid "popularity"
+msgstr ""
+
+#: webproj/templates/meets.html:11
+msgid "unknown criteria"
+msgstr ""
+
+#: webproj/templates/meets.html:28
+msgid "open_details"
+msgstr "Open details"
+
+#: webproj/templates/meets.html:48
+msgid "Empty list"
+msgstr ""
+
+#: webproj/templates/meets.html:50
+msgid "Create meet"
+msgstr ""
+
+#: webproj/templates/myaccount.html:21
+msgid "Meets nearby"
+msgstr ""
+
+#: webproj/templates/myaccount.html:26
+msgid "Popular meets"
+msgstr ""
+
+#: webproj/templates/registration/activate.html:4
+msgid "Activation Failure"
+msgstr ""
+
+#: webproj/templates/registration/activate.html:7
+msgid "Account activation failed."
+msgstr ""
+
+#: webproj/templates/registration/activation_complete.html:4
+#: webproj/templates/registration/activation_complete_admin_pending.html:4
+msgid "Account Activated"
+msgstr ""
+
+#: webproj/templates/registration/activation_complete.html:8
+#: webproj/templates/registration/activation_complete_admin_pending.html:8
+msgid "Your account is now activated."
+msgstr ""
+
+#: webproj/templates/registration/activation_complete.html:10
+msgid "You can log in."
+msgstr ""
+
+#: webproj/templates/registration/activation_complete_admin_pending.html:10
+msgid "Once a site administrator activates your account you can login."
+msgstr ""
+
+#: webproj/templates/registration/activation_email.html:6
+#: webproj/templates/registration/admin_approve_email.html:6
+msgid "registration"
+msgstr ""
+
+#: webproj/templates/registration/activation_email.html:11
+#, python-format
+msgid ""
+"\n"
+"    You (or someone pretending to be you) have asked to register an account at\n"
+"    %(site_name)s.  If this wasn't you, please ignore this email\n"
+"    and your address will be removed from our records.\n"
+"    "
+msgstr ""
+
+#: webproj/templates/registration/activation_email.html:18
+#, python-format
+msgid ""
+"\n"
+"    To activate this account, please click the following link within the next\n"
+"    %(expiration_days)s days:\n"
+"    "
+msgstr ""
+
+#: webproj/templates/registration/activation_email.html:30
+#: webproj/templates/registration/admin_approve_email.html:23
+#, python-format
+msgid ""
+"\n"
+"    Sincerely,\n"
+"    %(site_name)s Management\n"
+"    "
+msgstr ""
+
+#: webproj/templates/registration/activation_email.txt:2
+#, python-format
+msgid ""
+"\n"
+"You (or someone pretending to be you) have asked to register an account at\n"
+"%(site_name)s.  If this wasn't you, please ignore this email\n"
+"and your address will be removed from our records.\n"
+msgstr ""
+
+#: webproj/templates/registration/activation_email.txt:7
+#, python-format
+msgid ""
+"\n"
+"To activate this account, please click the following link within the next\n"
+"%(expiration_days)s days:\n"
+msgstr ""
+
+#: webproj/templates/registration/activation_email.txt:14
+#, python-format
+msgid ""
+"\n"
+"Sincerely,\n"
+"%(site_name)s Management\n"
+msgstr ""
+
+#: webproj/templates/registration/activation_email_subject.txt:1
+#: webproj/templates/registration/admin_approve_complete_email_subject.txt:1
+msgid "Account activation on"
+msgstr ""
+
+#: webproj/templates/registration/admin_approve.html:4
+msgid "Approval Failure"
+msgstr ""
+
+#: webproj/templates/registration/admin_approve.html:7
+msgid "Account Approval failed."
+msgstr ""
+
+#: webproj/templates/registration/admin_approve_complete.html:4
+msgid "Account Approved"
+msgstr ""
+
+#: webproj/templates/registration/admin_approve_complete.html:8
+msgid "The user's account is now approved."
+msgstr ""
+
+#: webproj/templates/registration/admin_approve_complete_email.html:6
+msgid "admin approval"
+msgstr ""
+
+#: webproj/templates/registration/admin_approve_complete_email.html:11
+msgid ""
+"\n"
+"    Your account is now approved. You can \n"
+"    "
+msgstr ""
+
+#: webproj/templates/registration/admin_approve_complete_email.html:14
+msgid "log in."
+msgstr ""
+
+#: webproj/templates/registration/admin_approve_complete_email.txt:2
+msgid ""
+"\n"
+"Your account is now approved. You can log in using the following link\n"
+msgstr ""
+
+#: webproj/templates/registration/admin_approve_email.html:11
+#, python-format
+msgid ""
+"\n"
+"    The following user (%(user)s) has asked to register an account at\n"
+"    %(site_name)s.\n"
+"    "
+msgstr ""
+
+#: webproj/templates/registration/admin_approve_email.html:17
+msgid ""
+"\n"
+"    To approve this, please\n"
+"    "
+msgstr ""
+
+#: webproj/templates/registration/admin_approve_email.html:20
+msgid "click here"
+msgstr ""
+
+#: webproj/templates/registration/admin_approve_email.txt:2
+#, python-format
+msgid ""
+"\n"
+"The following user (%(user)s) has asked to register an account at\n"
+"%(site_name)s.\n"
+msgstr ""
+
+#: webproj/templates/registration/admin_approve_email.txt:6
+msgid ""
+"\n"
+"To approve this, please click the following link.\n"
+msgstr ""
+
+#: webproj/templates/registration/admin_approve_email_subject.txt:1
+msgid "Account approval on"
+msgstr ""
+
+#: webproj/templates/registration/login.html:14
+msgid "Forgot your password?"
+msgstr ""
+
+#: webproj/templates/registration/login.html:14
+msgid "Reset it"
+msgstr ""
+
+#: webproj/templates/registration/login.html:15
+msgid "Not a member?"
+msgstr ""
+
+#: webproj/templates/registration/login.html:15
+msgid "Register"
+msgstr ""
+
+#: webproj/templates/registration/logout.html:4
+msgid "Logged out"
+msgstr ""
+
+#: webproj/templates/registration/logout.html:7
+msgid "Successfully logged out"
+msgstr ""
+
+#: webproj/templates/registration/password_change_done.html:4
+msgid "Password changed"
+msgstr ""
+
+#: webproj/templates/registration/password_change_done.html:7
+msgid "Password successfully changed!"
+msgstr ""
+
+#: webproj/templates/registration/password_change_form.html:4
+#: webproj/templates/registration/password_change_form.html:10
+msgid "Change password"
+msgstr ""
+
+#: webproj/templates/registration/password_reset_complete.html:4
+msgid "Password reset complete"
+msgstr ""
+
+#: webproj/templates/registration/password_reset_complete.html:8
+msgid "Your password has been reset!"
+msgstr ""
+
+#: webproj/templates/registration/password_reset_complete.html:9
+#, python-format
+msgid "You may now <a href=\"%(login_url)s\">log in</a>"
+msgstr ""
+
+#: webproj/templates/registration/password_reset_confirm.html:10
+msgid "Confirm password reset"
+msgstr ""
+
+#: webproj/templates/registration/password_reset_confirm.html:14
+msgid "Enter your new password below to reset your password:"
+msgstr ""
+
+#: webproj/templates/registration/password_reset_confirm.html:18
+msgid "Set password"
+msgstr ""
+
+#: webproj/templates/registration/password_reset_done.html:4
+msgid "Password reset"
+msgstr ""
+
+#: webproj/templates/registration/password_reset_done.html:8
+msgid ""
+"\n"
+"    We have sent you an email with a link to reset your password. Please check\n"
+"    your email and click the link to continue.\n"
+"    "
+msgstr ""
+
+#: webproj/templates/registration/password_reset_email.html:3
+msgid "Greetings"
+msgstr ""
+
+#: webproj/templates/registration/password_reset_email.html:5
+#, python-format
+msgid ""
+"\n"
+"You are receiving this email because you (or someone pretending to be you)\n"
+"requested that your password be reset on the %(domain)s site. If you do not\n"
+"wish to reset your password, please ignore this message.\n"
+msgstr ""
+
+#: webproj/templates/registration/password_reset_email.html:11
+msgid ""
+"\n"
+"To reset your password, please click the following link, or copy and paste it\n"
+"into your web browser:\n"
+msgstr ""
+
+#: webproj/templates/registration/password_reset_email.html:20
+msgid "Your username, in case you've forgotten:"
+msgstr ""
+
+#: webproj/templates/registration/password_reset_email.html:23
+msgid "Best regards"
+msgstr ""
+
+#: webproj/templates/registration/password_reset_email.html:24
+msgid "Management"
+msgstr ""
+
+#: webproj/templates/registration/password_reset_form.html:4
+#: webproj/templates/registration/password_reset_form.html:15
+msgid "Reset password"
+msgstr ""
+
+#: webproj/templates/registration/password_reset_form.html:8
+msgid ""
+"\n"
+"    Forgot your password? Enter your email in the form below and we'll send you instructions for creating a new one.\n"
+"    "
+msgstr ""
+
+#: webproj/templates/registration/registration_closed.html:4
+msgid "Registration is closed"
+msgstr ""
+
+#: webproj/templates/registration/registration_closed.html:7
+msgid "Sorry, but registration is closed at this moment. Come back later."
+msgstr ""
+
+#: webproj/templates/registration/registration_complete.html:4
+msgid "Activation email sent"
+msgstr ""
+
+#: webproj/templates/registration/registration_complete.html:7
+msgid "Please check your email to complete the registration process."
+msgstr ""
+
+#: webproj/templates/registration/registration_form.html:4
+msgid "Register for an account"
+msgstr ""
+
+#: webproj/templates/registration/registration_form.html:10
+#: webproj/templates/registration/resend_activation_form.html:10
+msgid "Submit"
+msgstr ""
+
+#: webproj/templates/registration/resend_activation_complete.html:4
+msgid "Account Activation Resent"
+msgstr ""
+
+#: webproj/templates/registration/resend_activation_complete.html:8
+#, python-format
+msgid ""
+"\n"
+"  We have sent an email to %(email)s with further instructions.\n"
+"  "
+msgstr ""
+
+#: webproj/templates/registration/resend_activation_form.html:4
+msgid "Resend Activation Email"
+msgstr ""
+
+#: webproj/templates/soon.html:5 webproj/templates/soon.html:46
+msgid "Soon"
+msgstr ""
+
+#: webproj/templates/togglefriendbutton.html:6
+msgid "Break friendship"
+msgstr ""
+
+#: webproj/templates/togglefriendbutton.html:13
+msgid "Nevermind"
+msgstr ""
+
+#: webproj/templates/togglefriendbutton.html:18
+msgid "Accept"
+msgstr ""
+
+#: webproj/templates/togglefriendbutton.html:23
+msgid "Reject"
+msgstr ""
+
+#: webproj/templates/togglefriendbutton.html:29
+msgid "Add friend"
+msgstr ""
+
+#: webproj/templates/tz.html:4
+msgid "tz_title"
+msgstr "Timezone"
+
+#: webproj/templates/tz.html:11
+msgid "tz_label"
+msgstr "Timezone"
+
+#: webproj/templates/tz.html:18
+msgid "tz_btn_set"
+msgstr "Set timezone"
+
+#~ msgid "form_meet_point_help"
+#~ msgstr "select in the map where stuff are going to happen"

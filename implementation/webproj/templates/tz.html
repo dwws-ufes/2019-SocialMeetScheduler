@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% load tz i18n %}
+{% block title %}
+    {% trans 'tz_title' %} | {{ block.super }}
+{% endblock title %}
+{% block content %}
+<br>
+{% get_current_timezone as TIME_ZONE %}
+<form class="form" action="{% url 'timezone' %}?next={{next|urlencode}}" method="POST">
+    {% csrf_token %}
+    <label for="timezone">{% trans 'tz_label' %}:</label>
+    <select class="form-control" name="timezone">
+        {% for tz in timezones %}
+        <option value="{{ tz }}"{% if tz == TIME_ZONE %} selected{% endif %}>{{ tz }}</option>
+        {% endfor %}
+    </select>
+    <br>
+    <input class="btn btn-primary" type="submit" value="{% trans 'tz_btn_set' %}">
+</form>
+{% endblock content %}

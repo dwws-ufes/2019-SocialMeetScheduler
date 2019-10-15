@@ -27,18 +27,18 @@ class MeetStar(models.Model):
         primary_key=False
     )
 
-    user = models.ForeignKey(
+    owner = models.ForeignKey(
         User,
-        null=True,
-        blank=True,
+        null=False,
+        blank=False,
         on_delete=models.CASCADE,
-        related_name="meetstar"
+        related_name="stars"
     )
 
     meet = models.ForeignKey(
         Meet,
-        null=True,
-        blank=True,
+        null=False,
+        blank=False,
         on_delete=models.CASCADE,
-        related_name="meetstar"
+        related_name="stars"
     )

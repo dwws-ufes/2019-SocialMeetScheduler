@@ -1,0 +1,17 @@
+<!-- FOOTER -->{% load tz i18n %}
+<footer class="container mt-5 pt-4">
+    <p class="float-right">
+        <button class="btn btn-link" onClick="window.scrollTo({top:0, behavior: 'smooth'})">
+            {% trans "Back to top" %}
+        </button>
+    </p>
+    <p>
+        &copy; 2019-{% now 'Y' %} {% trans "Universidade Federal do Espírito Santo" %}
+        &middot;
+        {% trans "written by Adler Neves" %}
+    </p>
+    <p>
+        {% get_current_timezone as TIME_ZONE %}
+        Current timezone: <a title="{% trans 'ftr_tz_chg' %}" href="{% url 'timezone' %}?next={{request.get_full_path|urlencode}}">{{TIME_ZONE}}</a> ({% now 'r' %})
+    </p>
+</footer>

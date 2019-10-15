@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block title %}
+{% trans "Where are you?" %} | {{ block.super }}
+{% endblock title %}
+
+{% block additional_head %}
+<script deferred>
+    function setCoordinatesOnForm(position){
+        lt.value = position.coords.latitude;
+        lg.value = position.coords.longitude;
+    }
+
+    function getCoordsFromBrowser(){
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(setCoordinatesOnForm);
+        }
+    }
+</script>
+{% endblock additional_head %}
+
+{% block content %}
+<button class="btn btn-primary" onClick="javascript:getCoordsFromBrowser()">{% trans "Load from browser" %}</button>
+<form class="form" action="{% url 'meets_nearby' %}" method="GET">
+    <p>
+        <label for="lt">{% trans "field_meet_lat" %}</label>
+        <input id="lt" class="form-control" type="number" name="lat" step="any">
+    </p>
+    <p>
+        <label for="lg">{% trans "field_meet_long" %}</label>
+        <input id="lg" class="form-control" type="number" name="long" step="any">
+    </p>
+    <p>
+        <button class="btn btn-primary" type="submit">{% trans "I'm there" %}</button>
+    </p>
+</form>
+{% endblock content %}

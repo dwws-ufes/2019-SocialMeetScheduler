@@ -1,0 +1,51 @@
+{% load i18n static %}<!DOCTYPE html>
+<html lang="{% trans 'lang-code-iso' %}">
+<head>
+    <meta charset="utf-8">
+    <title>
+        {% block title %}
+        {% if title %}
+        {{ title }} | {{ settings.SITE_NAME }}
+        {% else %}
+        {{ settings.SITE_NAME }}
+        {% endif %}
+        {% endblock %}
+    </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#343a40">
+    <link rel="shortcut icon" type="image/png" href="{% static 'favicon.png' %}"/>
+
+    <!-- Framework base JS -->
+    <script type="text/javascript" defer>window.CKEDITOR_BASEPATH = '{% static "ckeditor/ckeditor/" %}';</script>
+    <script src="{% static 'jquery/jquery-3.3.1.slim.min.js' %}" type="text/javascript" defer></script>
+    <script src="{% static 'ckeditor/ckeditor-init.js' %}" type="text/javascript" defer></script>
+    <script src="{% static 'ckeditor/ckeditor/ckeditor.js' %}" type="text/javascript" defer></script>
+
+    <!-- Bootstrap core JS -->
+    <script src="{% static 'bootstrap/js/bootstrap.bundle.min.js' %}" type="text/javascript" defer></script>
+
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}" />
+
+    <!-- Font Awesome 4.7.0 -->
+    <link rel="stylesheet" href="{% static 'font-awesome-4.7.0/css/font-awesome.min.css' %}">
+
+    {% block additional_head %}
+    {% endblock additional_head %}
+</head>
+<body>
+    {% include "base_header.html" %}
+    <main role="main">
+        {% block main %}
+        <div class="pt-3">
+            <div class="container mt-5">
+                {% block content %}
+                <span class="text-muted">No content is set</span>
+                {% endblock content %}
+            </div>
+        </div>
+        {% endblock main %}
+    </main>
+    {% include "base_footer.html" %}
+</body>
+</html>

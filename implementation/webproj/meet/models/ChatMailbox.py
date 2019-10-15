@@ -12,17 +12,18 @@ class ChatMailbox(models.Model):
     last_sent = models.DateTimeField(
         blank=False,
         null=False,
-        primary_key=False
+        primary_key=False,
+        auto_now=True
     )
 
-    # chatmessage: Set[ChatMessage]
+    # messages: Set[ChatMessage]
 
-    user = models.ForeignKey(
+    initiator = models.ForeignKey(
         User,
-        null=True,
-        blank=True,
+        null=False,
+        blank=False,
         on_delete=models.CASCADE,
-        related_name="chatmailbox"
+        related_name="mailboxes_active"
     )
 
     meet = models.ForeignKey(
@@ -30,13 +31,13 @@ class ChatMailbox(models.Model):
         null=True,
         blank=True,
         on_delete=models.CASCADE,
-        related_name="chatmailbox"
+        related_name="chats"
     )
 
-    user = models.ForeignKey(
+    initiated = models.ForeignKey(
         User,
-        null=True,
-        blank=True,
+        null=False,
+        blank=False,
         on_delete=models.CASCADE,
-        related_name="chatmailbox"
+        related_name="mailboxes_passive"
     )

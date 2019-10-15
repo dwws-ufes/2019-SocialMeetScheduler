@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block title %}
+{% trans "Conversations" %} | {{ block.super }}
+{% endblock title %}
+
+{% block content %}
+{% if mailboxes.first %}
+<ul>
+    {% for mailbox in mailboxes %}
+    <li>
+        <a href="{% url 'conversation' mailbox.pk %}">
+            {{ mailbox.initiator.username }} - {{ mailbox.initiated.username }}
+            {% if mailbox.meet %}
+            @ {{ mailbox.meet.title }}
+            {% endif %}
+        </a>
+    </li>
+    {% endfor %}
+</ul>
+{% else %}
+    {% trans "No conversations to display" %}
+{% endif %}
+{% endblock content %}

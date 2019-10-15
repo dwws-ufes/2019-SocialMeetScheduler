@@ -68,12 +68,17 @@ INSTALLED_APPS = [
     'django.contrib.humanize',
     'django.contrib.gis',
     'django_forms_bootstrap',
+    'django_template_check',
+    'crispy_forms',
     'django_archive',
     'django-dia',
     'rosetta',
     'ckeditor',
+    'pytz',
     'colorfield',
     'corsheaders',
+    'method_override',
+    'leaflet',
     'webproj.meet',
 ]
 
@@ -83,10 +88,13 @@ MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
+    'method_override.middleware.MethodOverrideMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django_pycdi.middlewares.CDIMiddleware',
+    'webproj.middleware.timezone.TimezoneMiddleware',
 ]
 
 ROOT_URLCONF = 'webproj.urls'
@@ -196,6 +204,12 @@ REST_FRAMEWORK = {
         'rest_framework.renderers.BrowsableAPIRenderer',
     )
 }
+
+LOCALE_PATHS = (
+    fsconfig.LNGS,
+)
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 ROSETTA_WSGI_AUTO_RELOAD = True
 

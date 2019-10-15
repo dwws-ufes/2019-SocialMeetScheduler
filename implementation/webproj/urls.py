@@ -1,3 +1,5 @@
+# -*- encoding: utf-8 -*-
+
 """webproj URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
@@ -18,11 +20,19 @@ from django.urls import path
 from django.urls import include
 from django.conf import settings
 from django.conf.urls.static import static
+from .views import TimezoneSetter, ServerError
+from django.conf.urls import handler400, handler403, handler404, handler500
+
+handler400 = ServerError(400)
+handler403 = ServerError(403)
+handler404 = ServerError(404)
+handler500 = ServerError(500)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('rosetta/', include('rosetta.urls')),
     path('i18n/', include('django.conf.urls.i18n')),
+    path('tz', TimezoneSetter.as_view(), name='timezone'),
     path('accounts/', include('registration.backends.default.urls')),
     path('', include('webproj.meet.urls')),
 ]

@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% load i18n leaflet_tags crispy_forms_tags %}
+
+{% block title %}
+{% trans "Edit meet" %} | {{ block.super }}
+{% endblock title %}
+
+{% block additional_head %}
+{% leaflet_js %}
+{% leaflet_css %}
+<script deferred>
+    function map_init(map, options){
+        map.on('click', map_clicked)
+    }
+    function map_clicked(e){
+        id_lat.value = e.latlng.lat
+        id_lng.value = e.latlng.lng
+        //id_point.value = 'POINT ('+e.latlng.lng+' '+e.latlng.lat+')';
+    }
+</script>
+{% endblock additional_head %}
+
+{% block content %}
+<form action="{{ request.path }}" method="POST">
+    {% csrf_token %}
+    {{form.id|as_crispy_field}}
+    {{form.title|as_crispy_field}}
+    {{form.description|as_crispy_field}}
+    {{form.meeting|as_crispy_field}}
+    {{form.name|as_crispy_field}}
+    <div id="div_id_point" class="form-group">
+        <label for="id_point" class="col-form-label  requiredField">
+            {% trans "form_meet_point_label" %}<span class="asteriskField">*</span>
+        </label>
+        {% leaflet_map "main" callback="map_init" %}
+    </div>
+    {{form.lat|as_crispy_field}}
+    {{form.lng|as_crispy_field}}
+    {% comment %} {{form.point|as_crispy_field}} {% endcomment %}
+    {{form.privacy_require_account|as_crispy_field}}
+    {{form.privacy_unlisted|as_crispy_field}}
+    {% comment %} {{form|crispy}} {% endcomment %}
+    <button type="submit" class="btn btn-primary">{% trans "Save" %}</button>
+</form>
+{% endblock content %}

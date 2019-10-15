@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block title %}
+{% trans "Friends" %} | {{ block.super }}
+{% endblock title %}
+
+{% block content %}
+{% if friends %}
+<table class="table">
+<table class="table table-striped table-bordered">
+    <thead class="bg-dark text-light">
+    </thead>
+    <tbody>
+        {% for item in friends %}
+        <tr>
+            <td>
+                <a href="{% url 'user' item.item.username %}">
+                    {{ item.item.username }}
+                </a>
+            </td>
+            <td>
+                {{ item.button }}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<small class="text-muted">
+    {% trans "No friends to display" %}
+</small>
+{% endif %}
+{% endblock content %}

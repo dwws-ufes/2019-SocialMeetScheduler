@@ -19,10 +19,10 @@ class MeetExternalLinks(models.Model):
         primary_key=False
     )
 
-    meet = models.ForeignKey(
+    parent = models.ForeignKey(
         Meet,
-        null=True,
-        blank=True,
+        null=False,
+        blank=False,
         on_delete=models.CASCADE,
-        related_name="meetexternallinks"
+        related_name="external_links"
     )

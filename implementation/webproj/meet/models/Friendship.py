@@ -17,21 +17,22 @@ class Friendship(models.Model):
     since = models.DateTimeField(
         blank=False,
         null=False,
-        primary_key=False
+        primary_key=False,
+        auto_now_add=True
     )
 
-    user = models.ForeignKey(
+    initiator = models.ForeignKey(
         User,
-        null=True,
-        blank=True,
+        null=False,
+        blank=False,
         on_delete=models.CASCADE,
-        related_name="friendship"
+        related_name="friend_active"
     )
 
-    user = models.ForeignKey(
+    initiated = models.ForeignKey(
         User,
-        null=True,
-        blank=True,
+        null=False,
+        blank=False,
         on_delete=models.CASCADE,
-        related_name="friendship"
+        related_name="friend_passive"
     )

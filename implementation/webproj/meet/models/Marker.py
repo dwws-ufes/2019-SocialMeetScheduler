@@ -3,6 +3,7 @@
 from django.db import models
 from django.contrib.gis.db import models as gismodels
 from django.contrib.auth import get_user_model
+from uuid import uuid4
 
 User = get_user_model()
 
@@ -11,7 +12,9 @@ class Marker(models.Model):
     key = models.UUIDField(
         blank=False,
         null=False,
-        primary_key=False
+        primary_key=False,
+        unique=True,
+        default=uuid4
     )
 
     name = models.CharField(
@@ -24,7 +27,8 @@ class Marker(models.Model):
     point = gismodels.PointField(
         blank=False,
         null=False,
-        primary_key=False
+        primary_key=False,
+        srid=4326
     )
 
     privacy_require_account = models.BooleanField(
@@ -42,19 +46,21 @@ class Marker(models.Model):
     created = models.DateTimeField(
         blank=False,
         null=False,
-        primary_key=False
+        primary_key=False,
+        auto_now_add=True
     )
 
     last_modified = models.DateTimeField(
         blank=False,
         null=False,
-        primary_key=False
+        primary_key=False,
+        auto_now=True
     )
 
-    user = models.ForeignKey(
+    creator = models.ForeignKey(
         User,
-        null=True,
-        blank=True,
+        null=False,
+        blank=False,
         on_delete=models.CASCADE,
-        related_name="marker"
+        related_name="markers"
     )
