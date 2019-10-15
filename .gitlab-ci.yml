@@ -15,4 +15,4 @@ sonarqube_reporter:
 deploy:
   stage: deploy
   script:
-    make -C implementation deploy-cd
+    make -C implementation deploy
