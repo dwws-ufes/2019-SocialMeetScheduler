@@ -144,6 +144,8 @@ If you choose to run inside Docker, there are 3 helpers:
 
 Tested on a Ubuntu 18.04 virtual machine; it doesn't trigger cron-dependent features.
 
+This Docker approach will only run the python server, still requiring a reverse proxy to be deployed (such as NGINX).
+
 ### SystemD
 
 Just copy the file `server_deploy_config/meet-webapp.service` into `/etc/systemd/system` and adapt it to suit your needs.
