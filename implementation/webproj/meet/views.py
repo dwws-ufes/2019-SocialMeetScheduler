@@ -6,6 +6,7 @@ from django.db.models import Model as BaseModel
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from django.utils.safestring import mark_safe
+from django.shortcuts import resolve_url
 from django.shortcuts import redirect
 from django.shortcuts import render
 from django.http import HttpRequest
@@ -111,41 +112,61 @@ class ListMixin(ControllableMixin):
     def get(self, request: HttpRequest, service, **kwargs: Dict[str, Any]) -> HttpResponse:
         return getattr(service, type(self).SRVC_LST_METHOD)(request.user, **kwargs)
 
+
+class TemplatePageComponentFixed(page_components.TemplatePageComponent):
+    def __init__(self, request: HttpRequest):
+        self._request = request
+    
+    def render(self):
+        return mark_safe(render(
+            self._request,
+            self.get_template_name(),
+            context=self.get_context_data()
+        ).content.decode())
+
+
 ##########################################################
 #### REAL STUFF BEGINS HERE ##############################
 ##########################################################
 
 
-class AddRemoveFriendButton(page_components.TemplatePageComponent):
+class AddRemoveFriendButton(TemplatePageComponentFixed):
     template_name = 'togglefriendbutton.html'
 
     @classmethod
     def from_service(cls, request: HttpRequest, service: services.FriendService, current_user: models.User, friendable: models.User) -> 'AddRemoveFriendButton':
-        is_friend = service.isFriendOf(current_user, friendable)
-        is_pending = service.isFriendshipWithPending(current_user, friendable)
-        return cls(request, friendable, is_friend, is_pending)
+        is_friend = service.is_friend_of(current_user, friendable)
+        is_pending = service.is_friendship_with_pending(current_user, friendable)
+        is_initiator = service.is_initiator_of_friendship(current_user, friendable)
+        return cls(request, friendable, is_friend, is_pending, is_initiator)
 
-    def __init__(self, request: HttpRequest, friendable: models.User, is_friend: bool, is_pending: bool):
+    def __init__(self, request: HttpRequest, friendable: models.User, is_friend: bool, is_pending: bool, is_initiator: bool):
+        super().__init__(request)
         self.friendable = friendable
         self.is_friend = is_friend
         self.is_pending = is_pending
-        self.rq = request
+        self.is_initiator = is_initiator
 
     def get_context_data(self, **kwargs):
-        return super().get_context_data(**{'friendable': self.friendable, 'is_friend': self.is_friend, 'is_pending': self.is_pending, **kwargs})
+        return super().get_context_data(**{
+            'friendable': self.friendable,
+            'is_friend': self.is_friend,
+            'is_pending': self.is_pending,
+            'is_initiator': self.is_initiator,
+            **kwargs
+        })
 
-    def render(self):
-        template_name = self.get_template_name()
-        context_data = self.get_context_data()
-        return mark_safe(render(self.rq, template_name, context=context_data).content.decode())
 
 
 @method_decorator(login_required, name='dispatch')
+@method_decorator(Inject(meet_service=services.MeetService), name='dispatch')
 class MyAccount(TemplateView):
     template_name = 'myaccount.html'
 
-    def get_context_data(self, *args, **kwargs):
-        return super().get_context_data(*args, **kwargs)
+    def get(self, request: HttpRequest, meet_service: services.MeetService):
+        return render(request, self.get_template_names(), {
+            'userMeets': meet_service.my_created_meets(request.user)
+        })
 
 
 @method_decorator(login_required, name='post')
@@ -157,16 +178,17 @@ class Friendship(View):
     def get(self, request: HttpRequest, service: services.FriendService, user: models.User) -> HttpResponse:
         return render(request, 'user.html', {
             'friend': user,
+            'friends': service.established_friends(user),
             'button': AddRemoveFriendButton.from_service(request, service, request.user, user),
-            'form': forms.ConversationForm() if service.isFriendOf(request.user, user) else None
+            'form': forms.ConversationForm() if service.is_friend_of(request.user, user) else None
         })
 
     def post(self, request: HttpRequest, service: services.FriendService, user: models.User) -> HttpResponse:
-        service.startFriendshipWith(request.user, user)
+        service.start_friendship_with(request.user, user)
         return redirect('user', username=user.username)
 
     def delete(self, request: HttpRequest, service: services.FriendService, user: models.User) -> HttpResponse:
-        service.breakFriendshipWith(request.user, user)
+        service.break_friendship_with(request.user, user)
         return redirect('user', username=user.username)
 
 
@@ -176,19 +198,25 @@ class Friends(View, ListMixin):
     SRVC_LST_METHOD = 'friends'
 
     def get(self, request: HttpRequest, service: services.FriendService) -> HttpResponse:
-        friends = super().get(request, service)
-        return render(request, 'friends.html', {
+        friendships = super().get(request, service)
+        extra_data = {
             'friends': [{
-                'item': friend,
-                'button': AddRemoveFriendButton.from_service(request, service, request.user, friend),
-            } for friend in friends]
-        })
+                'friend': friendship.initiated if friendship.initiator.pk==request.user.pk else friendship.initiator,
+                'button': AddRemoveFriendButton.from_service(
+                    request,
+                    service,
+                    request.user,
+                    friendship.initiated if friendship.initiator.pk==request.user.pk else friendship.initiator
+                ),
+            } for friendship in friendships]
+        }
+        return render(request, 'friends.html', extra_data)
 
 
 @method_decorator(login_required, name='dispatch')
 @method_decorator(Inject(service=services.MessengerService), name='dispatch')
 class Conversations(View, ListMixin):
-    SRVC_LST_METHOD = 'listMailboxes'
+    SRVC_LST_METHOD = 'list_mailboxes'
 
     def get(self, request: HttpRequest, service: services.MessengerService) -> HttpResponse:
         mailboxes = super().get(request, service)
@@ -202,8 +230,8 @@ class Conversations(View, ListMixin):
 @method_decorator(KeywordArgumentsRenamer(pk='mailbox'), name='dispatch')
 @method_decorator(Inject(service=services.MessengerService), name='dispatch')
 class Conversation(View, ListMixin, UpsertMixin):
-    SRVC_LST_METHOD = 'readMailbox'
-    SRVC_UPS_METHOD = 'sendMessage'
+    SRVC_LST_METHOD = 'read_mailbox'
+    SRVC_UPS_METHOD = 'send_message'
 
     def get(self, request: HttpRequest, service: services.MessengerService, mailbox: models.ChatMailbox) -> HttpResponse:
         super().get(request, service, mailbox=mailbox)
@@ -230,8 +258,8 @@ class Conversation(View, ListMixin, UpsertMixin):
 @method_decorator(KeywordArgumentsRenamer(username='user'), name='dispatch')
 @method_decorator(Inject(service1=services.FriendService, service2=services.MessengerService), name='dispatch')
 class TalkToFriend(View, DetailsMixin, UpsertMixin):
-    SRVC_DTL_METHOD = 'assertIsFriend'
-    SRVC_UPS_METHOD = 'sendMessageToFriend'
+    SRVC_DTL_METHOD = 'assert_is_friend'
+    SRVC_UPS_METHOD = 'send_messageToFriend'
 
     def get(self, request: HttpRequest, service1: services.FriendService, user: models.User, service2) -> HttpResponse:
         service = service1
@@ -261,8 +289,8 @@ class TalkToFriend(View, DetailsMixin, UpsertMixin):
 @method_decorator(KeywordArgumentsRenamer(key='meet'), name='dispatch')
 @method_decorator(Inject(service1=services.MeetService, service2=services.MessengerService), name='dispatch')
 class TalkToMeetOrganizer(View, DetailsMixin, UpsertMixin):
-    SRVC_DTL_METHOD = 'assertCanSeeMeet'
-    SRVC_UPS_METHOD = 'sendMessageToMeetOrganizer'
+    SRVC_DTL_METHOD = 'assert_can_see_meet'
+    SRVC_UPS_METHOD = 'send_message_to_meet_organizer'
 
     def get(self, request: HttpRequest, service1: services.MeetService, meet: models.Meet, service2) -> HttpResponse:
         service = service1
@@ -289,7 +317,7 @@ class TalkToMeetOrganizer(View, DetailsMixin, UpsertMixin):
 
 @method_decorator(Inject(service=services.MeetService), name='dispatch')
 class MeetsPopular(View, ListMixin):
-    SRVC_LST_METHOD = 'meetsByPopularity'
+    SRVC_LST_METHOD = 'meets_by_popularity'
 
     def get(self, request: HttpRequest, service: services.MeetService):
         meets = super().get(request, service)
@@ -301,7 +329,7 @@ class MeetsPopular(View, ListMixin):
 
 @method_decorator(Inject(service=services.MeetService), name='dispatch')
 class MeetsNearby(View, ListMixin):
-    SRVC_LST_METHOD = 'meetsByDistance'
+    SRVC_LST_METHOD = 'meets_by_distance'
 
     def get(self, request: HttpRequest, service: services.MeetService, lats: str = None, longs: str = None):
         reference_point = None
@@ -310,10 +338,10 @@ class MeetsNearby(View, ListMixin):
             latf = float(lats)
             reference_point = Point(longf, latf)
         except BaseException:
-            if 'lat' in request.GET and 'long' in request.GET:
+            try:
                 return redirect('meets_nearby_precise', lats=request.GET['lat'], longs=request.GET['long'])
-            else:
-                pass
+            except BaseException:
+                return render(request, 'asklatlong.html', {'next': request.GET.get('next', resolve_url('meets_nearby'))})
         if reference_point is None:
             return render(request, 'asklatlong.html', {'next': request.path})
         else:
@@ -328,7 +356,7 @@ class MeetsNearby(View, ListMixin):
 @method_decorator(KeywordArgumentsRenamer(key='meet'), name='dispatch')
 @method_decorator(Inject(service=services.MeetService), name='dispatch')
 class MeetView(View, DetailsMixin):
-    SRVC_DTL_METHOD = 'assertCanSeeMeet'
+    SRVC_DTL_METHOD = 'assert_can_see_meet'
 
     def get(self, request: HttpRequest, service: services.MeetService, meet: models.Meet):
         super().get(request, service, meet)
@@ -340,7 +368,7 @@ class MeetView(View, DetailsMixin):
 @method_decorator(login_required, name='dispatch')
 @method_decorator(Inject(service=services.MeetService), name='dispatch')
 class MeetNew(View, UpsertMixin):
-    SRVC_UPS_METHOD = 'addUpdateMeet'
+    SRVC_UPS_METHOD = 'add_update_meet'
 
     def get(self, request: HttpRequest, service: services.MeetService):
         return render(request, 'meet_edit.html', {
@@ -364,17 +392,16 @@ class MeetNew(View, UpsertMixin):
 @method_decorator(login_required, name='dispatch')
 @method_decorator(Inject(service=services.MeetService), name='dispatch')
 class MeetEdit(View, DetailsMixin, UpsertMixin, DeleteMixin):
-    SRVC_DTL_METHOD = 'assertCanEditMeet'
-    SRVC_UPS_METHOD = 'addUpdateMeet'
-    SRVC_DEL_METHOD = 'deleteMeet'
+    SRVC_DTL_METHOD = 'assert_can_edit_meet'
+    SRVC_UPS_METHOD = 'add_update_meet'
+    SRVC_DEL_METHOD = 'delete_meet'
 
     def get(self, request: HttpRequest, service: services.MeetService, meet: models.Meet):
         super().get(request, service, meet)
-        form = forms.MeetForm(instance=meet)
-        form.data['lat'] = meet.point.y
-        form.data['lng'] = meet.point.x
+        form = forms.MeetForm({**meet.__dict__, 'lng': meet.point.y, 'lat': meet.point.x}, instance=meet)
         return render(request, 'meet_edit.html', {
             'form': form,
+            'meet': meet,
         })
 
     def post(self, request: HttpRequest, service: services.MeetService, meet: models.Meet):
@@ -384,6 +411,7 @@ class MeetEdit(View, DetailsMixin, UpsertMixin, DeleteMixin):
         except services.FormValidationFailedException:
             return render(request, 'meet_edit.html', {
                 'form': form,
+                'meet': meet,
             })
         return redirect('meet', key=meet.key)
 
@@ -397,12 +425,13 @@ class MeetEdit(View, DetailsMixin, UpsertMixin, DeleteMixin):
 @method_decorator(login_required, name='dispatch')
 @method_decorator(Inject(service=services.MeetService), name='dispatch')
 class MeetLinksEdit(View, ListMixin, UpsertMixin):
-    SRVC_LST_METHOD = 'meetLinks'
-    SRVC_UPS_METHOD = 'meetSaveExternalLink'
+    SRVC_LST_METHOD = 'meet_links'
+    SRVC_UPS_METHOD = 'meet_save_external_link'
 
     def get(self, request: HttpRequest, service: services.MeetService, meet: models.Meet):
         mels = super().get(request, service, meet=meet)
         return render(request, 'meet_external_links_edit.html', {
+            'meet': meet,
             'mels': mels,
             'form': forms.MeetExternalLinksForm(),
         })
@@ -413,6 +442,7 @@ class MeetLinksEdit(View, ListMixin, UpsertMixin):
             super().post(request, service, form, meet=meet)
         except services.FormValidationFailedException:
             return render(request, 'meet_external_links_edit.html', {
+                'meet': meet,
                 'form': form,
             })
         return redirect('meetlinks', key=meet.key)
@@ -423,13 +453,13 @@ class MeetLinksEdit(View, ListMixin, UpsertMixin):
 @method_decorator(login_required, name='dispatch')
 @method_decorator(Inject(service=services.MeetService), name='dispatch')
 class MeetLinkEdit(View, DetailsMixin, UpsertMixin, DeleteMixin):
-    SRVC_DTL_METHOD = 'assertCanEditMeetExternalLink'
-    SRVC_UPS_METHOD = 'meetSaveExternalLink'
-    SRVC_DEL_METHOD = 'meetDeleteExternalLink'
+    SRVC_DTL_METHOD = 'assert_can_edit_meet_external_link'
+    SRVC_UPS_METHOD = 'meet_save_external_link'
+    SRVC_DEL_METHOD = 'meet_delete_external_link'
 
     def get(self, request: HttpRequest, service: services.MeetService, mel: models.MeetExternalLinks):
         super().get(request, service, mel)
-        return render(request, 'meet_external_links_edit.html', {
+        return render(request, 'meet_external_link_edit.html', {
             'mel': mel,
             'form': forms.MeetExternalLinksForm(instance=mel),
         })
@@ -439,7 +469,7 @@ class MeetLinkEdit(View, DetailsMixin, UpsertMixin, DeleteMixin):
         try:
             super().post(request, service, form, meet=mel.parent)
         except services.FormValidationFailedException:
-            return render(request, 'meet_external_links_edit.html', {
+            return render(request, 'meet_external_link_edit.html', {
                 'mel': mel,
                 'form': form,
             })
@@ -450,35 +480,42 @@ class MeetLinkEdit(View, DetailsMixin, UpsertMixin, DeleteMixin):
         return redirect('meetlinks', key=mel.parent.key)
 
 
-class MeetStarButton(page_components.TemplatePageComponent):
+class MeetStarButton(TemplatePageComponentFixed):
     template_name = 'meetstarbutton.html'
 
-    def __init__(self, meet, hasStar):
+    def __init__(self, request: HttpRequest, meet, has_star):
+        super().__init__(request)
         self.meet = meet
-        self.hasStar = hasStar
+        self.has_star = has_star is not None
+        self.star_privacy = has_star.anonymous if has_star is not None else None
+        self.star = has_star
 
     def get_context_data(self, **kwargs):
+        stardict = dict() if self.star is None else self.star.__dict__
         return super().get_context_data(**dict(
             meet=self.meet,
-            hasStar=self.hasStar,
-            anonymousForm=forms.MeetStarForm(dict(anonymous=True)),
-            publicForm=forms.MeetStarForm(dict(anonymous=False))
+            hasStar=self.has_star,
+            star=self.star,
+            starPrivacy=self.star_privacy,
+            anonymousForm=forms.MeetStarForm({**stardict, 'anonymous': True}, instance=self.star),
+            publicForm=forms.MeetStarForm({**stardict, 'anonymous': False}, instance=self.star)
         ), **kwargs)
 
 
+@method_decorator(login_required, name='post')
 @method_decorator(ModelSolver(key=models.Meet, to_raise=Http404(_('meet_not_found'))), name='dispatch')
 @method_decorator(KeywordArgumentsRenamer(key='meet'), name='dispatch')
 @method_decorator(Inject(service=services.MeetService), name='dispatch')
 class MeetStars(View, ListMixin, UpsertMixin):
-    SRVC_LST_METHOD = 'meetStars'
-    SRVC_UPS_METHOD = 'addUpdateStar'
+    SRVC_LST_METHOD = 'meet_stars'
+    SRVC_UPS_METHOD = 'add_update_star'
 
     def get(self, request: HttpRequest, service: services.MeetService, meet: models.Meet):
-        stars = super().get(request, service)
+        stars = super().get(request, service, meet=meet)
         return render(request, 'meetstars.html', {
             'meet': meet,
             'stars': stars,
-            'button': MeetStarButton(meet, service.hasStar(request.user, meet)),
+            'button': MeetStarButton(request, meet, service.has_star(request.user, meet)),
         })
 
     def post(self, request: HttpRequest, service: services.MeetService, meet: models.Meet):
@@ -490,18 +527,18 @@ class MeetStars(View, ListMixin, UpsertMixin):
             return render(request, 'meetstars.html', {
                 'meet': meet,
                 'stars': stars,
-                'button': MeetStarButton(meet, service.hasStar(request.user, meet)),
+                'button': MeetStarButton(request, meet, service.has_star(request.user, meet)),
             })
         return redirect('meetstars', key=meet.key)
 
 
-@method_decorator(ModelSolver(pk=models.MeetStar, to_raise=Http404(_('meetstar_not_found'))), name='dispatch')
-@method_decorator(KeywordArgumentsRenamer(pk='meetStar'), name='dispatch')
 @method_decorator(login_required, name='dispatch')
+@method_decorator(ModelSolver(pk=models.MeetStar, to_raise=Http404(_('meetstar_not_found'))), name='dispatch')
+@method_decorator(KeywordArgumentsRenamer(pk='meet_star'), name='dispatch')
 @method_decorator(Inject(service=services.MeetService), name='dispatch')
 class MeetStarEdit(View, DeleteMixin):
-    SRVC_DEL_METHOD = 'removeStar'
+    SRVC_DEL_METHOD = 'remove_star'
 
-    def delete(self, request: HttpRequest, service: services.MeetService, meetStar: models.MeetStar):
-        super().delete(request, service, meetStar)
-        return redirect('meetstars', key=meetStar.meet.key)
+    def delete(self, request: HttpRequest, service: services.MeetService, meet_star: models.MeetStar):
+        super().delete(request, service, meet_star)
+        return redirect('meetstars', key=meet_star.meet.key)

@@ -1,1 +1,46 @@
 {% extends 'base.html' %}
+{% load i18n crispy_forms_tags method_override %}
+
+{% block title %}
+{% trans "Edit external links" %} | {{ block.super }}
+{% endblock title %}
+
+{% block content %}
+<dl class="row">
+{% with mels|default:meet.external_links.all as mels %}
+{% for mel in mels %}
+    <dt class="col-sm-3">
+        {{mel.name}}
+    </dt>
+    <dd class="col-sm-9">
+        {{mel.url}}
+        <span style="float: right;">
+            <a class="btn btn-warning" href="{% url 'meetlink' mel.pk %}">
+                <i class="fa fa-pencil" aria-hidden="true"></i>
+                {% trans "Edit" %}
+            </a>
+            <form action="{% url 'meetlink' mel.pk %}" method="POST" style="display: inline;">
+                {% csrf_token %}
+                {% method_override 'DELETE' %}
+                <button type="submit" class="btn btn-danger">
+                    <i class="fa fa-close" aria-hidden="true"></i>
+                    {% trans "Delete" %}
+                </button>
+            </form>
+        </span>
+    </dd>
+{% empty %}
+<dd><small class="text-muted">{% trans "No external links were added" %}</small></dd>
+{% endfor %}
+{% endwith %}
+</dl>
+<hr>
+<form class="form" method="POST" action="{% url 'meetlinks' meet.key %}">
+    {% csrf_token %}
+    {{ form|crispy }}
+    <button type="submit" class="btn btn-primary">
+        <i class="fa fa-plus" aria-hidden="true"></i>
+        {% trans "Add" %}
+    </button>
+</form>
+{% endblock content %}

@@ -7,23 +7,70 @@
 
 {% block content %}
 <p>
-    <a href="{% url 'friends' %}">
-        {% trans "Friends" %}
-    </a>
-</p>
-<p>
-    <a href="{% url 'conversations' %}">
-        {% trans "Conversations" %}
-    </a>
-</p>
-<p>
-    <a href="{% url 'meets_nearby' %}">
+    <a href="{% url 'meets_nearby' %}" class="btn btn-outline-primary">
+        <i class="fa fa-globe" aria-hidden="true"></i>
         {% trans "Meets nearby" %}
     </a>
-</p>
-<p>
-    <a href="{% url 'meets_popular' %}">
+    <a href="{% url 'meets_popular' %}" class="btn btn-outline-primary">
+        <i class="fa fa-users" aria-hidden="true"></i>
         {% trans "Popular meets" %}
     </a>
 </p>
+<hr>
+<h3>{% trans "My Meet Stars" %}</h3>
+<div>
+    <table class="table table-striped table-bordered">
+        <caption style="display: none;">
+            {% trans "A table contaning some meets that you can go." %}
+        </caption>
+        <thead class="bg-dark text-light">
+                <th scope="col">{% trans "field_meet_title" %}</th>
+                <th scope="col">{% trans "field_meet_name" %}</th>
+                <th scope="col">{% trans "field_meet_lat" %}</th>
+                <th scope="col">{% trans "field_meet_long" %}</th>
+                <th scope="col">{% trans "field_meet_meeting" %}</th>
+                <th scope="col">{% trans "Privacy" %}</th>
+                <th scope="col">{% trans "open_details" %}</th>
+        </thead>
+        <tbody>
+            {% for stars in request.user.stars.all %}
+            <tr>
+                <td>{{stars.meet.title}}</td>
+                <td>{{stars.meet.name}}</td>
+                <td>{{stars.meet.point.y}}</td>
+                <td>{{stars.meet.point.x}}</td>
+                <td>{{stars.meet.meeting}}</td>
+                <td>
+                    {% if stars.anonymous %}
+                    <i class="fa fa-user-secret" aria-hidden="true"></i>
+                    {% trans "Anonymous" %}
+                    {% else %}
+                    <i class="fa fa-globe" aria-hidden="true"></i>
+                    {% trans "Public" %}
+                    {% endif %}
+                </td>
+                <td>
+                    <a href="{% url 'meet' stars.meet.key %}" class="btn btn-primary">
+                        <i class="fa fa-eye" aria-hidden="true"></i>
+                        {% trans "open_details" %}
+                    </a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+<hr>
+<h3>{% trans "My meets" %}</h3>
+<div>
+    {% if userMeets %}
+    {% with userMeets as meets %}
+    {% include 'meet_table.html' %}
+    {% endwith %}
+    {% else %}
+    <small class="text-muted">
+        {% trans "You never organized a meet" %}
+    </small>
+    {% endif %}
+</div>
 {% endblock content %}

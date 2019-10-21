@@ -9,7 +9,7 @@ from .. import models
 
 @Singleton()
 class FriendService:
-    def startFriendshipWith(self, user, friend):
+    def start_friendship_with(self, user, friend):
         if user == friend:
             raise NotAuthorizedException(_(
                 'You cannot friend yourself.'
@@ -31,18 +31,22 @@ class FriendService:
             else:
                 pass  # Friendship request exists as is
 
-    def breakFriendshipWith(self, user, friend):
+    def break_friendship_with(self, user, friend):
         self._potential_friendships(user, friend).delete()
 
-    def isFriendshipWithPending(self, user, friend):
+    def is_friendship_with_pending(self, user, friend):
         friendship = self._potential_friendships(user, friend).first()
         return friendship is not None and friendship.is_request
 
-    def isFriendOf(self, user, friend):
+    def is_initiator_of_friendship(self, user, friend):
+        friendship = self._potential_friendships(user, friend).first()
+        return friendship is not None and (friendship.initiator.pk == user.pk)
+
+    def is_friend_of(self, user, friend):
         return self._potential_friendships(user, friend).filter(is_request=False).exists()
 
-    def assertIsFriend(self, user, friend):
-        if not self.isFriendOf(user, friend):
+    def assert_is_friend(self, user, friend):
+        if not self.is_friend_of(user, friend):
             raise NotAuthorizedException(_(
                 'This action is not possible if both users are not friends.'
             ))
@@ -52,7 +56,17 @@ class FriendService:
             Q(initiator=user) | Q(initiated=user)
         ).order_by('-is_request').all()
 
+    def established_friends(self, user):
+        return models.Friendship.objects.filter(
+            Q(initiator=user) | Q(initiated=user)
+        ).filter(is_request=False).all()
+
     def _potential_friendships(self, user, friend):
+        if user.is_anonymous:
+            return models.Friendship.objects.filter(
+                initiator=None,
+                initiated=None
+            )
         return models.Friendship.objects.filter(
             Q(
                 initiator=user,

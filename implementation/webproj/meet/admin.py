@@ -1,11 +1,11 @@
 import django.contrib.gis.admin
 from django.contrib import admin
-from ..adminModelRegister import registerForMe
+from ..adminModelRegister import register_for_me
 from . import models
 
 # Register your models here.
 
-registerForMe(admin, models)
+register_for_me(admin, models)
 admin.site.unregister(models.Marker)
 admin.site.unregister(models.Meet)
 admin.site.register(models.Marker, django.contrib.gis.admin.OSMGeoAdmin)

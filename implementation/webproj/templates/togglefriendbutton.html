@@ -1,32 +1,48 @@
 {% load i18n method_override %}
+{% if request.user.pk != friendable.pk %}
 {% if is_friend %}
-<form action="{% url 'user' friendable.username %}" method="POST">
+<form action="{% url 'user' friendable.username %}" method="POST" style="display: inline;">
     {% csrf_token %}
     {% method_override 'DELETE' %}
-    <button class="btn btn-danger">{% trans "Break friendship" %}</button>
+    <button class="btn btn-danger">
+        <i class="fa fa-times" aria-hidden="true"></i>
+        {% trans "Break friendship" %}
+    </button>
 </form>
 {% elif is_pending %}
-{% if friendable.pk == user.pk %}
-<form action="{% url 'user' friendable.username %}" method="POST">
+{% if is_initiator %}
+<form action="{% url 'user' friendable.username %}" method="POST" style="display: inline;">
     {% csrf_token %}
     {% method_override 'DELETE' %}
-    <button>{% trans "Nevermind" %}</button>
+    <button class="btn btn-danger">
+        <i class="fa fa-times" aria-hidden="true"></i>
+        {% trans "Cancel friendship request" %}
+    </button>
 </form>
 {% else %}
-<form action="{% url 'user' friendable.username %}" method="POST">
+<form action="{% url 'user' friendable.username %}" method="POST" style="display: inline;">
     {% csrf_token %}
-    <button class="btn btn-success">{% trans "Accept" %}</button>
+    <button class="btn btn-success">
+        <i class="fa fa-check" aria-hidden="true"></i>
+        {% trans "Accept" %}
+    </button>
 </form>
-<form action="{% url 'user' friendable.username %}" method="POST">
+<form action="{% url 'user' friendable.username %}" method="POST" style="display: inline;">
     {% csrf_token %}
     {% method_override 'DELETE' %}
-    <button class="btn btn-danger">{% trans "Reject" %}</button>
+    <button class="btn btn-danger">
+        <i class="fa fa-times" aria-hidden="true"></i>
+        {% trans "Reject" %}
+    </button>
 </form>
 {% endif %}
 {% else %}
-<form action="{% url 'user' friendable.username %}" method="POST">
+<form action="{% url 'user' friendable.username %}" method="POST" style="display: inline;">
     {% csrf_token %}
-    <button class="btn btn-primary">{% trans "Add friend" %}</button>
+    <button class="btn btn-primary">
+        <i class="fa fa-plus" aria-hidden="true"></i>
+        {% trans "Add friend" %}
+    </button>
 </form>
 {% endif %}
-
+{% endif %}

@@ -14,11 +14,11 @@ from .. import models
 @Singleton()
 class MessengerService:
     def __init__(self):
-        self.friendService = FriendService()
-        self.meetService = MeetService()
+        self.friend_service = FriendService()
+        self.meet_service = MeetService()
 
-    def sendMessage(self, user, form, mailbox):
-        self.assertMailboxReadable(user, mailbox)
+    def send_message(self, user, form, mailbox):
+        self.assert_mailbox_readable(user, mailbox)
         if not form.is_valid():
             raise FormValidationFailedException
         else:
@@ -31,11 +31,11 @@ class MessengerService:
             mailbox.save()
             return message
 
-    def sendMessageToUser(self, user, form, friend):
+    def send_message_to_user(self, user, form, friend):
         if not form.is_valid():
             raise FormValidationFailedException
         else:
-            self.friendService.assertIsFriend(user, friend)
+            self.friend_service.assert_is_friend(user, friend)
             mailbox = models.ChatMailbox.objects.filter(
                 Q(initiator=user, initiated=friend, meet=None) |
                 Q(initiator=friend, initiated=user, meet=None)
@@ -46,13 +46,13 @@ class MessengerService:
                 mailbox.initiated = friend
                 mailbox.meet = None
                 mailbox.save()
-            return self.sendMessage(user, form, mailbox)
+            return self.send_message(user, form, mailbox)
 
-    def sendMessageToMeetOrganizer(self, user, form, meet):
+    def send_message_to_meet_organizer(self, user, form, meet):
         if not form.is_valid():
             raise FormValidationFailedException
         else:
-            self.meetService.assertCanSeeMeet(user, meet)
+            self.meet_service.assert_can_see_meet(user, meet)
             mailbox = models.ChatMailbox.objects.filter(
                 Q(initiator=user, initiated=meet.creator, meet=meet)
             ).first()
@@ -62,20 +62,20 @@ class MessengerService:
                 mailbox.initiated = meet.creator
                 mailbox.meet = meet
                 mailbox.save()
-            return self.sendMessage(user, form, mailbox)
+            return self.send_message(user, form, mailbox)
 
-    def listMailboxes(self, user):
+    def list_mailboxes(self, user):
         return models.ChatMailbox.objects.filter(Q(initiator=user) | Q(initiated=user)).all()
 
-    def readMailbox(self, user, mailbox):
-        self.assertMailboxReadable(user, mailbox)
+    def read_mailbox(self, user, mailbox):
+        self.assert_mailbox_readable(user, mailbox)
         other = mailbox.initiator
         if other.pk == user.pk:
             other = mailbox.initiated
         mailbox.messages.filter(sender=other, read=False).update(read=True)
         return mailbox.messages.all()
 
-    def assertMailboxReadable(self, user, mailbox):
+    def assert_mailbox_readable(self, user, mailbox):
         if mailbox.initiator.pk != user.pk and mailbox.initiated.pk != user.pk:
             raise NotAuthorizedException(_(  # trying to update someone's else object
                 'This data does not belong to the user who requested something about it.'

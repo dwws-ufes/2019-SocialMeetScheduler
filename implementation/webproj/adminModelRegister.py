@@ -1,10 +1,10 @@
 from django.db import models
-from .stackOverflowSnippets import classesInModule as classesInModuleWithoutCheckingAll
+from .stackOverflowSnippets import classes_in_module as classes_in_module_without_checking_all
 from django.core import exceptions
 from sys import stderr
 
 
-def classesInModuleFromAll(module):
+def classes_in_module_from_all(module):
     if hasattr(module, '__all__'):
         return [
             cls
@@ -19,35 +19,35 @@ def classesInModuleFromAll(module):
         return []
 
 
-def classesInModule(module):
+def classes_in_module(module):
     return list(set(
-        list(classesInModuleFromAll(module))
+        list(classes_in_module_from_all(module))
         +
-        list(classesInModuleWithoutCheckingAll(module))
+        list(classes_in_module_without_checking_all(module))
     ))
 
 
-def onlyModels(userMadeModels):
-    return [model for model in userMadeModels if models.Model in model.__mro__]
+def only_models(user_made_models):
+    return [model for model in user_made_models if models.Model in model.__mro__]
 
 
-def isAbstract(clazz):
+def is_abstract(clazz):
     try:
         return clazz.Meta.abstract
     except BaseException:
         return False
 
 
-def discardAbstractModels(userMadeModels):
-    return [model for model in userMadeModels if not isAbstract(model)]
+def discard_abstract_models(user_made_models):
+    return [model for model in user_made_models if not is_abstract(model)]
 
 
-def registrableModelsInModule(module):
-    return discardAbstractModels(onlyModels(classesInModule(module)))
+def registrable_models_in_module(module):
+    return discard_abstract_models(only_models(classes_in_module(module)))
 
 
-def registerForMe(admin, models_module):
-    for model in registrableModelsInModule(models_module):
+def register_for_me(admin, models_module):
+    for model in registrable_models_in_module(models_module):
         try:
             admin.site.register(model)
         except exceptions.ImproperlyConfigured:

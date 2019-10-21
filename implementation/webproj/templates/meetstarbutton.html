@@ -1,1 +1,48 @@
-btn
+{% load i18n crispy_forms_tags method_override %}
+{% if not hasStar %}
+<form method="POST" action="{% url 'meetstars' meet.key %}" style="display: inline;">
+    {% csrf_token %}
+    {{ publicForm }}
+    <button class="btn btn-success">
+        <i class="fa fa-star" aria-hidden="true"></i>
+        {% trans "Star it!" %}
+    </button>
+</form>
+<form method="POST" action="{% url 'meetstars' meet.key %}" style="display: inline;">
+    {% csrf_token %}
+    {{ anonymousForm }}
+    <button class="btn btn-primary">
+        <i class="fa fa-star-half-o" aria-hidden="true"></i>
+        {% trans "Star it anonymously!" %}
+    </button>
+</form>
+{% else %}
+{% if starPrivacy %}
+<form method="POST" action="{% url 'meetstars' meet.key %}" style="display: inline;">
+    {% csrf_token %}
+    {{ publicForm }}
+    <button class="btn btn-success">
+        <i class="fa fa-star-half-o" aria-hidden="true"></i>
+        {% trans "Star it publicly!" %}
+    </button>
+</form>
+{% else %}
+<form method="POST" action="{% url 'meetstars' meet.key %}" style="display: inline;">
+    {% csrf_token %}
+    {{ anonymousForm }}
+    <button class="btn btn-primary">
+        <i class="fa fa-star-half-o" aria-hidden="true"></i>
+        {% trans "Star it anonymously!" %}
+    </button>
+</form>
+{% endif %}
+<form method="POST" action="{% url 'meetstar' star.pk %}" style="display: inline;">
+    {% csrf_token %}
+    {% method_override 'DELETE' %}
+    {{ publicForm }}
+    <button class="btn btn-danger">
+        <i class="fa fa-star-o" aria-hidden="true"></i>
+        {% trans "Un-star it" %}
+    </button>
+</form>
+{% endif %}

@@ -8,17 +8,17 @@ class StackOverflowCopypaste:
     def __call__(self, module): pass
 
 
-class stackoverflow_a_21563930(StackOverflowCopypaste):
+class StackOverflow21563930(StackOverflowCopypaste):
     __doc__ = 'https://stackoverflow.com/a/21563930'
     __author__ = 'piRSquared'
 
     def __call__(self, module):
-        moduleDict = module.__dict__
+        module_dict = module.__dict__
         return [
-            definedClass for definedClass in moduleDict.values() if (
-                isinstance(definedClass, type) and definedClass.__module__ == module.__name__
+            defined_class for defined_class in module_dict.values() if (
+                isinstance(defined_class, type) and defined_class.__module__ == module.__name__
             )
         ]
 
 
-classesInModule = stackoverflow_a_21563930()
+classes_in_module = StackOverflow21563930()

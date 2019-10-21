@@ -2,17 +2,18 @@
 {% load i18n crispy_forms_tags %}
 
 {% block title %}
-{{ user.username }} | {{ block.super }}
+{{ friend.username }} | {{ block.super }}
 {% endblock title %}
 
 {% block content %}
-<h3>{{ user }}</h3>
+<h3>{{ friend }}</h3>
 <div>
     {{ button }}
 </div>
 {% if form %}
+<hr>
 <div>
-    <form action="{% url 'messageusr' user.username %}" method="POST">
+    <form action="{% url 'messageusr' friend.username %}" method="POST">
         {% csrf_token %}
         {{ form|crispy }}
         <button type="submit" class="btn btn-primary">
@@ -21,4 +22,52 @@
     </form>
 </div>
 {% endif %}
+<hr>
+<h3>{% trans "Friends" %}</h3>
+<ul>
+    {% for friendship in friends %}
+    {% if friendship.initiator.pk == friend.pk %}
+    {% with friendship.initiated as usr %}
+    <li>
+        <a href="{% url 'user' usr.username %}">
+            {{ usr.username }}
+        </a>
+    </li>
+    {% endwith %}
+    {% else %}
+    {% with friendship.initiator as usr %}
+    <li>
+        <a href="{% url 'user' usr.username %}">
+            {{ usr.username }}
+        </a>
+    </li>
+    {% endwith %}
+    {% endif %}
+    {% empty %}
+    <small class="text-muted">
+        {% trans "No friends" %}
+    </small>
+    {% endfor %}
+</ul>
+<hr>
+
+<h3>{% trans "Attending" %}</h3>
+<ul>
+    {% for star in friend.stars.all %}
+    <li>
+        {% if star.anonymous %}
+        {% trans "Star given anonymously" %}
+        {% else %}
+        <a href="{% url 'meet' star.meet.key %}">
+            {{ star.meet.title }}
+        </a>
+        {% endif %}
+    </li>
+    {% empty %}
+    <small class="text-muted">
+        {% trans "No stars given" %}
+    </small>
+    {% endfor %}
+</ul>
+
 {% endblock content %}

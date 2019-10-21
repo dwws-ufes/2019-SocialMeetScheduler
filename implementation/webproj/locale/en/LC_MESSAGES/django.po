@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-15 12:42+0000\n"
+"POT-Creation-Date: 2019-10-17 08:25+0000\n"
 "PO-Revision-Date: 2019-10-15 12:59-0306\n"
 "Last-Translator: b'  <adlerosn@gmail.com>'\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -142,20 +142,19 @@ msgstr ""
 #: webproj/meet/services/MeetService.py:29
 #: webproj/meet/services/MeetService.py:37
 #: webproj/meet/services/MeetService.py:49
-#: webproj/meet/services/MeetService.py:71
-#: webproj/meet/services/MeetService.py:93
-#: webproj/meet/services/MeetService.py:147
-#: webproj/meet/services/MeetService.py:153
+#: webproj/meet/services/MeetService.py:73
+#: webproj/meet/services/MeetService.py:95
+#: webproj/meet/services/MeetService.py:149
+#: webproj/meet/services/MeetService.py:155
 #: webproj/meet/services/MessengerService.py:81
-msgid ""
-"This data does not belong to the user who requested something about it."
+msgid "This data does not belong to the user who requested something about it."
 msgstr ""
 
-#: webproj/meet/services/MeetService.py:122
+#: webproj/meet/services/MeetService.py:124
 msgid "User is not authorized to see this data."
 msgstr ""
 
-#: webproj/meet/views.py:153 webproj/meet/views.py:223
+#: webproj/meet/views.py:153 webproj/meet/views.py:229
 msgid "usr_not_found"
 msgstr "User object was not found in the database"
 
@@ -163,13 +162,13 @@ msgstr "User object was not found in the database"
 msgid "cht_not_found"
 msgstr "Chat object was not found in the database"
 
-#: webproj/meet/views.py:247 webproj/meet/views.py:307
-#: webproj/meet/views.py:336 webproj/meet/views.py:362
-#: webproj/meet/views.py:383 webproj/meet/views.py:425
+#: webproj/meet/views.py:260 webproj/meet/views.py:327
+#: webproj/meet/views.py:362 webproj/meet/views.py:395
+#: webproj/meet/views.py:421 webproj/meet/views.py:469
 msgid "meet_not_found"
 msgstr "Meet object was not found in the database"
 
-#: webproj/meet/views.py:445
+#: webproj/meet/views.py:498
 msgid "meetstar_not_found"
 msgstr "MeetStar object was not found in the database"
 
@@ -181,13 +180,11 @@ msgstr ""
 msgid "Load from browser"
 msgstr ""
 
-#: webproj/templates/asklatlong.html:27 webproj/templates/meet_view.html:52
-#: webproj/templates/meets.html:25
+#: webproj/templates/asklatlong.html:27 webproj/templates/meets.html:25
 msgid "field_meet_lat"
 msgstr "Latitude"
 
-#: webproj/templates/asklatlong.html:31 webproj/templates/meet_view.html:53
-#: webproj/templates/meets.html:26
+#: webproj/templates/asklatlong.html:31 webproj/templates/meets.html:26
 msgid "field_meet_long"
 msgstr "Longitude"
 
@@ -287,26 +284,23 @@ msgstr ""
 msgid "Edit meet"
 msgstr ""
 
-#: webproj/templates/meet_edit.html:31
+#: webproj/templates/meet_edit.html:33
 msgid "form_meet_point_label"
 msgstr "Where is it?"
 
-#: webproj/templates/meet_edit.html:43
+#: webproj/templates/meet_edit.html:45
 msgid "Save"
 msgstr ""
 
-#: webproj/templates/meet_view.html:28 webproj/templates/meet_view.html:50
-#: webproj/templates/meets.html:23
+#: webproj/templates/meet_view.html:28 webproj/templates/meets.html:23
 msgid "field_meet_title"
 msgstr "Title"
 
-#: webproj/templates/meet_view.html:31 webproj/templates/meet_view.html:51
-#: webproj/templates/meets.html:24
+#: webproj/templates/meet_view.html:31 webproj/templates/meets.html:24
 msgid "field_meet_name"
 msgstr "Name"
 
-#: webproj/templates/meet_view.html:34 webproj/templates/meet_view.html:54
-#: webproj/templates/meets.html:27
+#: webproj/templates/meet_view.html:34 webproj/templates/meets.html:27
 msgid "field_meet_meeting"
 msgstr "When"
 
@@ -315,9 +309,12 @@ msgid "field_meet_creator"
 msgstr "Organizer"
 
 #: webproj/templates/meet_view.html:47
-#| msgid "form_meet_description_help"
 msgid "field_meet_description"
 msgstr "Description"
+
+#: webproj/templates/meet_view.html:53
+msgid "Edit"
+msgstr ""
 
 #: webproj/templates/meets.html:5
 msgid "Meets by"
@@ -343,7 +340,7 @@ msgstr "Open details"
 msgid "Empty list"
 msgstr ""
 
-#: webproj/templates/meets.html:50
+#: webproj/templates/meets.html:52
 msgid "Create meet"
 msgstr ""
 
@@ -390,7 +387,8 @@ msgstr ""
 #, python-format
 msgid ""
 "\n"
-"    You (or someone pretending to be you) have asked to register an account at\n"
+"    You (or someone pretending to be you) have asked to register an account "
+"at\n"
 "    %(site_name)s.  If this wasn't you, please ignore this email\n"
 "    and your address will be removed from our records.\n"
 "    "
@@ -400,7 +398,8 @@ msgstr ""
 #, python-format
 msgid ""
 "\n"
-"    To activate this account, please click the following link within the next\n"
+"    To activate this account, please click the following link within the "
+"next\n"
 "    %(expiration_days)s days:\n"
 "    "
 msgstr ""
@@ -589,7 +588,8 @@ msgstr ""
 #: webproj/templates/registration/password_reset_done.html:8
 msgid ""
 "\n"
-"    We have sent you an email with a link to reset your password. Please check\n"
+"    We have sent you an email with a link to reset your password. Please "
+"check\n"
 "    your email and click the link to continue.\n"
 "    "
 msgstr ""
@@ -610,7 +610,8 @@ msgstr ""
 #: webproj/templates/registration/password_reset_email.html:11
 msgid ""
 "\n"
-"To reset your password, please click the following link, or copy and paste it\n"
+"To reset your password, please click the following link, or copy and paste "
+"it\n"
 "into your web browser:\n"
 msgstr ""
 
@@ -634,7 +635,8 @@ msgstr ""
 #: webproj/templates/registration/password_reset_form.html:8
 msgid ""
 "\n"
-"    Forgot your password? Enter your email in the form below and we'll send you instructions for creating a new one.\n"
+"    Forgot your password? Enter your email in the form below and we'll send "
+"you instructions for creating a new one.\n"
 "    "
 msgstr ""
 

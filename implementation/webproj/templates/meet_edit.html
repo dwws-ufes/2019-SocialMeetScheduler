@@ -1,26 +1,60 @@
 {% extends 'base.html' %}
-{% load i18n leaflet_tags crispy_forms_tags %}
+{% load i18n leaflet_tags crispy_forms_tags method_override %}
 
 {% block title %}
-{% trans "Edit meet" %} | {{ block.super }}
+{% if meet %}
+{% trans "Edit meet" %}
+{% else %}
+{% trans "Create meet" %}
+{% endif %}
+|
+{{ block.super }}
 {% endblock title %}
 
 {% block additional_head %}
 {% leaflet_js %}
 {% leaflet_css %}
 <script deferred>
+    mainMap = null;
+    marker = null;
     function map_init(map, options){
-        map.on('click', map_clicked)
+        mainMap = map;
+        map.on('click', map_clicked);
+        if(id_lat.value!='' && id_lng.value!=''){
+            e = {latlng: {lat: id_lat.value, lng:id_lng.value}};
+            map_clicked(e);
+        } else {
+            map.setView([0,0], 2);
+        }
     }
     function map_clicked(e){
-        id_lat.value = e.latlng.lat
-        id_lng.value = e.latlng.lng
-        //id_point.value = 'POINT ('+e.latlng.lng+' '+e.latlng.lat+')';
+        id_lat.value = e.latlng.lat;
+        id_lng.value = e.latlng.lng;
+        var lla = [id_lat.value, id_lng.value];
+        mainMap.setView(lla, 15);
+        if(marker!==null) mainMap.removeLayer(marker);
+        marker = L.marker(lla).addTo(mainMap);
     }
 </script>
 {% endblock additional_head %}
 
 {% block content %}
+{% if meet %}
+<div>
+    <a class="btn btn-warning" href="{% url 'meetlinks' meet.key %}" role="button">
+        <i class="fa fa-pencil" aria-hidden="true"></i>
+        {% trans "Edit external links" %}
+    </a>
+    <form action="{% url 'meetedt' meet.key %}" method="POST" style="display: inline;">
+        {% csrf_token %}
+        {% method_override 'DELETE' %}
+        <button type="submit" class="btn btn-danger">
+            <i class="fa fa-times" aria-hidden="true"></i>
+            {% trans "Delete" %}
+        </button>
+    </form>
+</div>
+{% endif %}
 <form action="{{ request.path }}" method="POST">
     {% csrf_token %}
     {{form.id|as_crispy_field}}
@@ -28,6 +62,8 @@
     {{form.description|as_crispy_field}}
     {{form.meeting|as_crispy_field}}
     {{form.name|as_crispy_field}}
+    {# Begin point selector field #}
+    {% comment %} {{form.point|as_crispy_field}} {% endcomment %}
     <div id="div_id_point" class="form-group">
         <label for="id_point" class="col-form-label  requiredField">
             {% trans "form_meet_point_label" %}<span class="asteriskField">*</span>
@@ -36,10 +72,14 @@
     </div>
     {{form.lat|as_crispy_field}}
     {{form.lng|as_crispy_field}}
-    {% comment %} {{form.point|as_crispy_field}} {% endcomment %}
+    {# End point selector field #}
     {{form.privacy_require_account|as_crispy_field}}
     {{form.privacy_unlisted|as_crispy_field}}
+    {# Can't simply use this form because point selector field doesn't work #}
     {% comment %} {{form|crispy}} {% endcomment %}
-    <button type="submit" class="btn btn-primary">{% trans "Save" %}</button>
+    <button type="submit" class="btn btn-primary">
+        <i class="fa fa-check" aria-hidden="true"></i>
+        {% trans "Save" %}
+    </button>
 </form>
 {% endblock content %}

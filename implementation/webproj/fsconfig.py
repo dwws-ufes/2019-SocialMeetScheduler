@@ -41,10 +41,10 @@ if not os.path.exists(STD):
 
 if not os.path.exists(STN):
     with open(STN, 'wt') as f:
-        f.write('Meet')
+        f.write('Meeter')
 
 
-def isTrue(s: str) -> bool:
+def is_true(s: str) -> bool:
     return s in ['1', 'true', 't', 'True', 'TRUE', 'yes', 'y', 'YES', 'Yes']
 
 
@@ -59,10 +59,10 @@ with open(SKB, 'rb') as f:
     SECRET_KEY = f.read()
 
 with open(DBG, 'rt') as f:
-    DEBUG = isTrue(f.read().strip())
+    DEBUG = is_true(f.read().strip())
 
 with open(RGO, 'rt') as f:
-    REGISTRATION_OPEN = isTrue(f.read().strip())
+    REGISTRATION_OPEN = is_true(f.read().strip())
 
 with open(STD, 'rt') as f:
     SITE_DOMAIN = list(map(str.strip, f.read().strip().splitlines()))

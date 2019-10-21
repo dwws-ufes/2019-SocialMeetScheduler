@@ -17,7 +17,17 @@ class TimezoneSetter(View):
         return redirect(request.GET.get('next', '/'))
 
 
-def ServerError(code):
-    def handler(request, exc=None):
-        return render(request, 'httperror.html', dict(error=code, exception=exc), status=code)
-    return handler
+class ServerError(object):
+    def __init__(self, code):
+        self._code = code
+
+    def __call__(self, request, exception=None):
+        return render(
+            request,
+            'httperror.html',
+            dict(
+                error=self._code,
+                exception=exception
+            ),
+            status=self._code
+        )

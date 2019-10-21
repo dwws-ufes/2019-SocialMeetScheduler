@@ -5,14 +5,14 @@
 {% endblock title %}
 {% block content %}
 <div class="jumbotron">
-    <h1>
-        {{ error }}
+    <h1 class="display-1">
+        {% trans "Error" %} {{ error }}
     </h1>
-    <p>
+    <h5>
         {% if error == 404 %}
         {% trans "The document you requested was not found." %}
         {% elif error == 403 %}
-        {% trans "You're not authorized to see this content." %}
+        {% trans "You're not authorized to see this content or perform this action." %}
         {% elif error == 400 %}
         {% trans "Your browser sent a malformed request." %}
         {% elif error == 500 %}
@@ -20,10 +20,13 @@
         {% else %}
         {% trans "There was an unexpected error." %}
         {% endif %}
-    </p>
+    </h5>
     {% if exception %}
+    <hr>
+    <h6 class="text-muted">
+        {% trans "Exception:" %}
+    </h6>
     <p class="text-muted">
-        Exception:
         <small style="font-family: monospace;">
             {{ exception }}
         </small>

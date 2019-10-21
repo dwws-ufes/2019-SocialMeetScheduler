@@ -46,8 +46,28 @@
 
     <dt class="col-sm-3">{% trans "field_meet_description" %}</dt>
     <dd class="col-sm-9">{{ meet.description }}</dd>
+
+    {% for mel in meet.external_links.all %}
+    <dt class="col-sm-3">{{ mel.name }}</dt>
+    <dd class="col-sm-9"><a href="{{ mel.url }}">{{ mel.url }}</a></dd>
+    {% endfor %}
+
+    <dt class="col-sm-3">{% trans "Attendees" %}</dt>
+    <dd class="col-sm-9">
+        <a href="{% url 'meetstars' meet.key %}">
+            {{ meet.stars|length }} {% trans "attendees" %}
+            <span class="badge badge-pill badge-primary text-white">
+                <i class="fa fa-star-o" aria-hidden="true"></i>
+            </span>
+        </a>
+    </dd>
 </dl>
 {% if meet.creator.pk == request.user.pk %}
-<a href="{% url 'meetedt' meet.key %}" class="btn btn-warning">{% trans "Edit" %}</a>
+<div>
+    <a href="{% url 'meetedt' meet.key %}" class="btn btn-warning">
+        <i class="fa fa-pencil" aria-hidden="true"></i>
+        {% trans "Edit" %}
+    </a>
+</div>
 {% endif %}
 {% endblock content %}

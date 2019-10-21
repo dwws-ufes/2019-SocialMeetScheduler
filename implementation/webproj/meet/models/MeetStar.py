@@ -18,10 +18,12 @@ class MeetStar(models.Model):
     last_modified = models.DateTimeField(
         blank=False,
         null=False,
-        primary_key=False
+        primary_key=False,
+        auto_now=True
     )
 
     notified = models.BooleanField(
+        default=False,
         blank=False,
         null=False,
         primary_key=False

@@ -1,0 +1,33 @@
+<!doctype html>{% load i18n %}
+<html lang="{% trans 'lang-code-iso' %}">
+<head>
+    <title>{% trans "A meet you gave a star is about to start" %}</title>
+</head>
+<body>
+<p>
+    {% trans "Dear" %} {{star.owner.username}},
+</p>
+
+<p>
+{% blocktrans %}
+You gave a star to the event "{{star.meet.title}}", created by
+"{{star.meet.creator.username}}" and it will start in 6 hours.
+{% endblocktrans %}
+</p>
+
+<p>
+{% trans "You can review the meet on the link below:" %}
+</p>
+
+<p>
+<a href="{% url 'meet' star.meet.key %}">{% url 'meet' star.meet.key %}</a>
+</p>
+
+<p>
+{% blocktrans %}
+Sincerely,
+The management
+{% endblocktrans %}
+<p>
+</body>
+</html>

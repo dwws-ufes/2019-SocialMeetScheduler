@@ -1,1 +1,30 @@
 {% extends 'base.html' %}
+{% load i18n %}
+
+{% block title %}
+{% trans "Meet stars" %} | {{ block.super }}
+{% endblock title %}
+
+{% block content %}
+{{ button }}
+<ul>
+    {% for star in stars %}
+    <li>
+        {% if star.anonymous %}
+        {% trans "Someone anonymous" %}
+        {% else %}
+        <a href="{% url 'user' star.owner.username %}">
+            {{ star.owner.username }}
+        </a>
+        {% endif %}
+        {% if star.owner.pk == request.user.pk %}
+        <span class="badge badge-pill badge-info">
+            {% trans "You" %}
+        </span>
+        {% endif %}
+    </li>
+    {% empty %}
+    <small class="text-muted">{% trans "No one yet" %}</small>
+    {% endfor %}
+</ul>
+{% endblock content %}

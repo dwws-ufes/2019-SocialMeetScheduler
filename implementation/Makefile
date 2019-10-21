@@ -20,7 +20,7 @@ init: virtual_env
 	mkdir -p static
 	. virtual_env/bin/activate; yes yes | python manage.py collectstatic
 
-all: depends init virtual_env
+all: depends updatelangs init virtual_env
 	@echo ""
 	@echo "Done"
 	@echo ""
@@ -108,9 +108,11 @@ serve: virtual_env
 
 addlang:
 	. virtual_env/bin/activate; python manage.py makemessages -i virtual_env -l $(LANG)
+	. virtual_env/bin/activate; python manage.py compilemessages
 
 updatelangs:
 	for i in $$(ls -1 webproj/locale/); do LANG=$$i make addlang; done
+	. virtual_env/bin/activate; python manage.py compilemessages
 
 new-superuser:
 	. virtual_env/bin/activate; python manage.py createsuperuser
@@ -125,4 +127,10 @@ devserver: virtual_env
 
 devserverprod: virtual_env
 	. virtual_env/bin/activate; python manage.py runserver 0.0.0.0:19843
+
+sendstaremails: virtual_env
+	. virtual_env/bin/activate; python manage.py sendstaremails
+
+sendstaremailsasroot:
+	sudo -u http make sendstaremails
 
