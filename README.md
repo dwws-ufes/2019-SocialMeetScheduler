@@ -134,6 +134,16 @@ Edit your crontab (with `crontab -e`) and add this line:
  * * * * * cronic make sendstaremails -C /var/www/meet
 ```
 
+### Docker
+
+If you choose to run inside Docker, there are 3 helpers:
+
+- `make builddocker`
+- `make rundocker`
+- `make stopdocker`
+
+Tested on a Ubuntu 18.04 virtual machine; it doesn't trigger cron-dependent features.
+
 ### SystemD
 
 Just copy the file `server_deploy_config/meet-webapp.service` into `/etc/systemd/system` and adapt it to suit your needs.
