@@ -134,3 +134,13 @@ sendstaremails: virtual_env
 sendstaremailsasroot:
 	sudo -u http make sendstaremails
 
+builddocker:
+	sudo docker build -t dwws2019meet .
+
+rundocker:
+	-sudo docker rm /dwws2019meet
+	sudo docker run --name=dwws2019meet -d -v $$(pwd):/var/www/meet -p 19843:19843 dwws2019meet
+
+stopdocker:
+	-sudo docker stop /dwws2019meet
+	-sudo docker rm /dwws2019meet
