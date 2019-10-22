@@ -131,6 +131,12 @@ devserverprod: virtual_env
 sendstaremails: virtual_env
 	. virtual_env/bin/activate; python manage.py sendstaremails
 
+diadiagram: diagram.dia
+	-@echo -ne
+
+diagram.dia:
+	. virtual_env/bin/activate; python manage.py make_diagram -eao diagram.dia
+
 sendstaremailsasroot:
 	sudo -u http make sendstaremails
 
