@@ -46,11 +46,12 @@ def registrable_models_in_module(module):
     return discard_abstract_models(only_models(classes_in_module(module)))
 
 
-def register_for_me(admin, models_module):
+def register_for_me(admin, models_module, *models_to_skip):
     for model in registrable_models_in_module(models_module):
-        try:
-            admin.site.register(model)
-        except exceptions.ImproperlyConfigured:
-            pass
-        except BaseException as e:
-            print(f'{e.__class__.__name__}: {e}', file=stderr)
+        if model not in models_to_skip:
+            try:
+                admin.site.register(model)
+            except exceptions.ImproperlyConfigured:
+                pass
+            except BaseException as e:
+                print(f'{e.__class__.__name__}: {e}', file=stderr)

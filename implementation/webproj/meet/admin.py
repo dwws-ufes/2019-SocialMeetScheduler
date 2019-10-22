@@ -5,7 +5,7 @@ from . import models
 
 # Register your models here.
 
-register_for_me(admin, models)
+register_for_me(admin, models, models.User)
 admin.site.unregister(models.Marker)
 admin.site.unregister(models.Meet)
 admin.site.register(models.Marker, django.contrib.gis.admin.OSMGeoAdmin)
