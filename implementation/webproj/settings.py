@@ -13,13 +13,12 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 from django.utils.translation import ugettext_lazy as _
 from . import fsconfig
 import os
-DEVELOPING = os.uname()[1] == 'forest'
 
 SITE_NAME = fsconfig.SITE_NAME
 BASE_DIR = fsconfig.BASE_DIR
 SECRET_KEY = fsconfig.SECRET_KEY
+DEBUG = fsconfig.DEBUG
 
-DEBUG = fsconfig.DEBUG and DEVELOPING
 
 ALLOWED_HOSTS = [
     *fsconfig.SITE_DOMAIN,
@@ -27,7 +26,7 @@ ALLOWED_HOSTS = [
     '127.0.0.1',
 ]
 
-if DEBUG and DEVELOPING:
+if DEBUG:
     ALLOWED_HOSTS = '*'
 
 if not DEBUG:
@@ -178,7 +177,7 @@ STATICFILES_DIRS = [
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-if DEBUG and DEVELOPING:
+if DEBUG:
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 DEFAULT_FROM_EMAIL = SITE_NAME+' <noreply@'+ALLOWED_HOSTS[0]+'>'
