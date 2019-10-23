@@ -1,0 +1,18 @@
+{% load i18n %}{% trans "Dear" %} {{recipient.username}},
+
+{% blocktrans with sender=sender.username %}
+You got a message from "{{sender}}":
+{% endblocktrans %}
+
+```
+{{message}}
+```
+
+{% trans "Reply by clicking the link below:" %}
+
+https://{{site}}{% url 'conversation' mailbox.pk %}
+
+{% blocktrans %}
+Sincerely,
+The management
+{% endblocktrans %}

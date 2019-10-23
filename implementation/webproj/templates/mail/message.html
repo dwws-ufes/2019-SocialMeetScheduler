@@ -1,0 +1,36 @@
+<!doctype html>{% load i18n %}
+<html lang="{% trans 'lang-code-iso' %}">
+<head>
+    <title>{% trans "Someone has sent you a private message" %}</title>
+</head>
+<body>
+<p>
+{% trans "Dear" %} {{recipient.username}},
+</p>
+
+<p>
+{% blocktrans with sender=sender.username %}
+You got a message from "{{sender}}":
+{% endblocktrans %}
+</p>
+
+<p>
+{{message}}
+</p>
+
+<p>
+{% trans "Reply by clicking the link below:" %}
+</p>
+
+<p>
+<a href="https://{{site}}{% url 'conversation' mailbox.pk %}">https://{{site}}{% url 'conversation' mailbox.pk %}</a>
+</p>
+
+<p>
+{% blocktrans %}
+Sincerely,
+The management
+{% endblocktrans %}
+<p>
+</body>
+</html>

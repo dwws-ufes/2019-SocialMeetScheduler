@@ -172,7 +172,7 @@ class MeetService:
         triggering_time = timezone.now()+timedelta(hours=6)
         stars_to_mail = models.MeetStar.objects.filter(meet__meeting__lte=triggering_time, notified=False).all()
         for star in stars_to_mail:
-            context = dict(star=star)
+            context = dict(star=star, site=settings.ALLOWED_HOSTS[0])
             send_mail(
                 subject=_('A meet you gave a star is about to start'),
                 message=render_to_string('mail/star.txt', context=context),

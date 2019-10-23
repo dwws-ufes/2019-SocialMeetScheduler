@@ -1,13 +1,13 @@
 {% load i18n %}{% trans "Dear" %} {{star.owner.username}},
 
-{% blocktrans %}
-You gave a star to the event "{{star.meet.title}}", created by
-"{{star.meet.creator.username}}" and it will start in 6 hours.
+{% blocktrans with title=star.meet.title creator=star.meet.creator.username %}
+You gave a star to the event "{{title}}", created by
+"{{creator}}" and it will start in 6 hours.
 {% endblocktrans %}
 
 {% trans "You can review the meet on the link below:" %}
 
-{% url 'meet' star.meet.key %}
+https://{{site}}{% url 'meet' star.meet.key %}
 
 {% blocktrans %}
 Sincerely,

@@ -4,6 +4,9 @@ from pycdi.utils import Singleton
 from pycdi import Inject
 from django.db.models import Q
 from django.utils.translation import ugettext_lazy as _
+from django.conf import settings
+from django.template.loader import render_to_string
+from django.core.mail import send_mail
 from .FriendService import FriendService
 from .MeetService import MeetService
 from .exceptions import FormValidationFailedException
@@ -29,9 +32,25 @@ class MessengerService:
             message.sender = user
             message.save()
             mailbox.save()
+            recipient = mailbox.initiated if mailbox.initiator.pk==user.pk else mailbox.initiator
+            context = dict(
+                message=message.message,
+                site=settings.ALLOWED_HOSTS[0],
+                recipient=recipient,
+                sender=user,
+                mailbox=mailbox
+            )
+            send_mail(
+                subject=_('Someone has sent you a private message'),
+                message=render_to_string('mail/message.txt', context=context),
+                html_message=render_to_string('mail/message.html', context=context),
+                from_email=settings.DEFAULT_FROM_EMAIL,
+                recipient_list=[recipient.email],
+                fail_silently=True
+            )
             return message
 
-    def send_message_to_user(self, user, form, friend):
+    def send_message_to_friend(self, user, form, friend):
         if not form.is_valid():
             raise FormValidationFailedException
         else:

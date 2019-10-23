@@ -259,7 +259,7 @@ class Conversation(View, ListMixin, UpsertMixin):
 @method_decorator(Inject(service1=services.FriendService, service2=services.MessengerService), name='dispatch')
 class TalkToFriend(View, DetailsMixin, UpsertMixin):
     SRVC_DTL_METHOD = 'assert_is_friend'
-    SRVC_UPS_METHOD = 'send_messageToFriend'
+    SRVC_UPS_METHOD = 'send_message_to_friend'
 
     def get(self, request: HttpRequest, service1: services.FriendService, user: models.User, service2) -> HttpResponse:
         service = service1
