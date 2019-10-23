@@ -1,0 +1,44 @@
+@startuml
+hide circle
+hide empty methods
+hide empty attributes
+left to right direction
+
+'gerenciar os links externos de um encontro
+
+class "meet_external_links_edit.html" as pgp <<page>>
+class "meet_external_link_edit.html" as pgs <<page>>
+class "MeetExternalLinksForm" as ml1 <<form>>
+class "MeetExternalLinksForm" as ml2 <<form>>
+class "MeetLinksEdit" as cgp <<controller>>
+class "MeetLinkEdit" as cgs <<controller>>
+class "302 redirect" as rdr <<page>>
+class "Framework's\nError Page" as err <<page>>
+
+ml1 "1" --* pgp
+ml2 "1" --* pgs
+pgp -.-> cgp: {method=get}
+cgp -.-> pgp: {method=get, result=Ok}
+cgp -.-> pgp: {method=post, result=ValidationFailed}
+pgs -.-> cgs: {method=get}
+cgs -.-> pgs: {method=get, result=Ok}
+pgp -.-> cgs: {method=get}
+pgp -.-> cgs: {method=delete}
+cgs -.-> rdr: {method=delete, result=Ok}
+cgs -.-> rdr: {method=post, result=Ok}
+rdr -.-> cgp: {method=get}
+ml1 -.-> cgp: {method=post}
+ml2 -.-> cgs: {method=post}
+
+err <-.- cgs : {method=get, result=NotFound}
+err <-.- cgs : {method=post, result=NotFound}
+err <-.- cgs : {method=delete, result=NotFound}
+err <-.- cgs : {method=get, result=NoPermission}
+err <-.- cgs : {method=post, result=NoPermission}
+err <-.- cgs : {method=delete, result=NoPermission}
+cgp -.-> err : {method=get, result=NotFound}
+cgp -.-> err : {method=post, result=NotFound}
+cgp -.-> err : {method=get, result=NoPermission}
+cgp -.-> err : {method=post, result=NoPermission}
+
+@enduml

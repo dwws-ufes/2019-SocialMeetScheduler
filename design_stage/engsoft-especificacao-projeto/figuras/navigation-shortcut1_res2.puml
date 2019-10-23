@@ -1,0 +1,110 @@
+@startuml
+hide circle
+hide empty methods
+hide empty attributes
+
+class "MeetStarButton" as msb <<page>>
+class "AddRemoveFriendButton" as ftb <<page>>
+
+class "myaccount.html" as p1 <<controlledpage>>
+class "user.html" as p2 <<controlledpage>>
+class "friends.html" as p3 <<controlledpage>>
+class "mailboxes.html" as p4 <<controlledpage>>
+class "mailbox_messages.html" as p5 <<controlledpage>>
+class "talktofriend.html" as p6 <<controlledpage>>
+class "talktomeetorganizer.html" as p7 <<controlledpage>>
+class "meet_view.html" as p8 <<controlledpage>>
+class "meet_external_links_edit.html" as p9 <<controlledpage>>
+class "meet_external_link_edit.html" as p10 <<controlledpage>>
+class "meetstars.html" as p11 <<controlledpage>>
+
+class "meets.html" as p12 <<page>>
+class "MeetsPopular" as c12_1 <<controller>>
+class "MeetsNearby" as c12_2 <<controller>>
+
+class "meet_edit.html" as p13_1 <<page>>
+class "meet_edit.html" as p13_2 <<page>>
+class "MeetNew" as c13_1 <<controller>>
+class "MeetEdit" as c13_2 <<controller>>
+
+class "asklatlong.html" as p14 <<page>>
+
+abstract class "Index link\non top of\nevery page" as p0
+abstract class "Top navbar\nlinks" as p00
+
+class "MeetForm" as f0 <<form>>
+class "MeetForm" as f1 <<form>>
+class "MeetExternalLinksForm" as f2 <<form>>
+class "MeetExternalLinksForm" as f8 <<form>>
+class "MeetStarForm" as f3 <<form>>
+class "MeetStarForm" as f9 <<form>>
+class "ConversationForm" as f4 <<form>>
+class "ConversationForm" as f5 <<form>>
+class "ConversationForm" as f6 <<form>>
+class "ConversationForm" as f7 <<form>>
+
+p13_1 *-- "1" f0
+c13_1 <-.- f0 : {method=post}
+p8 <-.- c13_1 : {method=post, result=redirect}
+
+p13_2 *-- "1" f1
+c13_2 <-.- f1 : {method=post}
+p8 <-.- c13_2 : {method=post, result=redirect}
+
+p9 *-- "1" f2
+p10 *-- "1" f8
+
+p5 *-- "1" f4
+p6 *-- "1" f5
+p7 *-- "1" f6
+p2 *-- "1" f7
+
+p2 *-- "1" ftb
+ftb -.-> p2 : {method=delete}
+ftb -.-> p2 : {method=post}
+
+p11 *-- "1" msb
+msb *-- "1" f3
+msb *-- "1" f9
+f3 -.-> p11 : {method=post}
+f9 -.-> p11 : {method=post}
+
+p9 <-.- p10 : {method=post, result=redirect}
+p6 -.-> p5 : {method=post, result=redirect}
+p5 <-.- p7 : {method=post, result=redirect}
+p6 <-.- f7 : {method=post}
+
+p0 --|> p00
+
+p0 -.-> c12_1 : {method=get}
+c12_1 -.-> p12 : {method=get, result=Ok}
+p12 -.-> c13_1 : {method=get}
+c13_1 -.-> p13_1 : {method=get, result=Ok}
+p12 --> p8
+p8 -.-> c13_2: {method=get}
+c13_2 -.-> p13_2: {method=get, result=Ok}
+p13_2 -> p9
+p9 -> p10
+p8 -> p7
+p8 -> p11
+p8 --> p2
+p11--> p2
+
+p1 -.-> c12_1 : {method=get}
+p1 -.-> c12_2 : {method=get}
+c12_2 -.-> p12 : {method=get, result=Ok}
+
+c12_2 -.-> p14  : {method=get, result=NoPointGiven}
+c12_2 <-.- p14  : {method=get}
+
+p00 --> p1
+
+p00 --> p4
+p4 --> p5
+
+p00 --> p3
+p3 --> p6
+
+p3 --> p2
+
+@enduml

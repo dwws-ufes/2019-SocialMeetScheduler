@@ -1,0 +1,49 @@
+@startuml
+hide circle
+hide empty methods
+hide empty attributes
+left to right direction
+
+'enviar uma mensagem para um amigo
+
+class "user.html" as usr <<page>>
+class "mailbox_messages.html" as mbx <<page>>
+class "talktofriend.html" as tfp <<page>>
+class "Friendship" as fsh <<controller>>
+class "TalkToFriend" as ttf <<controller>>
+class "Conversation" as cvs <<controller>>
+class "ConversationForm" as cvf <<form>>
+class "ConversationForm" as cvf2 <<form>>
+class "ConversationForm" as cvf3 <<form>>
+class "302 redirect" as rdr <<page>>
+class "Framework's\nError Page" as err <<page>>
+
+usr *-- "1" cvf
+fsh -.->  usr: {method=get, result=Ok}
+usr -.-> fsh : {method=get}
+
+mbx *-- "1" cvf2
+tfp *-- "1" cvf3
+
+cvf3-.-> ttf : {method=post}
+cvf2-.-> cvs : {method=post}
+cvf -.-> ttf : {method=post}
+ttf -.-> rdr : {method=post, result=Ok}
+ttf -.-> tfp : {method=post, result=ValidationFailed}
+ttf -.-> tfp : {method=get, result=Ok}
+tfp -.-> ttf : {method=get}
+rdr -.-> cvs : {method=get}
+mbx -.-> cvs : {method=get}
+cvs -.-> mbx : {method=get, result=Ok}
+cvs -.-> rdr : {method=post, result=Ok}
+cvs -.-> mbx : {method=post, result=ValidationFailed}
+
+err <-.- cvs : {method=get, result=NotFound}
+err <-.- cvs : {method=post, result=NotFound}
+err <-.- cvs : {method=get, result=NoPermission}
+err <-.- cvs : {method=post, result=NoPermission}
+ttf -.-> err : {method=post, result=NotFound}
+ttf -.-> err : {method=post, result=NoPermission}
+
+
+@enduml

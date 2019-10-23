@@ -1,0 +1,61 @@
+@startuml
+hide circle
+hide empty methods
+hide empty attributes
+left to right direction
+
+/'
+class "togglefriendbutton.html" as pc1 <<page>>
+class "AddRemoveFriendButton" as cc1 <<controller>>
+pc1 -.- cc1
+
+class "meetstarbutton.html" as pc2 <<page>>
+class "MeetStarButton" as cc2 <<controller>>
+pc2 -.- cc2
+'/
+
+class "myaccount.html" as p1 <<page>>
+class "MyAccount" as c1 <<controller>>
+p1 -.- c1 : <<controls>>
+
+class "user.html" as p2 <<page>>
+class "Friendship" as c2 <<controller>>
+p2 -.- c2 : <<controls>>
+
+class "friends.html" as p3 <<page>>
+class "Friends" as c3 <<controller>>
+p3 -.- c3 : <<controls>>
+
+class "mailboxes.html" as p4 <<page>>
+class "Conversations" as c4 <<controller>>
+p4 -.- c4 : <<controls>>
+
+class "mailbox_messages.html" as p5 <<page>>
+class "Conversation" as c5 <<controller>>
+p5 -.- c5 : <<controls>>
+
+class "talktofriend.html" as p6 <<page>>
+class "TalkToFriend" as c6 <<controller>>
+p6 -.- c6 : <<controls>>
+
+class "talktomeetorganizer.html" as p7 <<page>>
+class "TalkToMeetOrganizer" as c7 <<controller>>
+p7 -.- c7 : <<controls>>
+
+class "meet_view.html" as p8 <<page>>
+class "MeetView" as c8 <<controller>>
+p8 -.- c8 : <<controls>>
+
+class "meet_external_links_edit.html" as p9 <<page>>
+class "MeetLinksEdit" as c9 <<controller>>
+p9 -.- c9 : <<controls>>
+
+class "meet_external_link_edit.html" as p10 <<page>>
+class "MeetLinkEdit" as c10 <<controller>>
+p10 -.- c10 : <<controls>>
+
+class "meetstars.html" as p11 <<page>>
+class "MeetStars" as c11 <<controller>>
+p11 -.- c11 : <<controls>>
+
+@enduml

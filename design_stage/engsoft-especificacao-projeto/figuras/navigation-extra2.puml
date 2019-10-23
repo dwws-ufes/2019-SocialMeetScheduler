@@ -1,0 +1,20 @@
+@startuml
+hide circle
+hide empty methods
+hide empty attributes
+
+package "templates" as tpls {
+  class "template1.html" as tpl <<page>>
+  class "template2.html" as tpl2 <<page>>
+}
+
+package "views" as vws {
+  class "SomeView" as vw <<controller>>
+}
+
+'tpls -[hidden]right-> vws
+
+tpl -.-right-> vw : {method=get}
+tpl2 <-.-right vw : {method=get, result=Ok}
+
+@enduml

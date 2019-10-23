@@ -1,0 +1,36 @@
+@startuml
+hide circle
+hide empty methods
+hide empty attributes
+left to right direction
+
+package "Shortcut" {
+  class "A page" as cp1 <<controlledpage>>
+  class "A form" as fp1 <<form>>
+}
+
+fp1 "1" --* cp1
+
+package "Standard FrameWeb\nequivalent" {
+  class "A form" as f1 <<form>>
+  class "A controller" as c1 <<controller>>
+  class "A page" as p1 <<page>>
+  class "Framework's\nError Page" as fep <<page>>
+}
+
+f1 "1" --* p1
+p1 -.-> c1 : {method=get}
+p1 -.-> c1 : {method=delete}
+f1 -.-> c1 : {method=post}
+p1 <-.- c1 : {method=delete, result=Ok}
+p1 <-.- c1 : {method=post, result=ValidationFailed}
+p1 <-.- c1 : {method=post, result=Ok}
+p1 <-.- c1 : {method=get, result=Ok}
+
+fep <-.- c1 : {method=delete, result=NoPermission}
+fep <-.- c1 : {method=post, result=NoPermission}
+fep <-.- c1 : {method=get, result=NoPermission}
+fep <-.- c1 : {method=delete, result=NotFound}
+fep <-.- c1 : {method=post, result=NotFound}
+fep <-.- c1 : {method=get, result=NotFound}
+@enduml

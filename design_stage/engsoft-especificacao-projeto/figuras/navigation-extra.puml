@@ -1,0 +1,47 @@
+@startuml
+hide circle
+hide empty methods
+hide empty attributes
+
+package "templates" as tpls {
+  class "Some page" as tpl0 <<page>>
+  class "Redirect to\nLogin page" as rdr0 <<page>>
+  class "Redirect to\nPrevious URL" as rdr1 <<page>>
+  class "Built-in\nlogin page" as tpl1 <<page>>
+  class "Other page" as tpl2 <<page>>
+}
+
+package "views" as vws {
+  class "View that\nrequires login" as vw <<controller>>
+  class "Built-in\nlogin view" as lgn <<controller>>
+}
+
+
+package "forms" as frms {
+  class "Built-in\nlogin form" as frm <<form>>
+}
+
+frm "1" -* tpl1
+
+'tpls -[hidden]right-> vws
+
+vw -[hidden]down- lgn
+
+tpl0 -[hidden]down- tpl2
+tpl2 -[hidden]down- rdr0
+rdr0 -[hidden]down- tpl1
+tpl1 -[hidden]down- rdr1
+
+tpl0 -.-right-> vw : {method=get}
+rdr0 <-.-right vw : {method=get, result=RedirectToLogin}
+rdr0 -.-right-> lgn : {method=get}
+tpl1 <-.-right- lgn : {method=get, result=Ok}
+frm -.-right-> lgn : {method=post}
+tpl1 <-.-right- lgn : {method=post, result=InvalidCredentials}
+rdr1 <-.-left- lgn : {method=post, result=Ok}
+rdr1 -.-down-> vw : {method=get}
+tpl2 <-.-right vw : {method=get, result=Ok}
+
+
+
+@enduml

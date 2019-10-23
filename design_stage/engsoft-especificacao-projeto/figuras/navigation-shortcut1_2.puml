@@ -1,0 +1,15 @@
+@startuml
+hide circle
+hide empty methods
+hide empty attributes
+
+class "Some page" as pg1 <<page>>
+class "Other page" as pg2 <<page>>
+
+class "Some View" as vw1 <<controller>>
+class "Other View" as vw2 <<controller>>
+
+pg1 -.- vw1: <<controls>>
+pg2 -.- vw2: <<controls>>
+
+@enduml

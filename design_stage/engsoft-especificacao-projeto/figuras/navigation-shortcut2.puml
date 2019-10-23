@@ -1,0 +1,24 @@
+@startuml
+hide circle
+hide empty methods
+hide empty attributes
+
+package "Shortcut" {
+  class "Some controller" as sc <<controller>>
+  class "Other controller" as oc <<controller>>
+}
+
+
+package "Standard FrameWeb\nequivalent" {
+  class "Some controller" as s <<controller>>
+  class "Redirect page" as r <<page>>
+  class "Other controller" as o <<controller>>
+}
+
+sc -.-> oc : {method=post, result=redirect}
+
+s -.-> r : {method=post, result=Ok}
+r -.-> o : {method=get}
+
+
+@enduml

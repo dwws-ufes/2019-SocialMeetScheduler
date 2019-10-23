@@ -1,0 +1,30 @@
+@startuml
+hide circle
+hide empty methods
+hide empty attributes
+
+'Services
+class MeetService #powderblue
+class FriendService #powderblue
+class MessengerService #powderblue
+
+'Entities
+class Friendship #greenyellow
+class MeetExternalLinks #greenyellow
+class ChatMailbox #greenyellow
+class ChatMessage #greenyellow
+class Meet #greenyellow
+class MeetStar #greenyellow
+
+'Associations
+
+MeetService -- MeetExternalLinks
+MeetService -- Meet
+MeetService -- MeetStar
+
+FriendService -- Friendship
+
+MessengerService -- ChatMailbox
+MessengerService -- ChatMessage
+
+@enduml

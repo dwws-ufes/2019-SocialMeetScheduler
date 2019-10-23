@@ -1,0 +1,15 @@
+@startuml
+hide circle
+hide empty methods
+hide empty attributes
+
+class "Some page" as pg1 <<controlledpage>>
+class "Other page" as pg2 <<controlledpage>>
+
+pg1 --> pg2
+pg2 --> pg1
+
+pg1 --> pg1
+pg2 --> pg2
+
+@enduml
