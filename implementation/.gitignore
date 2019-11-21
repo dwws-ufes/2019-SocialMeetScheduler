@@ -20,4 +20,5 @@
 /server_secrets
 /server_secrets/**
 /db.sqlite3
+/diagram.dia
 !/implementation/webproj/locale/**/LC_MESSAGES/django.mo
