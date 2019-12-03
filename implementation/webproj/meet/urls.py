@@ -14,6 +14,7 @@ urlpatterns = [
     path('user/<str:username>/message', views.TalkToFriend.as_view(), name='messageusr'),
     path('meet/<str:key>/message', views.TalkToMeetOrganizer.as_view(), name='messagemeet'),
     path('meet/new', views.MeetNew.as_view(), name='meetnew'),
+    path('meet/hints', views.MeetHints.as_view(), name='meethints'),
     path('meet/<str:key>', views.MeetView.as_view(), name='meet'),
     path('meet/<str:key>/edit', views.MeetEdit.as_view(), name='meetedt'),
     path('meet/<str:key>/edit/links', views.MeetLinksEdit.as_view(), name='meetlinks'),

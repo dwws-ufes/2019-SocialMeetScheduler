@@ -1,4 +1,4 @@
-<!-- FOOTER -->{% load tz i18n %}
+{% block footer %}<!-- FOOTER -->{% load tz i18n %}
 <footer class="container mt-5 pt-4">
     <p class="float-right">
         <button class="btn btn-link" onClick="window.scrollTo({top:0, behavior: 'smooth'})">
@@ -15,3 +15,4 @@
         Current timezone: <a title="{% trans 'ftr_tz_chg' %}" href="{% url 'timezone' %}?next={{request.get_full_path|urlencode}}">{{TIME_ZONE}}</a> ({% now 'r' %})
     </p>
 </footer>
+{% endblock footer %}

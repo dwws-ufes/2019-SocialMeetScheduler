@@ -1,7 +1,7 @@
 pip
 uwsgi
 psycopg2-binary
-django
+django<3
 filetype
 pillow
 requests
@@ -27,5 +27,7 @@ pylint-django
 beautifulsoup4
 html2text
 html5lib
+SPARQLWrapper
+rdflib
 gdal
 ics

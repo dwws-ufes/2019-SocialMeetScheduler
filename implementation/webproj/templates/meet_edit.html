@@ -35,6 +35,154 @@
         if(marker!==null) mainMap.removeLayer(marker);
         marker = L.marker(lla).addTo(mainMap);
     }
+    function on_init(){
+        id_name.onkeyup = change_search_terms;
+        btn_id_namesearch.onclick = perform_search;
+        change_search_terms();
+    }
+    var searchajax = null;
+    function abort_search(){
+        if(searchajax!=null){
+            searchajax.abort();
+            searchajax = null;
+        }
+    }
+    function change_search_terms(){
+        abort_search();
+        var searchterm = id_name.value;
+        div_id_namesearch.style.display = (searchterm.length >= 3) ? "block" : "none";
+        div_id_namesearching.style.display = "none";
+        div_id_nameresults.style.display = "none";
+    }
+    function perform_search(){
+        abort_search();
+        var searchterm = id_name.value;
+        var searchurl = "{% url 'meethints' %}?for="+encodeURIComponent(searchterm);
+        searchajax = new XMLHttpRequest();
+        searchajax.open("GET", searchurl, true);
+        searchajax.onreadystatechange = partial_search_result;
+        searchajax.send(null);
+        div_id_namesearch.style.display = "none";
+        div_id_namesearching.style.display = "block";
+        div_id_nameresults.style.display = "none";
+    }
+    function partial_search_result(){
+        if(searchajax !== null && searchajax.readyState == 4 && searchajax.status == 200) {
+            try{
+                display_search_results(JSON.parse(searchajax.responseText));
+            } catch (e) {
+                display_search_results(null);
+            }
+        }
+    }
+    function display_search_results(result){
+        var hints = (result || {'hints': null}).hints || [];
+        while (div_id_nameresults.firstChild) { div_id_nameresults.firstChild.remove(); }
+        // Adding summary:
+        var node = document.createElement("div");
+        div_id_nameresults.appendChild(node);
+        node.className = "text-muted";
+        var node2 = document.createTextNode(template_displaying_n_results.innerText.replace(':n:', new String(hints.length)))
+        node.appendChild(node2);
+        // Adding card holder:
+        node = document.createElement("div");
+        div_id_nameresults.appendChild(node);
+        node.className = "card-columns";
+        // Adding cards
+        for(let hint of hints){
+            card = document.createElement("div");
+            card.className = "card card-body";
+            node.appendChild(card);
+            // Title
+            var elem = document.createElement("h5");
+            elem.className = "card-title";
+            elem.appendChild(document.createTextNode(hint.name));
+            card.appendChild(elem);
+            // Abstract
+            var elem = document.createElement("p");
+            elem.className = "card-text";
+            elem.appendChild(document.createTextNode(hint.abstract));
+            card.appendChild(elem);
+            // Latitude
+            var elem = document.createElement("p");
+            elem.className = "card-text";
+            var bold = document.createElement('strong');
+            bold.appendChild(document.createTextNode(template_latitude.innerText));
+            elem.appendChild(bold);
+            elem.appendChild(document.createTextNode(' '+(new String(hint.latitude))));
+            card.appendChild(elem);
+            // Longitude
+            var elem = document.createElement("p");
+            elem.className = "card-text";
+            var bold = document.createElement('strong');
+            bold.appendChild(document.createTextNode(template_longitude.innerText));
+            elem.appendChild(bold);
+            elem.appendChild(document.createTextNode(' '+(new String(hint.longitude))));
+            card.appendChild(elem);
+            // Link
+            var elem3 = document.createElement("p");
+            elem3.className = "card-text";
+            var elem2 = document.createElement("a");
+            elem2.href = hint.url;
+            elem2.target = "_blank";
+            var elem = document.createElement("small");
+            elem.className = "text-muted";
+            elem.appendChild(document.createTextNode(hint.url));
+            elem2.appendChild(elem);
+            elem3.appendChild(elem2);
+            card.appendChild(elem3);
+            // Language
+            var elem2 = document.createElement("p");
+            elem2.className = "card-text";
+            var elem = document.createElement("small");
+            elem.className = "text-muted";
+            elem.appendChild(document.createTextNode("@"+hint.language));
+            elem2.appendChild(elem);
+            card.appendChild(elem2);
+            // Set button
+            var elem = document.createElement("button");
+            elem.className = "btn btn-primary btn-block";
+            elem.type = "button";
+            icon = document.createElement("i");
+            icon.className = "fa fa-check";
+            icon.setAttribute('aria-hidden', 'true');
+            elem.appendChild(icon);
+            elem.appendChild(document.createTextNode(" "));
+            elem.appendChild(document.createTextNode(template_use_this_data.innerText));
+            elem.onclick = ()=>{use_search_result(hint);};
+            card.appendChild(elem);
+        }
+        // Add discard results button
+        var elem = document.createElement("button");
+        elem.className = "btn btn-outline-danger btn-block";
+        elem.type = "button";
+        icon = document.createElement("i");
+        icon.className = "fa fa-times";
+        icon.setAttribute('aria-hidden', 'true');
+        elem.appendChild(icon);
+        elem.appendChild(document.createTextNode(" "));
+        elem.appendChild(document.createTextNode(template_discard_results.innerText));
+        elem.onclick = ()=>{hide_results();};
+        div_id_nameresults.appendChild(elem);
+        // Setting proper display:
+        div_id_namesearch.style.display = "none";
+        div_id_namesearching.style.display = "none";
+        div_id_nameresults.style.display = "block";
+    }
+    function use_search_result(selected){
+        map_clicked({'latlng': {'lat': selected.latitude, 'lng': selected.longitude}});
+        id_name.value = selected.name;
+        id_description.value = selected.abstract;
+        hide_results();
+        div_id_privacy_require_account.scrollIntoView({block: "start", behavior: "smooth"});
+
+    }
+    function hide_results(){
+        abort_search();
+        div_id_namesearch.style.display = "block";
+        div_id_namesearching.style.display = "none";
+        div_id_nameresults.style.display = "none";
+    }
 </script>
 {% endblock additional_head %}
 
@@ -59,9 +207,29 @@
     {% csrf_token %}
     {{form.id|as_crispy_field}}
     {{form.title|as_crispy_field}}
-    {{form.description|as_crispy_field}}
     {{form.meeting|as_crispy_field}}
     {{form.name|as_crispy_field}}
+    <div id="div_id_namesearch" class="form-group" style="display: none;">
+        <button id="btn_id_namesearch" type="button" class="btn btn-primary btn-block">
+            <i class="fa fa-search" aria-hidden="true"></i>
+            {% trans "Search for geolocation and description" %}
+        </button>
+    </div>
+    <div id="div_id_namesearching" class="form-group" style="display: none;">
+        <button type="button" class="btn btn-outline-primary btn-block" disabled>
+            <i class="fa fa-spinner fa-pulse fa-fw" aria-hidden="true"></i>
+            {% trans "Searching for geolocation and description..." %}
+        </button>
+    </div>
+    <div id="div_id_nameresults" class="form-group" style="display: none;">
+    </div>
+    <div style="display: none;">
+        <div id="template_displaying_n_results">{% trans "Displaying :n: results:" %}</div>
+        <div id="template_latitude">{% trans "Latitude:" %}</div>
+        <div id="template_longitude">{% trans "Longitude:" %}</div>
+        <div id="template_use_this_data">{% trans "Use this data" %}</div>
+        <div id="template_discard_results">{% trans "Discard results" %}</div>
+    </div>
     {# Begin point selector field #}
     {% comment %} {{form.point|as_crispy_field}} {% endcomment %}
     <div id="div_id_point" class="form-group">
@@ -72,6 +240,7 @@
     </div>
     {{form.lat|as_crispy_field}}
     {{form.lng|as_crispy_field}}
+    {{form.description|as_crispy_field}}
     {# End point selector field #}
     {{form.privacy_require_account|as_crispy_field}}
     {{form.privacy_unlisted|as_crispy_field}}
@@ -82,4 +251,5 @@
         {% trans "Save" %}
     </button>
 </form>
+<script deferred>on_init();</script>
 {% endblock content %}

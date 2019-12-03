@@ -12,6 +12,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.contrib.gis.db.models.functions import Distance
 from django.contrib.gis.measure import D
 from .. import models
+from ..daos import PlaceSuggestionDAO
 from .exceptions import NotAuthorizedException, FormValidationFailedException
 
 
@@ -183,3 +184,6 @@ class MeetService:
             )
             star.notified=True
             star.save()
+    
+    def place_suggestions(self, _, plchnt):
+        return PlaceSuggestionDAO.get(plchnt)

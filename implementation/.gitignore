@@ -21,4 +21,7 @@
 /server_secrets/**
 /db.sqlite3
 /diagram.dia
+/ttlbuilder/**
+!/ttlbuilder/Makefile
+!/ttlbuilder/ttls.txt
 !/implementation/webproj/locale/**/LC_MESSAGES/django.mo

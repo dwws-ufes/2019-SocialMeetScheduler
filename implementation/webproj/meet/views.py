@@ -11,6 +11,7 @@ from django.shortcuts import redirect
 from django.shortcuts import render
 from django.http import HttpRequest
 from django.http import HttpResponse
+from django.http import JsonResponse
 from django.http import Http404
 from django.core.exceptions import PermissionDenied as Http403
 from typing import Union
@@ -542,3 +543,13 @@ class MeetStarEdit(View, DeleteMixin):
     def delete(self, request: HttpRequest, service: services.MeetService, meet_star: models.MeetStar):
         super().delete(request, service, meet_star)
         return redirect('meetstars', key=meet_star.meet.key)
+
+
+@method_decorator(Inject(service=services.MeetService), name='dispatch')
+class MeetHints(View, ListMixin):
+    SRVC_LST_METHOD = 'place_suggestions'
+
+    def get(self, request: HttpRequest, service: services.MeetService):
+        hint = request.GET.get('for', '')
+        hints = super().get(request, service, plchnt=hint)
+        return JsonResponse({'hints': [hint.__dict__ for hint in hints]})
