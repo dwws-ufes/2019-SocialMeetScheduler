@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block title %}
+{% trans "Linked Data Dump" %} | {{ block.super }}
+{% endblock title %}
+
+{% block content %}
+<h3>
+    {% trans "Linked Data Dump" %}
+</h3>
+<p>
+    <a class="btn btn-primary" href="{% url 'lddumpdownload' 'ttl' %}" download>
+        <i class="fa fa-download" aria-hidden="true"></i>
+        {% trans "Download TTL" %}
+    </a>
+<p>
+</p>
+    <a class="btn btn-primary" href="{% url 'lddumpdownload' 'n3' %}" download>
+        <i class="fa fa-download" aria-hidden="true"></i>
+        {% trans "Download N3" %}
+    </a>
+<p>
+</p>
+    <a class="btn btn-primary" href="{% url 'lddumpdownload' 'nt' %}" download>
+        <i class="fa fa-download" aria-hidden="true"></i>
+        {% trans "Download NT" %}
+    </a>
+<p>
+</p>
+    <a class="btn btn-primary" href="{% url 'lddumpdownload' 'rdf' %}" download>
+        <i class="fa fa-download" aria-hidden="true"></i>
+        {% trans "Download RDF/XML" %}
+    </a>
+</p>
+</p>
+    <a class="btn btn-primary" href="{% url 'lddumpdownload' 'trig' %}" download>
+        <i class="fa fa-download" aria-hidden="true"></i>
+        {% trans "Download TriG" %}
+    </a>
+</p>
+{% endblock content %}

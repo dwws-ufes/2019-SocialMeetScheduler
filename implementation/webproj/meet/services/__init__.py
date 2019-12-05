@@ -3,6 +3,7 @@
 from .FriendService import FriendService
 from .MeetService import MeetService
 from .MessengerService import MessengerService
+from .LDService import LDService
 from .exceptions import ServiceException
 from .exceptions import NotFoundException
 from .exceptions import NotAuthorizedException
@@ -16,5 +17,6 @@ __all__ = [
     'FriendService',
     'MeetService',
     'MessengerService',
+    'LDService',
 ]
 

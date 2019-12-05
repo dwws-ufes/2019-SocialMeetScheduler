@@ -1,7 +1,7 @@
 arrow==0.11.0
 asgiref==3.2.3
 asn1crypto==0.24.0
-astroid==2.2.5
+astroid==2.3.3
 backports.csv==1.0.7
 beautifulsoup4==4.8.1
 certifi==2019.3.9
@@ -51,7 +51,7 @@ polib==1.1.0
 psycopg2-binary==2.8.4
 pycdi==0.1.2
 pycparser==2.19
-pylint==2.3.1
+pylint==2.4.4
 pylint-django==2.0.13
 pylint-plugin-utils==0.6
 pyparsing==2.4.5

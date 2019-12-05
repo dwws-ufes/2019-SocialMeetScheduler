@@ -11,6 +11,11 @@
         {% trans "written by Adler Neves" %}
     </p>
     <p>
+        <a href="{% url 'lddump' %}">
+            {% trans "Linked Data Dump" %}
+        </a>
+    </p>
+    <p>
         {% get_current_timezone as TIME_ZONE %}
         Current timezone: <a title="{% trans 'ftr_tz_chg' %}" href="{% url 'timezone' %}?next={{request.get_full_path|urlencode}}">{{TIME_ZONE}}</a> ({% now 'r' %})
     </p>

@@ -84,14 +84,17 @@ class MessengerService:
             return self.send_message(user, form, mailbox)
 
     def list_mailboxes(self, user):
+        if user.is_anonymous:
+            return models.ChatMailbox.objects.filter(initiator=None, initiated=None).all()
         return models.ChatMailbox.objects.filter(Q(initiator=user) | Q(initiated=user)).all()
 
-    def read_mailbox(self, user, mailbox):
+    def read_mailbox(self, user, mailbox, quietly=False):
         self.assert_mailbox_readable(user, mailbox)
         other = mailbox.initiator
         if other.pk == user.pk:
             other = mailbox.initiated
-        mailbox.messages.filter(sender=other, read=False).update(read=True)
+        if not quietly:
+            mailbox.messages.filter(sender=other, read=False).update(read=True)
         return mailbox.messages.all()
 
     def assert_mailbox_readable(self, user, mailbox):

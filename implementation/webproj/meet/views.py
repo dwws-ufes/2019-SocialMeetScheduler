@@ -553,3 +553,23 @@ class MeetHints(View, ListMixin):
         hint = request.GET.get('for', '')
         hints = super().get(request, service, plchnt=hint)
         return JsonResponse({'hints': [hint.__dict__ for hint in hints]})
+
+
+class LDDump(TemplateView):
+    template_name = 'lddump.html'
+
+
+@method_decorator(Inject(service=services.LDService), name='dispatch')
+class LDDumpDownload(View):
+    def get(self, request: HttpRequest, service: services.LDService, fmt: str = 'rdf'):
+        g = service.dump_all(request.user)
+        data, mime = service.serialize(request.user, g, fmt)
+        return HttpResponse(data, content_type=mime)
+
+
+@method_decorator(Inject(service=services.LDService), name='dispatch')
+class LDModelBuild(View):
+    def get(self, request: HttpRequest, service: services.LDService, model: str, pk: int, fmt: str):
+        g = service.dump_instance(request.user, model, pk)
+        data, mime = service.serialize(request.user, g, fmt)
+        return HttpResponse(data, content_type=mime)

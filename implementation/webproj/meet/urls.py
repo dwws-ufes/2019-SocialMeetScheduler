@@ -24,5 +24,9 @@ urlpatterns = [
     path('meets/nearby', views.MeetsNearby.as_view(), name='meets_nearby'),
     re_path(r'^meets/nearby/(?P<lats>-?\d+(?:\.\d+)?);(?P<longs>-?\d+(?:\.\d+)?)$', views.MeetsNearby.as_view(), name='meets_nearby_precise'),
     path('meets/popular', views.MeetsPopular.as_view(), name='meets_popular'),
+    path('ld/index.html', views.LDDump.as_view(), name="lddump"),
+    path('ld/dump', views.LDDumpDownload.as_view(), name="lddumpdownload"),
+    path('ld/dump.<str:fmt>', views.LDDumpDownload.as_view(), name="lddumpdownload"),
+    path('ld/<str:model>/<int:pk>.<str:fmt>', views.LDModelBuild.as_view(), name="ldmodelbuild"),
 ]
 
