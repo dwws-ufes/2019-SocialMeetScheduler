@@ -41,6 +41,8 @@ DBO = Namespace('http://dbpedia.org/ontology/')
 DBP = Namespace('http://dbpedia.org/property/')
 GEO = Namespace('http://www.w3.org/2003/01/geo/wgs84_pos#')
 MERE = Namespace('http://ontology.eil.utoronto.ca/icity/Mereology/')
+CCNS = Namespace('http://creativecommons.org/ns#')
+WRCC = Namespace('http://web.resource.org/cc/')
 
 
 @Singleton()
@@ -103,7 +105,9 @@ class LDService:
         return g
     
     def uri_of(self, instance) -> URIRef:
-        return URIRef(f'https://{settings.ALLOWED_HOSTS[0]}{reverse("ldmodelbuild", args=[instance.__class__.__name__, instance.pk, "rdf"])}')
+        host = settings.ALLOWED_HOSTS[0]
+        host = 'localhost:8000' if host=='*' else host
+        return URIRef(f'https://{host}{reverse("ldmodelbuild", args=[instance.__class__.__name__, instance.pk, "rdf"])}')
 
     def _serizize(self, user, instance, g):
         thisuri = self.uri_of(instance)
@@ -130,6 +134,11 @@ class LDService:
                 g.add((thisuri, MERE.containedIn, otheruri))
                 g.add((thisuri, PURL_REL.participantIn, otheruri))
                 g.add((thisuri, PURL_REL.usesList, otheruri))
+            g.add((thisuri, CCNS.prohibits, CCNS.Sharing))
+            g.add((thisuri, CCNS.prohibits, CCNS.DerivativeWorks))
+            g.add((thisuri, CCNS.prohibits, CCNS.Reproduction))
+            g.add((thisuri, CCNS.prohibits, CCNS.Distribution))
+            g.add((thisuri, CCNS.prohibits, CCNS.CommercialUse))
         elif isinstance(instance, models.ChatMailbox):
             self.services.messenger.assert_mailbox_readable(user, instance)
             g.add((thisuri, RDF.type, OWL.Thing))
@@ -143,6 +152,11 @@ class LDService:
                 otheruri = self.uri_of(message)
                 g.add((thisuri, MERE.hasProperPart, otheruri))
                 g.add((thisuri, MERE.contains, otheruri))
+            g.add((thisuri, CCNS.prohibits, CCNS.Sharing))
+            g.add((thisuri, CCNS.prohibits, CCNS.DerivativeWorks))
+            g.add((thisuri, CCNS.prohibits, CCNS.Reproduction))
+            g.add((thisuri, CCNS.prohibits, CCNS.Distribution))
+            g.add((thisuri, CCNS.prohibits, CCNS.CommercialUse))
         elif isinstance(instance, models.ChatMessage):
             self.services.messenger.assert_mailbox_readable(user, instance.mailbox)
             g.add((thisuri, RDF.type, OWL.Thing))
@@ -153,14 +167,24 @@ class LDService:
             g.add((thisuri, DBP.firstPublicationDate, Literal(instance.sent)))
             g.add((thisuri, DBP.lastPublicationDate, Literal(instance.sent)))
             g.add((thisuri, DBP.unicode, Literal(instance.message)))
+            g.add((thisuri, CCNS.prohibits, CCNS.Sharing))
+            g.add((thisuri, CCNS.prohibits, CCNS.DerivativeWorks))
+            g.add((thisuri, CCNS.prohibits, CCNS.Reproduction))
+            g.add((thisuri, CCNS.prohibits, CCNS.Distribution))
+            g.add((thisuri, CCNS.prohibits, CCNS.CommercialUse))
         elif isinstance(instance, models.MeetExternalLinks):
             g.add((thisuri, RDF.type, OWL.Thing))
             g.add((thisuri, RDF.type, DBO.Reference))
             g.add((thisuri, MERE.properPartOf, self.uri_of(instance.parent)))
             g.add((thisuri, MERE.containedIn, self.uri_of(instance.parent)))
             g.add((thisuri, RDFS.label, Literal(instance.name)))
-            g.add((thisuri, RDFS.seeAlso, URIRef(instance.url)))
-            g.add((thisuri, DBP.reference, URIRef(instance.url)))
+            g.add((thisuri, RDFS.seeAlso, Literal(instance.url)))
+            g.add((thisuri, DBP.reference, Literal(instance.url)))
+            g.add((thisuri, CCNS.permission, CCNS.Sharing))
+            g.add((thisuri, CCNS.permission, CCNS.DerivativeWorks))
+            g.add((thisuri, CCNS.permission, CCNS.Reproduction))
+            g.add((thisuri, CCNS.prohibits, CCNS.Distribution))
+            g.add((thisuri, CCNS.prohibits, CCNS.CommercialUse))
         elif isinstance(instance, models.Meet):
             self.services.meet.assert_can_see_meet(user, instance)
             g.add((thisuri, RDF.type, OWL.Thing))
@@ -182,6 +206,11 @@ class LDService:
                 otheruri = self.uri_of(star.owner)
                 g.add((thisuri, DUL.hasParticipant, otheruri))
                 g.add((thisuri, PURL_REL.participant, otheruri))
+            g.add((thisuri, CCNS.permission, CCNS.Sharing))
+            g.add((thisuri, CCNS.permission, CCNS.DerivativeWorks))
+            g.add((thisuri, CCNS.permission, CCNS.Reproduction))
+            g.add((thisuri, CCNS.prohibits, CCNS.Distribution))
+            g.add((thisuri, CCNS.prohibits, CCNS.CommercialUse))
         else:
             raise NotAuthorizedException(_('The requested data cannot be served.'))
 
