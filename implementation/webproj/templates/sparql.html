@@ -1,0 +1,164 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block title %}
+{% trans "SPARQL" %} | {{ block.super }}
+{% endblock title %}
+
+{% block additional_head %}{{ block.super }}
+<script defer>
+function escapeHtml(unsafe) {
+    return (new String(unsafe))
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
+function newLineFormatter(txt) {
+    return (new String(txt))
+        .replace(/\n/g, "<br>")
+        .replace(/ /g, "&nbsp;");
+}
+</script>
+{% endblock additional_head %}
+
+{% block content %}
+<h1>
+    {% trans "SPARQL" %}
+</h1>
+<p>
+    <div class="form-group">
+      <label for="sparqlurl">{% trans "SPARQL-over-HTTP endpoint:" %}</label>
+      <input type="text" class="form-control" id="sparqlurl" aria-describedby="sparqlurlHelpId" value="https://{{settings.SITE_URL}}{% url 'sparql' %}" readonly>
+      <small id="sparqlurlHelpId" class="form-text text-muted">{% trans "This is the URL you should query on your program; this current page just displays its output." %}</small>
+    </div>
+</p>
+<p>
+    <form method="GET" action="{% url 'sparql' %}">
+        <div class="form-group">
+            <label for="sparql">{% trans "Your SPARQL query:" %}</label>
+            <textarea rows="10" class="form-control" name="query" id="sparql" placeholder="{% trans "Your query goes here..." %}" style="font-family: monospace;">{{samplequery}}</textarea>
+        </div>
+        <button type="button" id="query_btn" class="btn btn-primary" btn-lg btn-block>
+            <i class="fa fa-search" aria-hidden="true"></i>
+            {% trans "Query" %}
+        </button>
+    </form>
+</p>
+<div id="error_query_unknown" style="display: none;">
+    <i class="fa fa-times-circle" aria-hidden="true"></i>
+    {% trans "Unknown error while querying" %}
+</div>
+<div id="query_running" style="display: none;">
+    <i class="fa fa-spinner fa-pulse fa-fw" aria-hidden="true"></i>
+    {% trans "Fetching results..." %}
+</div>
+<div id="result_deposit"></div>
+<script defer>
+function do_search(){
+    {% if settings.DEBUG %}
+    var searchurl = `/sparql?query=${encodeURIComponent(sparql.value)}`;
+    {% else %}
+    var searchurl = `${sparqlurl.value}?query=${encodeURIComponent(sparql.value)}`;
+    {% endif %}
+    var card = document.createElement('div');
+    card.className = "card";
+    card.style.marginBottom = "0.5em";
+    var cardbody = document.createElement('div');
+    cardbody.className = "card-body";
+    cardbody.innerHTML = query_running.innerHTML;
+    card.appendChild(cardbody);
+    var cardfooter = document.createElement('div');
+    cardfooter.className = "card-footer text-muted";
+    cardfooter.style.fontFamily = "monospace";
+    cardfooter.style.fontSize = "75%";
+    cardfooter.innerHTML = newLineFormatter(escapeHtml(sparql.value));
+    card.appendChild(cardfooter);
+    if(result_deposit.firstChild){
+        result_deposit.insertBefore(card, result_deposit.firstChild);
+    }else{
+        result_deposit.appendChild(card)
+    }
+    var elem = cardbody;
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET", searchurl, true);
+    xhr.setRequestHeader('Accept', 'application/json; encoding=UTF-8');
+    xhr.onreadystatechange = ()=>{partial_search_result(xhr, elem);};
+    xhr.send(null);
+}
+function partial_search_result(xhr, elem){
+    if(xhr !== null && xhr.readyState == 4) {
+        if(xhr.status == 200){
+            try{
+                display_search_results(elem, JSON.parse(xhr.responseText));
+            } catch (e) {
+                display_search_results(elem, null, error_query_unknown.innerHTML);
+            }
+        }
+        else if(xhr.status == 502){
+            display_search_results(elem, null, xhr.responseText);
+        }else{
+            display_search_results(elem, null, newLineFormatter(escapeHtml(xhr.responseText)));
+        }
+    }
+}
+function display_search_results(elem, res, err){
+    if(res===null || res===undefined){
+        elem.innerHTML = err;
+        elem.className += ' alert-danger';
+    }else{
+        while (elem.firstChild) { elem.firstChild.remove(); }
+        var table = document.createElement('table');
+        table.className = 'table table-striped table-bordered table-hover';
+        var thead = document.createElement('thead');
+        var tr = document.createElement('tr');
+        var td = document.createElement('th');
+        td.appendChild(document.createTextNode('#'));
+        tr.appendChild(td);
+        for(var lab of res.head.vars){
+            var td = document.createElement('th');
+            td.appendChild(document.createTextNode(lab));
+            tr.appendChild(td);
+        }
+        thead.appendChild(tr);
+        table.appendChild(thead);
+        var tbody = document.createElement('tbody');
+        var c = 0;
+        for(var ln of res.results.bindings){
+            c++;
+            var tr = document.createElement('tr');
+            var td = document.createElement('td');
+            td.appendChild(document.createTextNode(c));
+            tr.appendChild(td);
+            for(var lab of res.head.vars){
+                var pill = document.createElement('span');
+                pill.appendChild(document.createTextNode(ln[lab].type));
+                pill.className = 'badge badge-info';
+                pill.style.position = 'absolute';
+                pill.style.marginTop = '-1em';
+                pill.style.marginLeft = '-1em';
+                pill.style.fontSize = '65%';
+                var td = document.createElement('td');
+                var span = document.createElement((ln[lab].type=='uri') ? 'a' : 'span');
+                span.appendChild(document.createTextNode(ln[lab].value));
+                if(ln[lab].type=='uri'){span.href = ln[lab].value; span.className = 'text-dark';}
+                td.appendChild(pill);
+                td.appendChild(document.createTextNode(' '));
+                td.appendChild(span);
+                tr.appendChild(td);
+            }
+            tbody.appendChild(tr);
+        }
+        table.appendChild(tbody);
+        elem.appendChild(table);
+        thead.className = 'thead-dark';
+        table.style.fontSize = "85%";
+        table.style.marginBottom = "0em";
+        elem.className = '';
+    }
+}
+
+query_btn.onclick = do_search;
+</script>
+{% endblock content %}

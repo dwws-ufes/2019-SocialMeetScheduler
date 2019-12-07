@@ -14,6 +14,10 @@
         <a href="{% url 'lddump' %}">
             {% trans "Linked Data Dump" %}
         </a>
+        &middot;
+        <a href="{% url 'sparql_form' %}">
+            {% trans "SPARQL" %}
+        </a>
     </p>
     <p>
         {% get_current_timezone as TIME_ZONE %}

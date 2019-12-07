@@ -28,5 +28,7 @@ urlpatterns = [
     path('ld/dump', views.LDDumpDownload.as_view(), name="lddumpdownload"),
     path('ld/dump.<str:fmt>', views.LDDumpDownload.as_view(), name="lddumpdownload"),
     path('ld/<str:model>/<int:pk>.<str:fmt>', views.LDModelBuild.as_view(), name="ldmodelbuild"),
+    path('sparql', views.SparqlReverseProxy.as_view(), name="sparql"),
+    path('ld/sparql', views.Sparql.as_view(), name="sparql_form"),
 ]
 

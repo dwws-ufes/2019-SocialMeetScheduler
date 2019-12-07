@@ -6,6 +6,7 @@ from django.db.models import Model as BaseModel
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from django.utils.safestring import mark_safe
+from django.utils.html import urlencode
 from django.shortcuts import resolve_url
 from django.shortcuts import redirect
 from django.shortcuts import render
@@ -20,6 +21,7 @@ from typing import List
 from typing import Dict
 from pycdi import Inject
 import page_components
+import requests
 
 from django.contrib.gis.geos import Point
 from django.utils.translation import ugettext_lazy as _
@@ -573,3 +575,34 @@ class LDModelBuild(View):
         g = service.dump_instance(request.user, model, pk)
         data, mime = service.serialize(request.user, g, fmt)
         return HttpResponse(data, content_type=mime)
+
+
+class SparqlReverseProxy(TemplateView):
+    template_name = 'sparql_reverseproxy.html'
+
+    def get(self, request, *args, **kwargs):
+        if request.GET.get('query', ''):
+            u = f'http://localhost:64164/meet/sparql?{urlencode(request.GET)}'
+            r = requests.get(url=u, params={'Accept': request.META.get('HTTP_ACCEPT', 'application/json; encoding=UTF-8')})
+            return HttpResponse(
+                content=r.content,
+                status=r.status_code,
+                content_type=r.headers['Content-Type']
+            )
+        else:
+            return super().get(request, *args, **kwargs)
+
+
+class Sparql(TemplateView):
+    template_name = 'sparql.html'
+    def get_context_data(self, *args, **kwargs):
+        return super().get_context_data(*args, **{
+            **kwargs,
+            'samplequery': (
+                'SELECT ?subject ?predicate ?object' + '\n' +
+                'WHERE {' + '\n' +
+                '    ?subject ?predicate ?object' + '\n' +
+                '}' + '\n' +
+                'LIMIT 25'
+            ),
+        })
