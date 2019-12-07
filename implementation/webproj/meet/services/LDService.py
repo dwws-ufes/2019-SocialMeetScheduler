@@ -114,7 +114,7 @@ class LDService:
             g.add((thisuri, RDFS.label, Literal(instance.username)))
             g.add((thisuri, FOAF.name, Literal(instance.username)))
             for friend in self.services.friend.established_friends(instance):
-                otheruri = self.uri_of(friend)
+                otheruri = self.uri_of(friend.initiator if friend.initiated.pk == instance.pk else friend.initiated)
                 g.add((thisuri, FOAF.knows, otheruri))
                 g.add((thisuri, PURL_REL.knowsOf, otheruri))
                 g.add((thisuri, PURL_REL.friendOf, otheruri))
