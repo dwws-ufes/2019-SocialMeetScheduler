@@ -1,0 +1,13 @@
+[Unit]
+Description=Meet Web SPARQL service
+After=network.target meet-webapp.service
+
+[Service]
+User=http
+Group=http
+WorkingDirectory=/var/www/meet
+ExecStart=/usr/bin/make tdbserver
+KillSignal=SIGINT
+
+[Install]
+WantedBy=multi-user.target

@@ -54,12 +54,14 @@ fulldeploy: virtual_env
 	-sudo mkdir -p /var/www/meet/media
 	sudo systemctl daemon-reload
 	sudo systemctl enable meet-webapp.service
+	sudo systemctl enable meet-sparql.service
 	cd /var/www/meet; sudo chown http:http -R .
 	sudo make -C /var/www/meet all
 	sudo make -C /var/www/meet test
 	sudo make -C /var/www/meet gzip_static_media
 	cd /var/www/meet; sudo chown http:http -R .
 	sudo systemctl restart meet-webapp.service
+	sudo systemctl restart meet-sparql.service
 	sudo systemctl reload nginx.service
 
 deploy: virtual_env
@@ -82,12 +84,14 @@ deploy: virtual_env
 	-sudo mkdir -p /var/www/meet/media
 	sudo systemctl daemon-reload
 	sudo systemctl enable meet-webapp.service
+	sudo systemctl enable meet-sparql.service
 	cd /var/www/meet; sudo chown http:http -R .
 	sudo make -C /var/www/meet all
 	sudo make -C /var/www/meet test
 	sudo make -C /var/www/meet gzip_static_media
 	cd /var/www/meet; sudo chown http:http -R .
 	sudo systemctl restart meet-webapp.service
+	sudo systemctl restart meet-sparql.service
 
 gzip_static_media:
 	-find ./static -name "*.gz" | xargs rm
@@ -150,3 +154,31 @@ rundocker:
 stopdocker:
 	-sudo docker stop /dwws2019meet
 	-sudo docker rm /dwws2019meet
+
+devtdb: devtmp.ttl
+	rm -rf devtdb
+	tdbloader2 --loc devtdb devtmp.ttl
+	rm devtmp.ttl
+
+devtmp.ttl:
+	wget http://localhost:8000/ld/dump.ttl
+	mv dump.ttl devtmp.ttl
+
+tmp.ttl:
+	wget http://localhost:19843/ld/dump.ttl
+	mv dump.ttl tmp.ttl
+
+tdb: tmp.ttl
+	rm -rf tdb
+	tdbloader2 --loc tdb tmp.ttl
+	rm tmp.ttl
+
+cleartdb:
+	rm -rf devtmp.ttl tmp.ttl devtdb tdb
+
+devtdbserver: devtdb
+	FUSEKI_BASE="$$(pwd)/fuseki" fuseki-server --timeout=30000 --port 64164 --loc=devtdb /meet
+
+tdbserver: tdb
+	FUSEKI_BASE="$$(pwd)/fuseki" fuseki-server --timeout=30000 --port 64164 --loc=tdb /meet
+

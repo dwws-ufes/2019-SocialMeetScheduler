@@ -128,10 +128,14 @@ This somewhat easier approach (than setting an email server up), however, [has s
 
 ### Crontab setup
 
-Edit your crontab (with `crontab -e`) and add this line:
+Edit your crontab (with `crontab -e`) and add these lines:
 
 ```sh
  * * * * * cronic make sendstaremails -C /var/www/meet
+```
+
+```sh
+ 0 * * * * cronic systemctl restart meet-sparql.service
 ```
 
 ### Docker
