@@ -50,6 +50,7 @@ fulldeploy: virtual_env
 	-sudo cp -rf ./webproj /var/www/meet/webproj
 	sudo make -C /var/www/meet depends
 	sudo install ./server_deploy_config/meet-webapp.service /etc/systemd/system
+	sudo install ./server_deploy_config/meet-sparql.service /etc/systemd/system
 	sudo install ./server_deploy_config/events-furmeet-app-http.conf /etc/nginx/sites-available
 	-sudo mkdir -p /var/www/meet/media
 	sudo systemctl daemon-reload
@@ -81,6 +82,7 @@ deploy: virtual_env
 	-sudo cp -rf ./webproj /var/www/meet/webproj
 	sudo make -C /var/www/meet depends
 	sudo install ./server_deploy_config/meet-webapp.service /etc/systemd/system
+	sudo install ./server_deploy_config/meet-sparql.service /etc/systemd/system
 	-sudo mkdir -p /var/www/meet/media
 	sudo systemctl daemon-reload
 	sudo systemctl enable meet-webapp.service
