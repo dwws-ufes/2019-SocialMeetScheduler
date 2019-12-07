@@ -213,4 +213,3 @@ class LDService:
             g.add((thisuri, CCNS.prohibits, CCNS.CommercialUse))
         else:
             raise NotAuthorizedException(_('The requested data cannot be served.'))
-
