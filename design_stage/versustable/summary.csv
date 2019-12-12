@@ -1,0 +1,17 @@
+file,generated,generated,generated,similarity,final,final,final,file
+file,chars,chars/line,lines,similarity,lines,chars/line,chars,file
+-----,-----,-----,-----,-----,-----,-----,-----,-----
+models/ChatMailbox.py,865,20.12,43,93.61%,44,20.55,904,models/ChatMailbox.py
+models/ChatMessage.py,904,20.09,45,94.82%,47,20.21,950,models/ChatMessage.py
+models/Friendship.py,751,19.76,38,93.94%,39,20.49,799,models/Friendship.py
+models/Marker.py,1281,19.12,67,91.83%,73,19.33,1411,models/Marker.py
+models/Meet.py,618,18.73,33,98.05%,33,18.55,612,models/Meet.py
+models/MeetExternalLinks.py,565,19.48,29,97.79%,29,19.52,566,models/MeetExternalLinks.py
+models/MeetStar.py,885,19.67,45,95.10%,47,19.79,930,models/MeetStar.py
+models/__init__.py,405,19.29,21,90.60%,25,19.56,489,models/__init__.py
+services/FriendService.py,539,28.37,19,17.44%,79,35.43,2799,services/FriendService.py
+services/LDService.py,0,0.00,0,0.00%,272,51.68,14058,services/LDService.py
+services/MeetService.py,753,30.12,25,10.31%,194,40.93,7941,services/MeetService.py
+services/MessengerService.py,425,26.56,16,9.21%,105,39.81,4180,services/MessengerService.py
+services/__init__.py,232,17.85,13,57.00%,23,25.30,582,services/__init__.py
+services/exceptions.py,0,0.00,0,0.00%,29,17.07,495,services/exceptions.py

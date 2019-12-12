@@ -1,0 +1,184 @@
+{
+    "models\/ChatMailbox.py": {
+        "generated": {
+            "lines": 43,
+            "chars": 865,
+            "chars_per_line": 20.11627906976744
+        },
+        "final": {
+            "lines": 44,
+            "chars": 904,
+            "chars_per_line": 20.545454545454547
+        },
+        "similarity": 93.61221028829847
+    },
+    "models\/ChatMessage.py": {
+        "generated": {
+            "lines": 45,
+            "chars": 904,
+            "chars_per_line": 20.08888888888889
+        },
+        "final": {
+            "lines": 47,
+            "chars": 950,
+            "chars_per_line": 20.21276595744681
+        },
+        "similarity": 94.8220064724919
+    },
+    "models\/Friendship.py": {
+        "generated": {
+            "lines": 38,
+            "chars": 751,
+            "chars_per_line": 19.763157894736842
+        },
+        "final": {
+            "lines": 39,
+            "chars": 799,
+            "chars_per_line": 20.487179487179485
+        },
+        "similarity": 93.93548387096774
+    },
+    "models\/Marker.py": {
+        "generated": {
+            "lines": 67,
+            "chars": 1281,
+            "chars_per_line": 19.119402985074625
+        },
+        "final": {
+            "lines": 73,
+            "chars": 1411,
+            "chars_per_line": 19.328767123287673
+        },
+        "similarity": 91.82763744427935
+    },
+    "models\/Meet.py": {
+        "generated": {
+            "lines": 33,
+            "chars": 618,
+            "chars_per_line": 18.727272727272727
+        },
+        "final": {
+            "lines": 33,
+            "chars": 612,
+            "chars_per_line": 18.545454545454547
+        },
+        "similarity": 98.04878048780488
+    },
+    "models\/MeetExternalLinks.py": {
+        "generated": {
+            "lines": 29,
+            "chars": 565,
+            "chars_per_line": 19.482758620689655
+        },
+        "final": {
+            "lines": 29,
+            "chars": 566,
+            "chars_per_line": 19.517241379310345
+        },
+        "similarity": 97.789566755084
+    },
+    "models\/MeetStar.py": {
+        "generated": {
+            "lines": 45,
+            "chars": 885,
+            "chars_per_line": 19.666666666666668
+        },
+        "final": {
+            "lines": 47,
+            "chars": 930,
+            "chars_per_line": 19.78723404255319
+        },
+        "similarity": 95.09641873278237
+    },
+    "models\/__init__.py": {
+        "generated": {
+            "lines": 21,
+            "chars": 405,
+            "chars_per_line": 19.285714285714285
+        },
+        "final": {
+            "lines": 25,
+            "chars": 489,
+            "chars_per_line": 19.56
+        },
+        "similarity": 90.60402684563758
+    },
+    "services\/FriendService.py": {
+        "generated": {
+            "lines": 19,
+            "chars": 539,
+            "chars_per_line": 28.36842105263158
+        },
+        "final": {
+            "lines": 79,
+            "chars": 2799,
+            "chars_per_line": 35.43037974683544
+        },
+        "similarity": 17.43559017375674
+    },
+    "services\/LDService.py": {
+        "generated": {
+            "lines": 0,
+            "chars": 0,
+            "chars_per_line": 0
+        },
+        "final": {
+            "lines": 272,
+            "chars": 14058,
+            "chars_per_line": 51.68382352941177
+        },
+        "similarity": 0
+    },
+    "services\/MeetService.py": {
+        "generated": {
+            "lines": 25,
+            "chars": 753,
+            "chars_per_line": 30.12
+        },
+        "final": {
+            "lines": 194,
+            "chars": 7941,
+            "chars_per_line": 40.93298969072165
+        },
+        "similarity": 10.305958132045088
+    },
+    "services\/MessengerService.py": {
+        "generated": {
+            "lines": 16,
+            "chars": 425,
+            "chars_per_line": 26.5625
+        },
+        "final": {
+            "lines": 105,
+            "chars": 4180,
+            "chars_per_line": 39.80952380952381
+        },
+        "similarity": 9.207383279044517
+    },
+    "services\/__init__.py": {
+        "generated": {
+            "lines": 13,
+            "chars": 232,
+            "chars_per_line": 17.846153846153847
+        },
+        "final": {
+            "lines": 23,
+            "chars": 582,
+            "chars_per_line": 25.304347826086957
+        },
+        "similarity": 57.002457002457
+    },
+    "services\/exceptions.py": {
+        "generated": {
+            "lines": 0,
+            "chars": 0,
+            "chars_per_line": 0
+        },
+        "final": {
+            "lines": 29,
+            "chars": 495,
+            "chars_per_line": 17.06896551724138
+        },
+        "similarity": 0
+    }
+}
