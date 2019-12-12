@@ -67,12 +67,14 @@
         div_id_nameresults.style.display = "none";
     }
     function partial_search_result(){
-        if(searchajax !== null && searchajax.readyState == 4 && searchajax.status == 200) {
-            try{
-                display_search_results(JSON.parse(searchajax.responseText));
-            } catch (e) {
-                display_search_results(null);
-            }
+        if(searchajax !== null && searchajax.readyState == 4){
+            if(searchajax.status == 200) {
+                try{
+                    display_search_results(JSON.parse(searchajax.responseText));
+                } catch (e) {
+                    display_search_results(null);
+                }
+            } else display_search_results(null);
         }
     }
     function display_search_results(result){
@@ -173,6 +175,7 @@
         map_clicked({'latlng': {'lat': selected.latitude, 'lng': selected.longitude}});
         id_name.value = selected.name;
         id_description.value = selected.abstract;
+        id_point_ld.value = selected.url;
         hide_results();
         div_id_privacy_require_account.scrollIntoView({block: "start", behavior: "smooth"});
 
@@ -182,6 +185,9 @@
         div_id_namesearch.style.display = "block";
         div_id_namesearching.style.display = "none";
         div_id_nameresults.style.display = "none";
+    }
+    function hide_placeld(){
+        id_point_ld.value = '';
     }
 </script>
 {% endblock additional_head %}
@@ -229,6 +235,17 @@
         <div id="template_longitude">{% trans "Longitude:" %}</div>
         <div id="template_use_this_data">{% trans "Use this data" %}</div>
         <div id="template_discard_results">{% trans "Discard results" %}</div>
+    </div>
+    <div id="div_id_point_ld" class="form-group">
+        <label for="id_point_ld" class="col-form-label  requiredField">
+            {% trans "form_meet_point_ld_label" %}<span class="asteriskField">*</span>
+        </label>
+        <div class="input-group">
+            <input type="text" class="form-control" name="point_ld" id="id_point_ld" placeholder="http://..." value="{{form.point_ld.value|default_if_none:''}}" readonly>
+            <button class="btn btn-danger input-group-append" type="button" onclick="hide_placeld()">
+                <i class="fa fa-times" aria-hidden="true"></i>
+            </button>
+        </div>
     </div>
     {# Begin point selector field #}
     {% comment %} {{form.point|as_crispy_field}} {% endcomment %}

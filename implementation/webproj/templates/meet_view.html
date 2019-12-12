@@ -5,6 +5,7 @@
 {{ meet.title }} | {{ block.super }}
 {% endblock title %}
 
+{% load linkeddata %}
 {% block additional_head %}
 {% leaflet_js %}
 {% leaflet_css %}
@@ -18,6 +19,11 @@
         L.marker([lon, lat]).addTo(map);
     }
 </script>
+{{ block.super }}
+{{meet|linkeddata}}
+{% for mel in meet.external_links.all %}
+{{mel|linkeddata}}
+{% endfor %}
 {% endblock additional_head %}
 
 {% block content %}
@@ -29,7 +35,15 @@
     <dd class="col-sm-9">{{ meet.title }}</dd>
 
     <dt class="col-sm-3">{% trans "field_meet_name" %}</dt>
-    <dd class="col-sm-9">{{ meet.name }}</dd>
+    <dd class="col-sm-9">
+        {% if meet.point_ld %}
+        <a href="{{meet.point_ld}}">
+            {{ meet.name }}
+        </a>
+        {% else %}
+        {{ meet.name }}
+        {% endif %}
+    </dd>
 
     <dt class="col-sm-3">{% trans "field_meet_meeting" %}</dt>
     <dd class="col-sm-9">{{ meet.meeting }}</dd>

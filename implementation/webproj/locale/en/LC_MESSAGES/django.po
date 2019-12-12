@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-17 08:25+0000\n"
-"PO-Revision-Date: 2019-10-15 12:59-0306\n"
+"POT-Creation-Date: 2019-12-12 05:48+0000\n"
+"PO-Revision-Date: 2019-12-12 05:50+0000\n"
 "Last-Translator: b'  <adlerosn@gmail.com>'\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -83,50 +83,62 @@ msgstr ""
 "by checking this, only people with the link will be able to find your event"
 
 #: server_secrets/form_meta_fields.html:16
+#: webproj/templates/meet_edit.html:238
+#| msgid "form_meet_point_label"
+msgid "form_meet_point_ld_label"
+msgstr "Link to the data that represents this place"
+
+#: server_secrets/form_meta_fields.html:17
+#, fuzzy
+#| msgid "form_meet_point_help"
+msgid "form_meet_point_ld_help"
+msgstr "select in the map where stuff are going to happen"
+
+#: server_secrets/form_meta_fields.html:18
 msgid "form_conversation_message_label"
 msgstr "Message"
 
-#: server_secrets/form_meta_fields.html:17
+#: server_secrets/form_meta_fields.html:19
 msgid "form_conversation_message_help"
 msgstr "what do you want to talk with them?"
 
-#: server_secrets/form_meta_fields.html:18
+#: server_secrets/form_meta_fields.html:20
 msgid "form_meetexternallinks_id_label"
 msgstr ""
 
-#: server_secrets/form_meta_fields.html:19
+#: server_secrets/form_meta_fields.html:21
 msgid "form_meetexternallinks_id_help"
 msgstr ""
 
-#: server_secrets/form_meta_fields.html:20
+#: server_secrets/form_meta_fields.html:22
 msgid "form_meetexternallinks_name_label"
 msgstr "Name"
 
-#: server_secrets/form_meta_fields.html:21
+#: server_secrets/form_meta_fields.html:23
 msgid "form_meetexternallinks_name_help"
 msgstr "the name of the place the link points to"
 
-#: server_secrets/form_meta_fields.html:22
+#: server_secrets/form_meta_fields.html:24
 msgid "form_meetexternallinks_url_label"
 msgstr "URL"
 
-#: server_secrets/form_meta_fields.html:23
+#: server_secrets/form_meta_fields.html:25
 msgid "form_meetexternallinks_url_help"
 msgstr "the link"
 
-#: server_secrets/form_meta_fields.html:24
+#: server_secrets/form_meta_fields.html:26
 msgid "form_meetstar_id_label"
 msgstr ""
 
-#: server_secrets/form_meta_fields.html:25
+#: server_secrets/form_meta_fields.html:27
 msgid "form_meetstar_id_help"
 msgstr ""
 
-#: server_secrets/form_meta_fields.html:26
+#: server_secrets/form_meta_fields.html:28
 msgid "form_meetstar_anonymous_label"
 msgstr ""
 
-#: server_secrets/form_meta_fields.html:27
+#: server_secrets/form_meta_fields.html:29
 msgid "form_meetstar_anonymous_help"
 msgstr ""
 
@@ -134,41 +146,63 @@ msgstr ""
 msgid "You cannot friend yourself."
 msgstr ""
 
-#: webproj/meet/services/FriendService.py:47
+#: webproj/meet/services/FriendService.py:51
 msgid "This action is not possible if both users are not friends."
 msgstr ""
 
-#: webproj/meet/services/MeetService.py:21
-#: webproj/meet/services/MeetService.py:29
-#: webproj/meet/services/MeetService.py:37
-#: webproj/meet/services/MeetService.py:49
-#: webproj/meet/services/MeetService.py:73
-#: webproj/meet/services/MeetService.py:95
-#: webproj/meet/services/MeetService.py:149
-#: webproj/meet/services/MeetService.py:155
-#: webproj/meet/services/MessengerService.py:81
-msgid "This data does not belong to the user who requested something about it."
+#: webproj/meet/services/LDService.py:100
+msgid "The requested model was not found."
 msgstr ""
 
-#: webproj/meet/services/MeetService.py:124
+#: webproj/meet/services/LDService.py:103
+msgid "The requested instance was not found."
+msgstr ""
+
+#: webproj/meet/services/LDService.py:257
+msgid "The requested data cannot be served."
+msgstr ""
+
+#: webproj/meet/services/MeetService.py:26
+#: webproj/meet/services/MeetService.py:34
+#: webproj/meet/services/MeetService.py:42
+#: webproj/meet/services/MeetService.py:54
+#: webproj/meet/services/MeetService.py:82
+#: webproj/meet/services/MeetService.py:104
+#: webproj/meet/services/MeetService.py:163
+#: webproj/meet/services/MeetService.py:169
+#: webproj/meet/services/MessengerService.py:103
+msgid ""
+"This data does not belong to the user who requested something about it."
+msgstr ""
+
+#: webproj/meet/services/MeetService.py:133
 msgid "User is not authorized to see this data."
 msgstr ""
 
-#: webproj/meet/views.py:153 webproj/meet/views.py:229
+#: webproj/meet/services/MeetService.py:182 webproj/templates/mail/star.html:4
+msgid "A meet you gave a star is about to start"
+msgstr ""
+
+#: webproj/meet/services/MessengerService.py:44
+#: webproj/templates/mail/message.html:4
+msgid "Someone has sent you a private message"
+msgstr ""
+
+#: webproj/meet/views.py:177 webproj/meet/views.py:260
 msgid "usr_not_found"
 msgstr "User object was not found in the database"
 
-#: webproj/meet/views.py:201
+#: webproj/meet/views.py:232
 msgid "cht_not_found"
 msgstr "Chat object was not found in the database"
 
-#: webproj/meet/views.py:260 webproj/meet/views.py:327
-#: webproj/meet/views.py:362 webproj/meet/views.py:395
-#: webproj/meet/views.py:421 webproj/meet/views.py:469
+#: webproj/meet/views.py:291 webproj/meet/views.py:358
+#: webproj/meet/views.py:393 webproj/meet/views.py:426
+#: webproj/meet/views.py:454 webproj/meet/views.py:509
 msgid "meet_not_found"
 msgstr "Meet object was not found in the database"
 
-#: webproj/meet/views.py:498
+#: webproj/meet/views.py:539
 msgid "meetstar_not_found"
 msgstr "MeetStar object was not found in the database"
 
@@ -180,11 +214,13 @@ msgstr ""
 msgid "Load from browser"
 msgstr ""
 
-#: webproj/templates/asklatlong.html:27 webproj/templates/meets.html:25
+#: webproj/templates/asklatlong.html:27 webproj/templates/meet_table.html:8
+#: webproj/templates/myaccount.html:29
 msgid "field_meet_lat"
 msgstr "Latitude"
 
-#: webproj/templates/asklatlong.html:31 webproj/templates/meets.html:26
+#: webproj/templates/asklatlong.html:31 webproj/templates/meet_table.html:9
+#: webproj/templates/myaccount.html:30
 msgid "field_meet_long"
 msgstr "Longitude"
 
@@ -192,7 +228,12 @@ msgstr "Longitude"
 msgid "I'm there"
 msgstr ""
 
-#: webproj/templates/base.html:2
+#: webproj/templates/base.html:2 webproj/templates/mail/message.html:2
+#: webproj/templates/mail/star.html:2
+#: webproj/templates/registration/activation_email.html:3
+#: webproj/templates/registration/admin_approve_complete_email.html:3
+#: webproj/templates/registration/admin_approve_email.html:3
+#: webproj/templates/soon.html:2
 msgid "lang-code-iso"
 msgstr "en"
 
@@ -208,37 +249,68 @@ msgstr ""
 msgid "written by Adler Neves"
 msgstr ""
 
-#: webproj/templates/base_footer.html:15
+#: webproj/templates/base_footer.html:15 webproj/templates/lddump.html:5
+#: webproj/templates/lddump.html:10
+msgid "Linked Data Dump"
+msgstr ""
+
+#: webproj/templates/base_footer.html:19 webproj/templates/sparql.html:5
+#: webproj/templates/sparql.html:28
+msgid "SPARQL"
+msgstr ""
+
+#: webproj/templates/base_footer.html:24
 msgid "ftr_tz_chg"
 msgstr "Change timezone"
 
-#: webproj/templates/base_header.html:44 webproj/templates/myaccount.html:5
+#: webproj/templates/base_header.html:45 webproj/templates/myaccount.html:5
 msgid "Account"
 msgstr ""
 
-#: webproj/templates/base_header.html:48
-msgid "Log out"
+#: webproj/templates/base_header.html:49 webproj/templates/friends.html:5
+#: webproj/templates/user.html:31
+msgid "Friends"
 msgstr ""
 
-#: webproj/templates/base_header.html:58
+#: webproj/templates/base_header.html:53 webproj/templates/mailboxes.html:5
+msgid "Conversations"
+msgstr ""
+
+#: webproj/templates/base_header.html:63
 msgid "Sign Up"
 msgstr ""
 
-#: webproj/templates/base_header.html:61
+#: webproj/templates/base_header.html:66
 #: webproj/templates/registration/login.html:4
 #: webproj/templates/registration/login.html:10
 msgid "Log in"
 msgstr ""
 
-#: webproj/templates/friends.html:5 webproj/templates/myaccount.html:11
-msgid "Friends"
+#: webproj/templates/base_header.html:72
+msgid "Log out"
 msgstr ""
 
-#: webproj/templates/friends.html:31
+#: webproj/templates/friends.html:17
+msgid "A table contaning all your friends."
+msgstr ""
+
+#: webproj/templates/friends.html:21
+msgid "Friend"
+msgstr ""
+
+#: webproj/templates/friends.html:22
+msgid "Friendship"
+msgstr ""
+
+#: webproj/templates/friends.html:41 webproj/templates/user.html:53
+msgid "No friends"
+msgstr ""
+
+#: webproj/templates/friends.html:50
 msgid "No friends to display"
 msgstr ""
 
-#: webproj/templates/httperror.html:4
+#: webproj/templates/httperror.html:4 webproj/templates/httperror.html:9
 msgid "Error"
 msgstr ""
 
@@ -247,7 +319,7 @@ msgid "The document you requested was not found."
 msgstr ""
 
 #: webproj/templates/httperror.html:15
-msgid "You're not authorized to see this content."
+msgid "You're not authorized to see this content or perform this action."
 msgstr ""
 
 #: webproj/templates/httperror.html:17
@@ -262,58 +334,193 @@ msgstr ""
 msgid "There was an unexpected error."
 msgstr ""
 
+#: webproj/templates/httperror.html:27
+msgid "Exception:"
+msgstr ""
+
+#: webproj/templates/lddump.html:15
+msgid "Download TTL"
+msgstr ""
+
+#: webproj/templates/lddump.html:21
+msgid "Download N3"
+msgstr ""
+
+#: webproj/templates/lddump.html:27
+msgid "Download NT"
+msgstr ""
+
+#: webproj/templates/lddump.html:33
+msgid "Download RDF/XML"
+msgstr ""
+
+#: webproj/templates/lddump.html:39
+msgid "Download TriG"
+msgstr ""
+
+#: webproj/templates/mail/message.html:8 webproj/templates/mail/message.txt:1
+#: webproj/templates/mail/star.html:8 webproj/templates/mail/star.txt:1
+msgid "Dear"
+msgstr ""
+
+#: webproj/templates/mail/message.html:12 webproj/templates/mail/message.txt:3
+#, python-format
+msgid ""
+"\n"
+"You got a message from \"%(sender)s\":\n"
+msgstr ""
+
+#: webproj/templates/mail/message.html:22
+#: webproj/templates/mail/message.txt:11
+msgid "Reply by clicking the link below:"
+msgstr ""
+
+#: webproj/templates/mail/message.html:30
+#: webproj/templates/mail/message.txt:15 webproj/templates/mail/star.html:27
+#: webproj/templates/mail/star.txt:12
+msgid ""
+"\n"
+"Sincerely,\n"
+"The management\n"
+msgstr ""
+
+#: webproj/templates/mail/star.html:12 webproj/templates/mail/star.txt:3
+#, python-format
+msgid ""
+"\n"
+"You gave a star to the event \"%(title)s\", created by\n"
+"\"%(creator)s\" and it will start in 6 hours.\n"
+msgstr ""
+
+#: webproj/templates/mail/star.html:19 webproj/templates/mail/star.txt:8
+msgid "You can review the meet on the link below:"
+msgstr ""
+
 #: webproj/templates/mailbox_messages.html:5
 msgid "Conversation"
 msgstr ""
 
-#: webproj/templates/mailbox_messages.html:19
-#: webproj/templates/talktofriend.html:10
-#: webproj/templates/talktomeetorganizer.html:9 webproj/templates/user.html:19
+#: webproj/templates/mailbox_messages.html:30
+#: webproj/templates/talktofriend.html:11
+#: webproj/templates/talktomeetorganizer.html:10
+#: webproj/templates/user.html:25
 msgid "Send message"
 msgstr ""
 
-#: webproj/templates/mailboxes.html:5 webproj/templates/myaccount.html:16
-msgid "Conversations"
-msgstr ""
-
-#: webproj/templates/mailboxes.html:23
+#: webproj/templates/mailboxes.html:32
 msgid "No conversations to display"
 msgstr ""
 
-#: webproj/templates/meet_edit.html:5
+#: webproj/templates/meet_edit.html:6
 msgid "Edit meet"
 msgstr ""
 
-#: webproj/templates/meet_edit.html:33
+#: webproj/templates/meet_edit.html:8 webproj/templates/meets.html:32
+msgid "Create meet"
+msgstr ""
+
+#: webproj/templates/meet_edit.html:197
+#: webproj/templates/meet_external_links_edit.html:5
+msgid "Edit external links"
+msgstr ""
+
+#: webproj/templates/meet_edit.html:204
+#: webproj/templates/meet_external_links_edit.html:27
+msgid "Delete"
+msgstr ""
+
+#: webproj/templates/meet_edit.html:218
+msgid "Search for geolocation and description"
+msgstr ""
+
+#: webproj/templates/meet_edit.html:224
+msgid "Searching for geolocation and description..."
+msgstr ""
+
+#: webproj/templates/meet_edit.html:230
+msgid "Displaying :n: results:"
+msgstr ""
+
+#: webproj/templates/meet_edit.html:231
+msgid "Latitude:"
+msgstr ""
+
+#: webproj/templates/meet_edit.html:232
+msgid "Longitude:"
+msgstr ""
+
+#: webproj/templates/meet_edit.html:233
+msgid "Use this data"
+msgstr ""
+
+#: webproj/templates/meet_edit.html:234
+msgid "Discard results"
+msgstr ""
+
+#: webproj/templates/meet_edit.html:247
 msgid "form_meet_point_label"
 msgstr "Where is it?"
 
-#: webproj/templates/meet_edit.html:45
+#: webproj/templates/meet_edit.html:262
+#: webproj/templates/meet_external_link_edit.html:14
 msgid "Save"
 msgstr ""
 
-#: webproj/templates/meet_view.html:28 webproj/templates/meets.html:23
+#: webproj/templates/meet_external_link_edit.html:5
+msgid "Edit external link"
+msgstr ""
+
+#: webproj/templates/meet_external_links_edit.html:20
+#: webproj/templates/meet_view.html:75
+msgid "Edit"
+msgstr ""
+
+#: webproj/templates/meet_external_links_edit.html:33
+msgid "No external links were added"
+msgstr ""
+
+#: webproj/templates/meet_external_links_edit.html:43
+msgid "Add"
+msgstr ""
+
+#: webproj/templates/meet_table.html:3 webproj/templates/myaccount.html:24
+msgid "A table contaning some meets that you can go."
+msgstr ""
+
+#: webproj/templates/meet_table.html:6 webproj/templates/meet_view.html:34
+#: webproj/templates/myaccount.html:27
 msgid "field_meet_title"
 msgstr "Title"
 
-#: webproj/templates/meet_view.html:31 webproj/templates/meets.html:24
+#: webproj/templates/meet_table.html:7 webproj/templates/meet_view.html:37
+#: webproj/templates/myaccount.html:28
 msgid "field_meet_name"
 msgstr "Name"
 
-#: webproj/templates/meet_view.html:34 webproj/templates/meets.html:27
+#: webproj/templates/meet_table.html:10 webproj/templates/meet_view.html:40
+#: webproj/templates/myaccount.html:31
 msgid "field_meet_meeting"
 msgstr "When"
 
-#: webproj/templates/meet_view.html:37
+#: webproj/templates/meet_table.html:11 webproj/templates/meet_table.html:24
+#: webproj/templates/myaccount.html:33 webproj/templates/myaccount.html:55
+msgid "open_details"
+msgstr "Open details"
+
+#: webproj/templates/meet_view.html:43
 msgid "field_meet_creator"
 msgstr "Organizer"
 
-#: webproj/templates/meet_view.html:47
+#: webproj/templates/meet_view.html:53
 msgid "field_meet_description"
 msgstr "Description"
 
-#: webproj/templates/meet_view.html:53
-msgid "Edit"
+#: webproj/templates/meet_view.html:61
+msgid "Attendees"
+msgstr ""
+
+#: webproj/templates/meet_view.html:64
+msgid "attendees"
 msgstr ""
 
 #: webproj/templates/meets.html:5
@@ -332,24 +539,73 @@ msgstr ""
 msgid "unknown criteria"
 msgstr ""
 
-#: webproj/templates/meets.html:28
-msgid "open_details"
-msgstr "Open details"
-
-#: webproj/templates/meets.html:48
+#: webproj/templates/meets.html:27
 msgid "Empty list"
 msgstr ""
 
-#: webproj/templates/meets.html:52
-msgid "Create meet"
+#: webproj/templates/meetstarbutton.html:8
+msgid "Star it!"
 msgstr ""
 
-#: webproj/templates/myaccount.html:21
+#: webproj/templates/meetstarbutton.html:16
+#: webproj/templates/meetstarbutton.html:35
+msgid "Star it anonymously!"
+msgstr ""
+
+#: webproj/templates/meetstarbutton.html:26
+msgid "Star it publicly!"
+msgstr ""
+
+#: webproj/templates/meetstarbutton.html:45
+msgid "Un-star it"
+msgstr ""
+
+#: webproj/templates/meetstars.html:5
+msgid "Meet stars"
+msgstr ""
+
+#: webproj/templates/meetstars.html:29
+msgid "Someone anonymous"
+msgstr ""
+
+#: webproj/templates/meetstars.html:37
+msgid "You"
+msgstr ""
+
+#: webproj/templates/meetstars.html:42
+msgid "No one yet"
+msgstr ""
+
+#: webproj/templates/myaccount.html:12
 msgid "Meets nearby"
 msgstr ""
 
-#: webproj/templates/myaccount.html:26
+#: webproj/templates/myaccount.html:16
 msgid "Popular meets"
+msgstr ""
+
+#: webproj/templates/myaccount.html:20
+msgid "My Meet Stars"
+msgstr ""
+
+#: webproj/templates/myaccount.html:32
+msgid "Privacy"
+msgstr ""
+
+#: webproj/templates/myaccount.html:46
+msgid "Anonymous"
+msgstr ""
+
+#: webproj/templates/myaccount.html:49
+msgid "Public"
+msgstr ""
+
+#: webproj/templates/myaccount.html:64
+msgid "My meets"
+msgstr ""
+
+#: webproj/templates/myaccount.html:72
+msgid "You never organized a meet"
 msgstr ""
 
 #: webproj/templates/registration/activate.html:4
@@ -387,8 +643,7 @@ msgstr ""
 #, python-format
 msgid ""
 "\n"
-"    You (or someone pretending to be you) have asked to register an account "
-"at\n"
+"    You (or someone pretending to be you) have asked to register an account at\n"
 "    %(site_name)s.  If this wasn't you, please ignore this email\n"
 "    and your address will be removed from our records.\n"
 "    "
@@ -398,8 +653,7 @@ msgstr ""
 #, python-format
 msgid ""
 "\n"
-"    To activate this account, please click the following link within the "
-"next\n"
+"    To activate this account, please click the following link within the next\n"
 "    %(expiration_days)s days:\n"
 "    "
 msgstr ""
@@ -588,8 +842,7 @@ msgstr ""
 #: webproj/templates/registration/password_reset_done.html:8
 msgid ""
 "\n"
-"    We have sent you an email with a link to reset your password. Please "
-"check\n"
+"    We have sent you an email with a link to reset your password. Please check\n"
 "    your email and click the link to continue.\n"
 "    "
 msgstr ""
@@ -610,8 +863,7 @@ msgstr ""
 #: webproj/templates/registration/password_reset_email.html:11
 msgid ""
 "\n"
-"To reset your password, please click the following link, or copy and paste "
-"it\n"
+"To reset your password, please click the following link, or copy and paste it\n"
 "into your web browser:\n"
 msgstr ""
 
@@ -635,8 +887,7 @@ msgstr ""
 #: webproj/templates/registration/password_reset_form.html:8
 msgid ""
 "\n"
-"    Forgot your password? Enter your email in the form below and we'll send "
-"you instructions for creating a new one.\n"
+"    Forgot your password? Enter your email in the form below and we'll send you instructions for creating a new one.\n"
 "    "
 msgstr ""
 
@@ -685,23 +936,66 @@ msgstr ""
 msgid "Soon"
 msgstr ""
 
-#: webproj/templates/togglefriendbutton.html:6
+#: webproj/templates/sparql.html:32
+msgid "SPARQL-over-HTTP endpoint:"
+msgstr ""
+
+#: webproj/templates/sparql.html:34
+msgid ""
+"This is the URL you should query on your program; this current page just "
+"displays its output."
+msgstr ""
+
+#: webproj/templates/sparql.html:40
+msgid "Your SPARQL query:"
+msgstr ""
+
+#: webproj/templates/sparql.html:41
+msgid "Your query goes here..."
+msgstr ""
+
+#: webproj/templates/sparql.html:45
+msgid "Query"
+msgstr ""
+
+#: webproj/templates/sparql.html:51
+msgid "Unknown error while querying"
+msgstr ""
+
+#: webproj/templates/sparql.html:55
+msgid "Fetching results..."
+msgstr ""
+
+#: webproj/templates/sparql_reverseproxy.html:5
+#: webproj/templates/sparql_reverseproxy.html:9
+msgid "SPARQL endpoint"
+msgstr ""
+
+#: webproj/templates/sparql_reverseproxy.html:12
+msgid "This is where you should reverse-proxy your SPARQL endpoint server."
+msgstr ""
+
+#: webproj/templates/sparql_reverseproxy.html:15
+msgid "If you're seeing this on a website, contact site administration."
+msgstr ""
+
+#: webproj/templates/togglefriendbutton.html:9
 msgid "Break friendship"
 msgstr ""
 
-#: webproj/templates/togglefriendbutton.html:13
-msgid "Nevermind"
+#: webproj/templates/togglefriendbutton.html:19
+msgid "Cancel friendship request"
 msgstr ""
 
-#: webproj/templates/togglefriendbutton.html:18
+#: webproj/templates/togglefriendbutton.html:27
 msgid "Accept"
 msgstr ""
 
-#: webproj/templates/togglefriendbutton.html:23
+#: webproj/templates/togglefriendbutton.html:35
 msgid "Reject"
 msgstr ""
 
-#: webproj/templates/togglefriendbutton.html:29
+#: webproj/templates/togglefriendbutton.html:44
 msgid "Add friend"
 msgstr ""
 
@@ -717,5 +1011,14 @@ msgstr "Timezone"
 msgid "tz_btn_set"
 msgstr "Set timezone"
 
-#~ msgid "form_meet_point_help"
-#~ msgstr "select in the map where stuff are going to happen"
+#: webproj/templates/user.html:59
+msgid "Attending"
+msgstr ""
+
+#: webproj/templates/user.html:64
+msgid "Star given anonymously"
+msgstr ""
+
+#: webproj/templates/user.html:73
+msgid "No stars given"
+msgstr ""

@@ -5,6 +5,15 @@
 {% trans "Conversation" %} | {{ block.super }}
 {% endblock conversation %}
 
+{% load linkeddata %}
+{% block additional_head %}
+{{ block.super }}
+{{mailbox|linkeddata}}
+{% for message in mailbox.messages.all %}
+{{message|linkeddata}}
+{% endfor %}
+{% endblock additional_head %}
+
 {% block content %}
 <ul>
     {% for message in mailbox.messages.all %}

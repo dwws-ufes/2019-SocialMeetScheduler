@@ -570,6 +570,14 @@ class LDDumpDownload(View):
 
 
 @method_decorator(Inject(service=services.LDService), name='dispatch')
+class LDSchema(View):
+    def get(self, request: HttpRequest, service: services.LDService, fmt: str = 'rdf'):
+        g = service.schema(request.user)
+        data, mime = service.serialize(request.user, g, fmt)
+        return HttpResponse(data, content_type=mime)
+
+
+@method_decorator(Inject(service=services.LDService), name='dispatch')
 class LDModelBuild(View):
     def get(self, request: HttpRequest, service: services.LDService, model: str, pk: int, fmt: str):
         g = service.dump_instance(request.user, model, pk)
@@ -601,7 +609,7 @@ class Sparql(TemplateView):
             'samplequery': (
                 'SELECT ?subject ?predicate ?object' + '\n' +
                 'WHERE {' + '\n' +
-                '    ?subject ?predicate ?object' + '\n' +
+                '    ?subject ?predicate ?object .' + '\n' +
                 '}' + '\n' +
                 'LIMIT 25'
             ),

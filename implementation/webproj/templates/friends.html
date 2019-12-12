@@ -5,6 +5,11 @@
 {% trans "Friends" %} | {{ block.super }}
 {% endblock title %}
 
+{% load linkeddata %}
+{% block additional_head %}
+{{ block.super }}{% for item in friends %}{{item.friend|linkeddata}}{% endfor %}
+{% endblock additional_head %}
+
 {% block content %}
 {% if friends %}
 <table class="table table-striped table-bordered">

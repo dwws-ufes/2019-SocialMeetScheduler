@@ -5,6 +5,11 @@
 {{ friend.username }} | {{ block.super }}
 {% endblock title %}
 
+{% load linkeddata %}
+{% block additional_head %}
+{{ block.super }}{{friend|linkeddata}}
+{% endblock additional_head %}
+
 {% block content %}
 <h3>{{ friend }}</h3>
 <div>

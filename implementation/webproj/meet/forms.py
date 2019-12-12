@@ -25,11 +25,13 @@ class MeetForm(forms.ModelForm):
             # 'point',
             'privacy_require_account',
             'privacy_unlisted',
+            'point_ld',
         ]
         widgets = {
             'id': forms.HiddenInput(),
             # 'point': gisforms.OSMWidget(),
             'meeting': forms.DateTimeInput(),
+            'point_ld': forms.HiddenInput(),
         }
 
 

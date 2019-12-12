@@ -5,6 +5,21 @@
 {% trans "Meet stars" %} | {{ block.super }}
 {% endblock title %}
 
+{% load linkeddata %}
+{% block additional_head %}
+{{ block.super }}
+{% for star in stars %}
+{% if not star.anonymous %}
+{{star.owner|linkeddata}}
+{% endif %}
+{% endfor %}
+{% with stars|first as star %}
+{% with star.meet as meet %}
+{{meet|linkeddata}}
+{% endwith %}
+{% endwith %}
+{% endblock additional_head %}
+
 {% block content %}
 {{ button }}
 <ul>

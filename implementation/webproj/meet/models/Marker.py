@@ -64,3 +64,9 @@ class Marker(models.Model):
         on_delete=models.CASCADE,
         related_name="markers"
     )
+
+    point_ld = models.URLField(
+        default=None,
+        null=True,
+        blank=True
+    )

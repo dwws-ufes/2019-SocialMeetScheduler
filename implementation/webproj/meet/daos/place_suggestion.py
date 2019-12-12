@@ -24,8 +24,7 @@ class PlaceSuggestionDAO:
             "http://dbpedia.org/sparql",
             returnFormat=SPARQLWrapper.JSON
         )
-        sw.setTimeout(30)
-        sw.setQuery(f"""
+        q = f"""
             PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
             PREFIX dbo: <http://dbpedia.org/ontology/>
             PREFIX dbp: <http://dbpedia.org/property/>
@@ -37,13 +36,13 @@ class PlaceSuggestionDAO:
             WHERE {{
                 ?plc rdfs:label ?nm ;
                 dbo:abstract ?abs ;
-                geo:lat ?lat ;
-                geo:long ?long .
+                (dbp:latitude|geo:lat) ?lat ;
+                (dbp:longitude|geo:long) ?long .
                 FILTER(
                     LANG(?nm)=LANG(?abs)
                 ) .
                 FILTER(
-                    CONTAINS(
+                    STRSTARTS(
                         LCASE(STR(
                             ?nm
                         )),
@@ -52,7 +51,9 @@ class PlaceSuggestionDAO:
                 ) .
             }}
             LIMIT 15
-        """)
+        """
+        # sw.setTimeout(30)
+        sw.setQuery(q)
         results = sw.query().convert()
         return [
             PlaceSuggestion(

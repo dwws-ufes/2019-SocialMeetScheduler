@@ -57,12 +57,16 @@ class MeetService:
                 current = form.save(commit=False)
                 current.creator = user
                 current.point = Point(form.cleaned_data['lat'], form.cleaned_data['lng'])
+                if not current.point_ld:
+                    current.point_ld = None
                 current.save()
                 return current
             else:  # update existing
                 for k, v in form.cleaned_data.items():
                     setattr(previous_one, k, v)
                 previous_one.point = Point(form.cleaned_data['lat'], form.cleaned_data['lng'])
+                if not previous_one.point_ld:
+                    previous_one.point_ld = None
                 previous_one.save()
                 return previous_one
 

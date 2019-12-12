@@ -27,6 +27,7 @@ urlpatterns = [
     path('ld/index.html', views.LDDump.as_view(), name="lddump"),
     path('ld/dump', views.LDDumpDownload.as_view(), name="lddumpdownload"),
     path('ld/dump.<str:fmt>', views.LDDumpDownload.as_view(), name="lddumpdownload"),
+    path('ld/schema.<str:fmt>', views.LDSchema.as_view(), name="ldschema"),
     path('ld/<str:model>/<int:pk>.<str:fmt>', views.LDModelBuild.as_view(), name="ldmodelbuild"),
     path('sparql', views.SparqlReverseProxy.as_view(), name="sparql"),
     path('ld/sparql', views.Sparql.as_view(), name="sparql_form"),

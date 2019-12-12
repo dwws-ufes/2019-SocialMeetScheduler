@@ -5,6 +5,14 @@
 {% trans "Conversations" %} | {{ block.super }}
 {% endblock title %}
 
+{% load linkeddata %}
+{% block additional_head %}
+{{ block.super }}
+{% for mailbox in mailboxes %}
+{{mailbox|linkeddata}}
+{% endfor %}
+{% endblock additional_head %}
+
 {% block content %}
 {% if mailboxes.first %}
 <ul>

@@ -1,0 +1,58 @@
+@startuml
+hide circle
+hide empty methods
+hide empty attributes
+
+class "foaf:Person" as foafperson
+class "dbo:Event" as dboevent
+class "dbo:Place" as dboplace
+class "dbo:Reference" as dboreference
+class "dbo:Letter" as dboletter
+class "purl:List" as purllist
+
+class "User" as usr {
+  username: xsd:string {owl:equivalentProperty=foaf:name}
+}
+class "Meet" as meet {
+  creator: xsd:anyURI{User} {owl:equivalentProperty=dbp:organizer}
+  title: xsd:string {owl:equivalentProperty=rdfs:label}
+  name: xsd:string {owl:equivalentProperty=dbp:venue}
+  description: xsd:string {owl:equivalentProperty=rdfs:comment}
+  meeting: xsd:date {owl:equivalentProperty=dbo:startDateTime}
+  point: xsd:string {owl:equivalentProperty=geo:geometry}
+  place: xsd:anyURI{dbo:Place} {owl:equivalentProperty=owl:sameAs}
+}
+class "ExternalLink" as mel {
+  meet: xsd:anyURI{Meet} {owl:equivalentProperty=mere:properPartOf}
+  name: xsd:string {owl:equivalentProperty=rdfs:label}
+  url: xsd:string {owl:equivalentProperty=rdfs:seeAlso}
+}
+class "Mailbox" as mbox {
+  initiator: xsd:anyURI{User} {owl:equivalentProperty=purl:participant}
+  initiated: xsd:anyURI{User} {owl:equivalentProperty=purl:participant}
+  meet: xsd:anyURI{Meet} {owl:equivalentProperty=rdfs:seeAlso}
+}
+class "Message" as msg {
+  mailbox: xsd:anyURI{Mailbox} {owl:equivalentProperty=mere:containedIn}
+  sender: xsd:anyURI{User} {owl:equivalentProperty=dbp:author}
+  sent: xsd:date {owl:equivalentProperty=dbp:firstPublicationDate}
+  message: xsd:string {owl:equivalentProperty=dbp:unicode}
+}
+
+foafperson ^-- usr
+dboevent ^-- meet
+dboplace ^-- meet
+dboletter ^-- msg
+purllist ^-- mbox
+dboreference ^-- mel
+
+
+usr <-down-> usr : friendOf\n{owl:equivalentProperty=purl:friendOf}
+usr --> mbox : participates
+usr --> msg : sends
+mbox -right-> msg : contains
+usr -up-> meet : attends
+mel <-- meet : references
+
+
+@enduml

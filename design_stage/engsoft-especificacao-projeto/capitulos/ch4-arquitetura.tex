@@ -215,6 +215,24 @@ Como Django usa \textit{Active Record} e não \textit{Data Access Objects} e, po
 	\label{fig:ese}
 \end{figure}
 
+\subsection{Modelo Frameweb-LD}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.8\textwidth]{figuras/framewebld.png}
+	\caption{Modelo de Entidades de \textit{Linked Data} do \imprimirtitulo.}
+	\label{fig:ld}
+\end{figure}
+
+A Figura \ref{fig:ld} mostra a versão \textit{Linked Data} exposta das entidades da Figura \ref{fig:ent}.
+A classe \texttt{ChatMailbox} foi exposta como \texttt{Mailbox}.
+A classe \texttt{ChatMessage} foi exposta como \texttt{Message}.
+A classe \texttt{MeetExternalLinks} foi exposta como \texttt{ExternalLink}.
+A classe \texttt{Friendship} foi exposta apenas como uma relação entre duas entidades.
+A propriedade \texttt{place} da classe \texttt{Meet} da Figura \ref{fig:ld} é dada pela propriedade \texttt{point\_ld} da classe de mesmo nome na Figura \ref{fig:ent}.
+A propriedade \texttt{meet} da classe \texttt{ExternalLink} da Figura \ref{fig:ld} é dada pela propriedade \texttt{parent} da classe equivalente na Figura \ref{fig:ent}.
+De resto, o modelo continua representando os mesmos dados, ainda que usando nomes ligeiramente diferentes e explicitando a presença de algumas propriedades cuja presença era apenas presumida a partir das associações presentes na Figura \ref{fig:ent} e mantendo outras ainda presumidas.
+
 % \section{Camada de Acesso a Dados}
 % \label{sec-arquitetura-dados}
 %

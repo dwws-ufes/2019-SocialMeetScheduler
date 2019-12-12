@@ -15,8 +15,12 @@
 {{ block.super }}
 {% endblock title %}
 
-{% block content %}
+{% load linkeddata %}
+{% block additional_head %}
+{{ block.super }}{% for meet in meets %}{{meet|linkeddata}}{% endfor %}
+{% endblock additional_head %}
 
+{% block content %}
 {% if meets|length > 0 %}
 {% include 'meet_table.html' %}
 {% else %}
