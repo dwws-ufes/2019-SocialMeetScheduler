@@ -607,6 +607,19 @@ class Sparql(TemplateView):
         return super().get_context_data(*args, **{
             **kwargs,
             'samplequery': (
+                'PREFIX schm: <' + services.LDService().schemaNS() + '>' + '\n' +
+                'PREFIX mere: <http://ontology.eil.utoronto.ca/icity/Mereology/>' + '\n' +
+                'PREFIX dbp: <http://dbpedia.org/property/>' + '\n' +
+                'PREFIX dul: <http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#>' + '\n' +
+                'PREFIX cc: <http://creativecommons.org/ns#>' + '\n' +
+                'PREFIX rel: <http://purl.org/vocab/relationship/>' + '\n' +
+                'PREFIX dbo: <http://dbpedia.org/ontology/>' + '\n' +
+                'PREFIX foaf: <http://xmlns.com/foaf/0.1/>' + '\n' +
+                'PREFIX geo: <http://www.w3.org/2003/01/geo/wgs84_pos#>' + '\n' +
+                'PREFIX owl: <http://www.w3.org/2002/07/owl#>' + '\n' +
+                'PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>' + '\n' +
+                'PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>' + '\n' +
+                '\n' +
                 'SELECT ?subject ?predicate ?object' + '\n' +
                 'WHERE {' + '\n' +
                 '    ?subject ?predicate ?object .' + '\n' +

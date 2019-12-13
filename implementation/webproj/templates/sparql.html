@@ -38,7 +38,7 @@ function newLineFormatter(txt) {
     <form method="GET" action="{% url 'sparql' %}">
         <div class="form-group">
             <label for="sparql">{% trans "Your SPARQL query:" %}</label>
-            <textarea rows="10" class="form-control" name="query" id="sparql" placeholder="{% trans "Your query goes here..." %}" style="font-family: monospace;">{{samplequery}}</textarea>
+            <textarea rows="20" class="form-control" name="query" id="sparql" placeholder="{% trans "Your query goes here..." %}" style="font-family: monospace;">{{samplequery}}</textarea>
         </div>
         <button type="button" id="query_btn" class="btn btn-primary" btn-lg btn-block>
             <i class="fa fa-search" aria-hidden="true"></i>
