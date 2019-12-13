@@ -206,7 +206,7 @@ A camada de aplicação do modelo é expressa pela Figura \ref{fig:apl}, a qual 
 	\label{fig:apl}
 \end{figure}
 
-Como Django usa \textit{Active Record} e não \textit{Data Access Objects} e, por conta disso, a camada de acesso ao dado foi ignorada, e, por conseguinte, o modelo de persistência não existir, a Figura \ref{fig:ese} explicita quais modelos são gerenciados por quais serviços, suprindo a lacuna causada pela falta deste.
+Como Django usa \textit{Active Record} e não \textit{Data Access Objects} e, por conta disso, a camada de acesso ao dado foi ignorada, e, por conseguinte, o modelo de persistência não existir, a Figura \ref{fig:ese} explicita quais modelos são gerenciados por quais serviços, suprindo a lacuna causada pela falta deste. Apesar do serviço \texttt{LDService} não gerenciar nenhuma entidade, ele expõe as entidades a ele relacionadas, conforme será apresentado na seção \ref{mfld}.
 
 \begin{figure}[H]
 	\centering
@@ -216,6 +216,7 @@ Como Django usa \textit{Active Record} e não \textit{Data Access Objects} e, po
 \end{figure}
 
 \subsection{Modelo Frameweb-LD}
+\label{mfld}
 
 \begin{figure}[H]
 	\centering

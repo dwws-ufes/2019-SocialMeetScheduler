@@ -7,6 +7,7 @@ hide empty attributes
 class MeetService #powderblue
 class FriendService #powderblue
 class MessengerService #powderblue
+class LDService #powderblue
 
 'Entities
 class Friendship #greenyellow
@@ -26,5 +27,10 @@ FriendService -- Friendship
 
 MessengerService -- ChatMailbox
 MessengerService -- ChatMessage
+
+MeetExternalLinks -- LDService
+Meet              -- LDService
+ChatMailbox       -- LDService
+ChatMessage       -- LDService
 
 @enduml
