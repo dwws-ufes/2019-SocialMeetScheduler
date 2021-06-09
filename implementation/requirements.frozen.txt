@@ -46,7 +46,7 @@ lazy-object-proxy==1.4.2
 mccabe==0.6.1
 odfpy==1.4.0
 openpyxl==2.6.2
-Pillow==8.1.1
+Pillow==8.2.0
 polib==1.1.0
 psycopg2-binary==2.8.4
 pycdi==0.1.2
