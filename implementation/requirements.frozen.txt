@@ -34,7 +34,7 @@ django-template-check==0.3.1
 et-xmlfile==1.0.1
 filetype==1.0.5
 future==0.18.3
-GDAL==3.0.2
+GDAL==3.13.0
 html2text==2019.9.26
 html5lib==1.0.1
 ics==0.6
