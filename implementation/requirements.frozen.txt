@@ -62,7 +62,7 @@ PyYAML==5.4
 rdflib==4.2.2
 requests==2.33.0
 six==1.12.0
-soupsieve==1.9.2
+soupsieve==2.8.4
 SPARQLWrapper==1.8.4
 sqlparse==0.5.4
 tablib==0.13.0
