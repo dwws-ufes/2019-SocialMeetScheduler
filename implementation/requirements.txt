@@ -1,7 +1,7 @@
 pip
 uwsgi
 psycopg2-binary
-django<5
+django<6
 filetype
 pillow
 requests
